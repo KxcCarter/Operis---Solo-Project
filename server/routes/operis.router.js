@@ -8,12 +8,37 @@ const router = express.Router();
 /**
  * GET route template
  */
+
+// GET all projects by user
 router.get('/', rejectUnauthenticated, (req, res) => {
   const user = req.user.id;
   const query = `SELECT * FROM projects WHERE projects.user_id = $1;`;
 
   pool
     .query(query, [user])
+    .then((dbRes) => {
+      console.log(dbRes.rows);
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('ERROR in GET: ', err);
+      res.sendStatus(500);
+    });
+});
+
+// GET a single project
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+  const projectID = req.params.id;
+  const query = `SELECT "projects".*, array_agg("roles".role_name), array_agg("talent".name) AS talent, array_agg("tasks".description) AS tasks from "projects"
+  JOIN "tasks" ON "tasks".project_id = "projects".id
+  JOIN "project_roles" ON "project_roles".project_id = "projects".id
+  JOIN "talent" ON "talent".id = "project_roles".talent_id
+  JOIN "roles" ON "roles".id = "project_roles".role_id
+  WHERE "projects".id = $1
+  GROUP BY "projects".id;`;
+
+  pool
+    .query(query, [projectID])
     .then((dbRes) => {
       console.log(dbRes.rows);
       res.send(dbRes.rows);

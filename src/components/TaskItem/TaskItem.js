@@ -1,72 +1,81 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import mapStoreToProps from '../../redux/mapStoreToProps';
+
+// --- Material-UI
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
 import TextField from '@material-ui/core/TextField';
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, Box, Grid, Paper } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+// --- Icons
+import EditIcon from '@material-ui/icons/Edit';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
 export default function TaskItem() {
-  const classes = useStyles();
+  const loremIpsum =
+    'Pellentesque eget velit ornare massa semper tempor. Donec hendrerit mi sit amet lacinia ultricies. Aliquam augue diam, rhoncus ut pulvinar eget, commodo ac ex.';
+
   const [taskState, setTaskState] = useState('');
   const [editMode, setEditMode] = useState(false);
+  const [taskData, setTaskData] = useState(loremIpsum);
 
-  const handleChange = (event) => {
+  const handleOptions = (event) => {
     setTaskState(event.target.value);
   };
 
-  return (
-    <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="options-native-simple">Options</InputLabel>
-        <Select
-          native
-          value={taskState.age}
-          onChange={handleChange}
-          inputProps={{
-            name: 'options',
-            id: 'options-native-simple',
-          }}
-        >
-          <option aria-label="None" value="" />
-          <option value="complete">Complete</option>
-          <option value="incomplete">Incomplete</option>
-          <option value="remove">Delete</option>
-        </Select>
-      </FormControl>
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
 
-      {editMode ? (
-        <Typography variant="body1">
-          In condimentum sed ex nec faucibus. Pellentesque eget velit ornare
-          massa semper tempor. Donec hendrerit mi sit amet lacinia ultricies.
-          Aliquam augue diam, rhoncus ut pulvinar eget, commodo ac ex.
-        </Typography>
-      ) : (
-        <>
-          <TextField
-            id="standard-full-width"
-            style={{ margin: 8 }}
-            placeholder="New Task"
-            fullWidth
-            margin="normal"
-          />
-          <Button size="small" variant="contained">
-            +
+  const handleTaskData = (event) => {
+    setTaskData(event.target.value);
+  };
+
+  return (
+    <Box mt={2}>
+      <Grid container spacing={0}>
+        <Grid item md={1}>
+          <Select
+            native
+            value={taskState}
+            variant="standard"
+            onChange={handleOptions}
+          >
+            <option aria-label="None" value="" />
+            <option value="complete">Complete</option>
+            <option value="incomplete">Incomplete</option>
+            <option value="remove">Delete</option>
+          </Select>
+        </Grid>
+
+        <Grid item md={10}>
+          <Paper elevation={2}>
+            {!editMode ? (
+              <Box m={1}>
+                <Typography variant="body1">{taskData}</Typography>
+              </Box>
+            ) : (
+              <>
+                <TextField
+                  id="standard-full-width"
+                  style={{ margin: 8 }}
+                  placeholder="New Task"
+                  fullWidth
+                  margin="dense"
+                  value={taskData}
+                  onChange={handleTaskData}
+                />
+              </>
+            )}
+          </Paper>
+        </Grid>
+        <Grid item md={1}>
+          <Button size="small" variant="text" onClick={toggleEditMode}>
+            {!editMode ? <EditIcon /> : <SaveAltIcon />}
           </Button>
-        </>
-      )}
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
