@@ -19,9 +19,10 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import TestCard from '../ProjectCard/ProjectCard';
+import ProjectDetails from '../ProjectDetailsPage/ProjectDetailsPage';
 
 import './App.css';
+import { Container } from '@material-ui/core';
 
 class App extends Component {
   componentDidMount() {
@@ -31,7 +32,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <Container maxWidth="md">
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -46,7 +47,7 @@ class App extends Component {
             <ProtectedRoute exact path="/admin" component={UserPage} />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
-            <ProtectedRoute exact path="/info" component={TestCard} />
+            <ProtectedRoute exact path="/info" component={InfoPage} />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will be redirected to the authRedirect path provided. */}
             <ProtectedRoute
@@ -69,16 +70,15 @@ class App extends Component {
             />
             <ProtectedRoute
               exact
-              path="/projects"
-              authRedirect="/admin"
-              component={TestCard}
+              path="/projectDetails"
+              component={ProjectDetails}
             />
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
           <Footer />
-        </div>
+        </Container>
       </Router>
     );
   }

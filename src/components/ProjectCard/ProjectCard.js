@@ -17,16 +17,18 @@ const ProjectCard = (props) => {
   //   console.log(props.store.projects);
 
   return (
-    <Box>
-      <Grid item xs={6} sm={3}>
-        <Paper elevation={3}>
-          <Typography variant="h4">{props.title}</Typography>
-          <Typography variant="body1">{props.description}</Typography>
-          {/* <img src={blaBLAH} alt="THIS IS ALT TEXT"></img> */}
-          <Typography variant="subtitle1">{props.isCompleted}</Typography>
-        </Paper>
-      </Grid>
-    </Box>
+    <Grid item xs={6} sm={3}>
+      <div className="clickableContainer">
+        <Box>
+          <Paper elevation={3}>
+            <Typography variant="h4">{props.title}</Typography>
+            <Typography variant="body1">{props.description}</Typography>
+            <img src={props.image} alt="THIS IS ALT TEXT! WOW!"></img>
+            <Typography variant="subtitle1">{props.isCompleted}</Typography>
+          </Paper>
+        </Box>
+      </div>
+    </Grid>
   );
 };
 export default connect(mapStoreToProps)(ProjectCard);
