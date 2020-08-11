@@ -25,16 +25,18 @@ const ProjectList = (props) => {
 
   const projects = props.store.projects.map((item, index) => {
     return (
-      <ProjectCard
-        title={item.title}
-        description={item.description}
-        image={item.image}
-        isCompleted={item.is_completed}
-        isStaffed={item.is_staffed}
-        id={item.id}
-        key={item.id}
-        onClick={goToProject}
-      />
+      <Grid item md={4}>
+        <ProjectCard
+          title={item.title}
+          description={item.description}
+          image={item.image}
+          isCompleted={item.is_completed}
+          isStaffed={item.is_staffed}
+          id={item.id}
+          key={item.id}
+          onClick={goToProject}
+        />
+      </Grid>
     );
   });
 
@@ -42,7 +44,15 @@ const ProjectList = (props) => {
     <Box>
       <Grid container spacing={3}>
         {projects}
-        <PostCardDemo />
+        <Grid item md={4}>
+          <PostCardDemo />
+        </Grid>
+        <Grid item md={4}>
+          <PostCardDemo />
+        </Grid>
+        <Grid item md={4}>
+          <PostCardDemo />
+        </Grid>
       </Grid>
     </Box>
   );

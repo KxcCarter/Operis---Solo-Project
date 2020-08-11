@@ -29,11 +29,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // GET a single project
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
-  const query = `SELECT "projects".*, array_agg("roles".role_name), array_agg("talent".name) AS talent, array_agg("tasks".description) AS tasks from "projects"
-  JOIN "tasks" ON "tasks".project_id = "projects".id
-  JOIN "project_roles" ON "project_roles".project_id = "projects".id
-  JOIN "talent" ON "talent".id = "project_roles".talent_id
-  JOIN "roles" ON "roles".id = "project_roles".role_id
+  const query = `SELECT "projects".title, "projects".description, "projects".image, "projects".is_completed, "projects".is_staffed, array_agg("roles".role_name) AS roles, array_agg("talent".name) AS talent, array_agg("tasks".description) AS tasks from "projects"
+  LEFT JOIN "tasks" ON "tasks".project_id = "projects".id
+  LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
+  LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
+  LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
   WHERE "projects".id = $1
   GROUP BY "projects".id;`;
 
