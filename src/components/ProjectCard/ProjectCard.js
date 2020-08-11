@@ -7,21 +7,26 @@ import { useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import { Box, Grid, Paper, Typography } from '@material-ui/core';
 
-const TestCard = (props) => {
-  const dispatch = useDispatch();
-  //   const fireDispatch = dispatch({ type: 'GET_PROJECTS' });
+const ProjectCard = (props) => {
+  //   const dispatch = useDispatch();
 
-  useEffect(dispatch({ type: 'GET_PROJECTS' }), []);
+  //   useEffect(() => {
+  //     dispatch({ type: 'GET_PROJECTS' });
+  //   }, []);
+
+  //   console.log(props.store.projects);
 
   return (
     <Box>
-      <Paper>
-        <Typography variant="h4">THIS IS THE TITLE</Typography>
-        <Typography variant="body1">THIS IS THE DESCRIPTION</Typography>
-        {/* <img src={blaBLAH} alt="THIS IS ALT TEXT"></img> */}
-        <Typography variant="subtitle1">THIS IS A NOTE</Typography>
-      </Paper>
+      <Grid item xs={6} sm={3}>
+        <Paper elevation={3}>
+          <Typography variant="h4">{props.title}</Typography>
+          <Typography variant="body1">{props.description}</Typography>
+          {/* <img src={blaBLAH} alt="THIS IS ALT TEXT"></img> */}
+          <Typography variant="subtitle1">{props.isCompleted}</Typography>
+        </Paper>
+      </Grid>
     </Box>
   );
 };
-export default connect(mapStoreToProps)(TestCard);
+export default connect(mapStoreToProps)(ProjectCard);
