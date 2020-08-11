@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux';
 // --- Components
 
 import ProjectCard from '../ProjectCard/ProjectCard';
+import PostCardDemo from '../ProjectCard/CoolerCard';
 // --- Material-UI
 import Container from '@material-ui/core/Container';
+
 import { Box, Grid, Paper } from '@material-ui/core';
 
 // this could also be written with destructuring parameters as:
@@ -39,6 +41,7 @@ const UserPage = (props) => {
       <Box>
         <Grid container spacing={3}>
           {projects}
+          <PostCardDemo />
         </Grid>
       </Box>
       <div>

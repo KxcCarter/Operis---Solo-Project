@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
+import TaskItem from '../TaskItem/TaskItem';
 
 const loremIpsum =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vehicula ac ipsum eu lobortis. Pellentesque semper dolor justo, in accumsan felis pharetra sit amet. Nunc commodo sagittis odio, in venenatis lacus iaculis eu. In condimentum sed ex nec faucibus. Pellentesque eget velit ornare massa semper tempor. Donec hendrerit mi sit amet lacinia ultricies. Aliquam augue diam, rhoncus ut pulvinar eget, commodo ac ex.';
@@ -32,19 +33,23 @@ const ProjectDetails = (props) => {
 
   return (
     <Grid container spacing={3}>
+      <Grid item md={9}>
+        <Typography variant="h4" align="center">
+          Title and Description
+        </Typography>
+      </Grid>
       <Grid item xs={6} sm={4}>
         <Box>
           <Paper elevation={3}>
             <img
               src="https://i.pinimg.com/564x/f0/5e/86/f05e865445d3a728165dd97234b76ab9.jpg"
-              alt="it's some alt text"
+              alt="He's Gonzo..."
             />
           </Paper>
         </Box>
       </Grid>
 
       <Grid item xs={6} sm={4}>
-        <Typography variant="h5">Title and Description</Typography>
         <Typography variant="body1">{loremIpsum}</Typography>
       </Grid>
       <Grid item xs={6} sm={4}>
@@ -54,22 +59,41 @@ const ProjectDetails = (props) => {
 
       <Grid item xs={12} sm container>
         <Grid item sm={12}>
-          <div className="row">
-            <Typography variant="h5">Tasks</Typography>
-            <Fab color="secondary">
-              <AddIcon />
-            </Fab>
-            <ButtonGroup variant="contained" color="primary">
-              <Button>Completed</Button>
-              <Button>Incomplete</Button>
-              <Button>Newest</Button>
-              <Button>Oldest</Button>
-            </ButtonGroup>
-          </div>
+          <Box m={2}>
+            <Box p={1} display="inline">
+              <Typography variant="h5" display="inline">
+                Tasks
+              </Typography>
+            </Box>
+            <Box p={1} display="inline">
+              <Fab size="small" color="secondary">
+                <AddIcon />
+              </Fab>
+            </Box>
+            <Box p={1} display="inline">
+              <ButtonGroup size="small" variant="contained" color="primary">
+                <Button>Completed</Button>
+                <Button>Incomplete</Button>
+                <Button>Newest</Button>
+                <Button>Oldest</Button>
+              </ButtonGroup>
+            </Box>
+          </Box>
+
+          <Typography variant="body1">{loremIpsum}</Typography>
+          <TaskItem />
+          {/* <TextField
+              id="standard-full-width"
+              style={{ margin: 8 }}
+              placeholder="New Task"
+              fullWidth
+              margin="normal"
+            /> */}
         </Grid>
       </Grid>
       <Grid item xs={12} sm={3}>
         <Typography variant="h5">Notes</Typography>
+
         <TextField
           id="outlined-multiline-static"
           multiline
