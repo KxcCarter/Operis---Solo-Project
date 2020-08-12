@@ -17,7 +17,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   pool
     .query(query, [user])
     .then((dbRes) => {
-      console.log(dbRes.rows);
       res.send(dbRes.rows);
     })
     .catch((err) => {
@@ -29,7 +28,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // GET a single project
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
-  const query = `SELECT "projects".title, "projects".description, "projects".image, "projects".is_completed, "projects".is_staffed, array_agg("roles".role_name) AS roles, array_agg("talent".name) AS talent, array_agg("tasks".description) AS tasks from "projects"
+  const query = `SELECT "projects".*, 
+                array_agg("roles".role_name) AS roles, array_agg("talent".name) AS talent, 
+                array_agg("tasks".description) AS tasks from "projects"
                 LEFT JOIN "tasks" ON "tasks".project_id = "projects".id
                 LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
                 LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
@@ -40,7 +41,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
   pool
     .query(query, [projectID])
     .then((dbRes) => {
-      console.log(dbRes.rows);
+      // console.log(dbRes.rows);
       res.send(dbRes.rows);
     })
     .catch((err) => {
@@ -67,6 +68,31 @@ router.post('/', (req, res) => {
     })
     .catch((err) => {
       console.log('ERROR creating project: ', err);
+      res.sendStatus(500);
+    });
+});
+
+// PUT
+// PUT update note
+router.put('/update/:id', (req, res) => {
+  const note = req.body.note;
+  console.log('req.body.note:', req.body.note);
+  const id = req.params.id;
+  console.log('params: ', req.params.id);
+  // const user = req.user.id;
+
+  const query = `UPDATE "projects"
+                  SET notes = $1
+                  WHERE "projects".id = $2`;
+
+  pool
+    .query(query, [note, id])
+    .then((dbRes) => {
+      console.log('Update note dbRes: ', dbRes);
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('ERROR with PUT: ', err);
       res.sendStatus(500);
     });
 });

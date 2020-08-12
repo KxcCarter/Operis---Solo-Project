@@ -5,6 +5,7 @@ import userSaga from './user.saga';
 import cardSaga from './getProjectCard.saga';
 import projectDetails from './projectDetails.saga';
 import newProject from './newProject.saga';
+import updateNote from './updateNote.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     cardSaga(),
     projectDetails(),
     newProject(),
+    updateNote(),
   ]);
 }

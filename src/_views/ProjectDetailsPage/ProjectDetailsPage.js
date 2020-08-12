@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 // --- Material-UI
 import {
@@ -21,20 +22,33 @@ import TaskBox from '../../components/TaskBox/TaskBox';
 // const UserPage = ({ user }) => (
 // and then instead of `props.user.username` you could use `user.username`
 const ProjectDetails = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { match } = props;
   const {
     store: { projectDetails },
   } = props;
 
-  const id = match.params.id;
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch({ type: 'GET_PROJECT_DETAILS', payload: id });
+    dispatch({ type: 'GET_PROJECT_DETAILS', payload: match.params.id });
   }, []);
 
-  console.table(projectDetails);
+  const [note, setNote] = useState(projectDetails.notes || '');
+
+  const clickBack = () => {
+    history.goBack();
+  };
+
+  const handleNote = (event) => {
+    setNote(event.target.value);
+  };
+
+  const saveNote = () => {
+    dispatch({
+      type: 'UPDATE_NOTE',
+      payload: { note: note, id: projectDetails.id },
+    });
+  };
 
   return (
     <>
@@ -42,7 +56,11 @@ const ProjectDetails = (props) => {
       {projectDetails.title && (
         <Grid container spacing={3}>
           <Grid item sm={2}>
-            <Button variant="contained" startIcon={<ArrowBackIcon />}></Button>
+            <Button
+              variant="contained"
+              startIcon={<ArrowBackIcon />}
+              onClick={clickBack}
+            ></Button>
           </Grid>
           <Grid item md={9}>
             <Typography variant="h4" align="center">
@@ -72,22 +90,37 @@ const ProjectDetails = (props) => {
             </ul>
           </Grid>
           <br></br>
-
-          <TaskBox taskData={projectDetails.tasks} />
+          <Grid item sm={9}>
+            <TaskBox taskData={projectDetails.tasks} />
+          </Grid>
 
           {/* Notes Widget Container */}
           <Grid item xs={12} sm={3}>
             <Paper elevation={3}>
               <Box m={0.5} p={0.5} pb={1.5}>
-                <Box mb={3} pt={1}>
-                  <Typography variant="h6">Notes</Typography>
+                <Box m={1}>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <Typography variant="h6">Notes</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        onClick={saveNote}
+                      >
+                        save
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Box>
                 <TextField
                   id="outlined-multiline-static"
                   multiline
                   rows={8}
-                  defaultValue="jot down a quick note!"
+                  defaultValue={note}
                   variant="outlined"
+                  onChange={handleNote}
                 />
               </Box>
             </Paper>

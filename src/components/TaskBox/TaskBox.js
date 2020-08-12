@@ -25,42 +25,37 @@ function TaskBox(props) {
   });
 
   return (
-    <Grid item xs={12} sm container spacing={1}>
-      <Box m={2}>
-        <Paper>
-          {/* Taskbar Control Row */}
-          <Grid item sm={12}>
-            <Box align="center" m={2} pt={1}>
-              <Box p={1} display="inline">
-                <Typography variant="h5" display="inline">
-                  Tasks
-                </Typography>
-              </Box>
-              <Box p={1} display="inline">
-                <Fab size="small" color="secondary">
-                  <AddIcon />
-                </Fab>
-              </Box>
-              <Box p={1} display="inline">
-                <ButtonGroup size="small" variant="contained" color="primary">
-                  <Button>Completed</Button>
-                  <Button>Incomplete</Button>
-                  <Button>Newest</Button>
-                  <Button>Oldest</Button>
-                </ButtonGroup>
-              </Box>
+    <Box m={2}>
+      <Paper>
+        {/* Taskbar Control Row */}
+        <Grid item sm={12}>
+          <Box align="center" m={2} pt={1}>
+            <Box p={1} display="inline">
+              <Typography variant="h5" display="inline">
+                Tasks
+              </Typography>
             </Box>
-          </Grid>
-          <Box p={1}>
-            {/* Task Items */}
-            {taskList}
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
+            <Box p={1} display="inline">
+              <Fab size="small" color="secondary">
+                <AddIcon />
+              </Fab>
+            </Box>
+            <Box p={1} display="inline">
+              <ButtonGroup size="small" variant="contained" color="primary">
+                <Button>Completed</Button>
+                <Button>Incomplete</Button>
+                <Button>Newest</Button>
+                <Button>Oldest</Button>
+              </ButtonGroup>
+            </Box>
           </Box>
-        </Paper>
-      </Box>
-    </Grid>
+        </Grid>
+        <Box p={1}>
+          {/* Task Items */}
+          {taskList}
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 
