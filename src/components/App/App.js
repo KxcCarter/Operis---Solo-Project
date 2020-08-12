@@ -13,15 +13,15 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 // --- Pages
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import ProjectDetails from '../ProjectDetailsPage/ProjectDetailsPage';
+import AboutPage from '../../_views/AboutPage/AboutPage';
+import UserPage from '../../_views/UserPage/UserPage';
+import InfoPage from '../../_views/InfoPage/InfoPage';
+import LandingPage from '../../_views/LandingPage/LandingPage';
+import LoginPage from '../../_views/LoginPage/LoginPage';
+import RegisterPage from '../../_views/RegisterPage/RegisterPage';
+import ProjectDetails from '../../_views/ProjectDetailsPage/ProjectDetailsPage';
 import ProjectList from '../ProjectList/ProjectList';
-import NewProject from '../NewProject/NewProject';
+import NewProject from '../../_views/NewProject/NewProject';
 
 import './App.css';
 import { Container } from '@material-ui/core';

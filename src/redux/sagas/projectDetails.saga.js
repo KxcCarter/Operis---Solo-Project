@@ -3,6 +3,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* getProjectDetails(action) {
   try {
+    console.log('ID of the project we are requesting: ', action.payload);
     const response = yield axios.get(`/api/operis/${action.payload}`);
     yield put({
       type: 'SET_PROJECT_DETAILS',

@@ -18,6 +18,12 @@ import TaskItem from '../TaskItem/TaskItem';
 function TaskBox(props) {
   const [state, setState] = useState('Functional Component');
 
+  console.log(props.taskData);
+
+  const taskList = props.taskData.map((item, index) => {
+    return <TaskItem key={index} taskContent={item} />;
+  });
+
   return (
     <Grid item xs={12} sm container spacing={1}>
       <Box m={2}>
@@ -47,7 +53,7 @@ function TaskBox(props) {
           </Grid>
           <Box p={1}>
             {/* Task Items */}
-
+            {taskList}
             <TaskItem />
             <TaskItem />
             <TaskItem />

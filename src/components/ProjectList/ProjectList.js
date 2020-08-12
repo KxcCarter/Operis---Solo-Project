@@ -9,7 +9,7 @@ import ProjectCard from '../ProjectCard/ProjectCard';
 import PostCardDemo from '../ProjectCard/CoolerCard';
 // --- Material-UI
 
-import { Box, Grid, Paper } from '@material-ui/core';
+import { Box, Grid, CircularProgress } from '@material-ui/core';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -42,18 +42,22 @@ const ProjectList = (props) => {
 
   return (
     <Box>
-      <Grid container spacing={3}>
-        {projects}
-        <Grid item md={4}>
-          <PostCardDemo />
+      {!props.store.projects[0] ? (
+        <CircularProgress />
+      ) : (
+        <Grid container spacing={3}>
+          {projects}
+          <Grid item md={4}>
+            <PostCardDemo />
+          </Grid>
+          <Grid item md={4}>
+            <PostCardDemo />
+          </Grid>
+          <Grid item md={4}>
+            <PostCardDemo />
+          </Grid>
         </Grid>
-        <Grid item md={4}>
-          <PostCardDemo />
-        </Grid>
-        <Grid item md={4}>
-          <PostCardDemo />
-        </Grid>
-      </Grid>
+      )}
     </Box>
   );
 };

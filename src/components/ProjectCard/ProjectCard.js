@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useHistory } from 'react-router-dom';
 
 // --- Material-UI
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { Box, Grid, Paper, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({

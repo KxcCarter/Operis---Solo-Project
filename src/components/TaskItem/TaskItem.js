@@ -12,13 +12,10 @@ import { Typography, Button, Box, Grid, Paper } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
-export default function TaskItem() {
-  const loremIpsum =
-    'Pellentesque eget velit ornare massa semper tempor. Donec hendrerit mi sit amet lacinia ultricies. Aliquam augue diam, rhoncus ut pulvinar eget, commodo ac ex.';
-
+export default function TaskItem(props) {
   const [taskState, setTaskState] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [taskData, setTaskData] = useState(loremIpsum);
+  const [taskData, setTaskData] = useState(props.taskContent);
 
   const handleOptions = (event) => {
     setTaskState(event.target.value);
@@ -28,7 +25,7 @@ export default function TaskItem() {
     setEditMode(!editMode);
   };
 
-  const handleTaskData = (event) => {
+  const handleChange = (event) => {
     setTaskData(event.target.value);
   };
 
@@ -63,7 +60,7 @@ export default function TaskItem() {
                 multiline
                 rows={4}
                 value={taskData}
-                onChange={handleTaskData}
+                onChange={handleChange}
               />
             )}
           </Paper>
