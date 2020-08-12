@@ -30,12 +30,12 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
   const query = `SELECT "projects".title, "projects".description, "projects".image, "projects".is_completed, "projects".is_staffed, array_agg("roles".role_name) AS roles, array_agg("talent".name) AS talent, array_agg("tasks".description) AS tasks from "projects"
-  LEFT JOIN "tasks" ON "tasks".project_id = "projects".id
-  LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
-  LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
-  LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
-  WHERE "projects".id = $1
-  GROUP BY "projects".id;`;
+                LEFT JOIN "tasks" ON "tasks".project_id = "projects".id
+                LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
+                LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
+                LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
+                WHERE "projects".id = $1
+                GROUP BY "projects".id;`;
 
   pool
     .query(query, [projectID])
@@ -57,11 +57,10 @@ router.post('/', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const image = req.body.image;
-  const notes = req.body.notes;
-  const query = `INSERT INTO projects (user_id, title, description, image, notes) VALUES ($1, $2, $3, $4, $5);`;
+  const query = `INSERT INTO projects (user_id, title, description, image) VALUES ($1, $2, $3, $4);`;
 
   pool
-    .query(query, [user, title, description, image, notes])
+    .query(query, [user, title, description, image])
     .then((dbRes) => {
       console.log(dbRes);
       res.sendStatus(201);

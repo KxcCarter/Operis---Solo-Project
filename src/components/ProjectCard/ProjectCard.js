@@ -58,9 +58,9 @@ const ProjectCard = (props) => {
               <img src={props.image} alt="THIS IS ALT TEXT! WOW!"></img>
             </Box> */}
 
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justify="space-between">
             <Grid item sm={8}>
-              <Box ml={2}>
+              <Box ml={1}>
                 <Typography variant="subtitle1">
                   {toString(props.isCompleted)}
                 </Typography>
@@ -69,7 +69,7 @@ const ProjectCard = (props) => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item sm={4}>
+            <Grid item sm={3}>
               <Button size="small" variant="contained" onClick={handleClick}>
                 Open Project
               </Button>

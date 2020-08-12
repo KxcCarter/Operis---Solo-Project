@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ProjectDetails from '../ProjectDetailsPage/ProjectDetailsPage';
 import ProjectList from '../ProjectList/ProjectList';
+import NewProject from '../NewProject/NewProject';
 
 import './App.css';
 import { Container } from '@material-ui/core';
@@ -76,6 +77,7 @@ class App extends Component {
             />
 
             <ProtectedRoute exact path="/projects" component={ProjectList} />
+            <ProtectedRoute exact path="/new" component={NewProject} />
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

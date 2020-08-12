@@ -34,7 +34,7 @@ export default function TaskItem() {
 
   return (
     <Box mt={2}>
-      <Grid container spacing={0}>
+      <Grid container spacing={1} justify="space-around">
         <Grid item md={1}>
           <Select
             native
@@ -56,17 +56,15 @@ export default function TaskItem() {
                 <Typography variant="body1">{taskData}</Typography>
               </Box>
             ) : (
-              <>
-                <TextField
-                  id="standard-full-width"
-                  style={{ margin: 8 }}
-                  placeholder="New Task"
-                  fullWidth
-                  margin="dense"
-                  value={taskData}
-                  onChange={handleTaskData}
-                />
-              </>
+              <TextField
+                style={{ margin: 8 }}
+                placeholder="New Task"
+                fullWidth
+                multiline
+                rows={4}
+                value={taskData}
+                onChange={handleTaskData}
+              />
             )}
           </Paper>
         </Grid>
