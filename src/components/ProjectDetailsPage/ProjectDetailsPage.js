@@ -13,20 +13,27 @@ import TaskBox from '../TaskBox/TaskBox';
 const loremIpsum =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vehicula ac ipsum eu lobortis. Pellentesque semper dolor justo, in accumsan felis pharetra sit amet. Nunc commodo sagittis odio, in venenatis lacus iaculis eu. In condimentum sed ex nec faucibus. Pellentesque eget velit ornare massa semper tempor. Donec hendrerit mi sit amet lacinia ultricies. Aliquam augue diam, rhoncus ut pulvinar eget, commodo ac ex.';
 
+// this could also be written with destructuring parameters as:
+// const UserPage = ({ user }) => (
+// and then instead of `props.user.username` you could use `user.username`
 const ProjectDetails = (props) => {
-  //   const dispatch = useDispatch();
+  const {
+    match: { params },
+  } = props;
 
-  //   useEffect(() => {
-  //     dispatch({ type: 'GET_PROJECTS' });
-  //   }, []);
+  const dispatch = useDispatch();
 
-  //   console.log(props.store.projects);
+  useEffect(() => {
+    dispatch({ type: 'GET_PROJECT_DETAILS', payload: params.id });
+  }, []);
+
+  console.log('Loging props.store:', props.store);
 
   return (
     <Grid container spacing={3}>
       <Grid item md={9}>
         <Typography variant="h4" align="center">
-          Title and Description
+          blaaa
         </Typography>
       </Grid>
       <Grid item xs={6} sm={4}>

@@ -1,5 +1,5 @@
 const defaultState = { roles: [], talent: [], tasks: [] };
-const projects = (state = defaultState, action) => {
+const projectDetails = (state = defaultState, action) => {
   switch (action.type) {
     case 'SET_PROJECT_DETAILS':
       return action.payload;
@@ -8,4 +8,4 @@ const projects = (state = defaultState, action) => {
   }
 };
 
-export default projects;
+export default projectDetails;

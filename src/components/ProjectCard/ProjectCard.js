@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useHistory } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ const ProjectCard = (props) => {
   const history = useHistory();
 
   const handleClick = () => {
-    history.push(`/projects/${props.id}`);
+    history.push(`/projectDetails/${props.id}`);
   };
 
   return (
