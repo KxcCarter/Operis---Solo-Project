@@ -30,6 +30,8 @@ const NewProject = (props) => {
     image: tempIMG,
   });
 
+  const dispatch = useDispatch();
+
   const handleChange = (fieldKey) => (event) => {
     setProjectDetails({
       ...projectDetails,
@@ -40,6 +42,7 @@ const NewProject = (props) => {
 
   const handleSubmit = () => {
     console.log(projectDetails);
+    dispatch({ type: 'CREATE_NEW_PROJECT', payload: projectDetails });
   };
 
   return (
@@ -54,16 +57,19 @@ const NewProject = (props) => {
           onChange={handleChange('title')}
         />
       </Grid>
-      <Grid item sm={3}>
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          onClick={handleSubmit}
-        >
-          save
-        </Button>
-      </Grid>
+
+      {projectDetails.title && (
+        <Grid item sm={3}>
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={handleSubmit}
+          >
+            save
+          </Button>
+        </Grid>
+      )}
       <Grid item xs={6} sm={4}>
         <Paper elevation={5}>
           <Box m={0.7} p={0.3}>
@@ -84,6 +90,7 @@ const NewProject = (props) => {
           onChange={handleChange('description')}
         />
       </Grid>
+
       <Grid item xs={6} sm={3}>
         <Typography variant="h5">Crew List</Typography>
         <ul>
