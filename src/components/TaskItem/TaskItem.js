@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
@@ -24,6 +24,10 @@ export default function TaskItem(props) {
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
+
+  // useEffect(() => {
+
+  // }, []);
 
   const handleChange = (event) => {
     setTaskData(event.target.value);
@@ -59,7 +63,7 @@ export default function TaskItem(props) {
                 fullWidth
                 multiline
                 rows={4}
-                value={taskData}
+                defaultValue={taskData}
                 onChange={handleChange}
               />
             )}

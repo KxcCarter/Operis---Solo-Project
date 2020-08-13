@@ -18,11 +18,15 @@ import TaskItem from '../TaskItem/TaskItem';
 function TaskBox(props) {
   const [state, setState] = useState('Functional Component');
 
-  console.log(props.taskData);
+  console.table(props.taskData);
 
   const taskList = props.taskData.map((item, index) => {
     return <TaskItem key={index} taskContent={item} />;
   });
+
+  const handleAddTask = () => {
+    console.log('We bout to add a new one!');
+  };
 
   return (
     <Box m={2}>
@@ -36,7 +40,7 @@ function TaskBox(props) {
               </Typography>
             </Box>
             <Box p={1} display="inline">
-              <Fab size="small" color="secondary">
+              <Fab size="small" color="secondary" onClick={handleAddTask}>
                 <AddIcon />
               </Fab>
             </Box>
