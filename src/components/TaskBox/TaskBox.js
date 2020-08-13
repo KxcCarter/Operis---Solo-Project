@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import NewTaskModal from '../NewTaskModal/NewTaskModal';
 
 // --- Material-UI
 import {
@@ -25,6 +26,10 @@ function TaskBox(props) {
   });
 
   const handleAddTask = () => {
+    //  {
+    //     task: '',
+    //     id: '',
+    // }
     console.log('We bout to add a new one!');
   };
 
@@ -40,9 +45,7 @@ function TaskBox(props) {
               </Typography>
             </Box>
             <Box p={1} display="inline">
-              <Fab size="small" color="secondary" onClick={handleAddTask}>
-                <AddIcon />
-              </Fab>
+              <NewTaskModal />
             </Box>
             <Box p={1} display="inline">
               <ButtonGroup size="small" variant="contained" color="primary">

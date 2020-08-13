@@ -72,6 +72,25 @@ router.post('/', (req, res) => {
     });
 });
 
+//
+// POST new task
+router.post('/newTask', (req, res) => {
+  const task = req.body.task;
+  const id = req.body.id;
+
+  const query = `INSERT INTO tasks (project_id, description)
+                VALUES ($2, $1);`;
+  pool
+    .query(query, [task, id])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error POSTing new note: ', err);
+      res.sendStatus(500);
+    });
+});
+
 // PUT
 // PUT update note
 router.put('/update/:id', (req, res) => {
