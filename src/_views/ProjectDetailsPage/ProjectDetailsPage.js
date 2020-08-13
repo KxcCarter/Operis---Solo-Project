@@ -29,14 +29,16 @@ const ProjectDetails = (props) => {
     store: { projectDetails },
   } = props;
 
+  // GET project details on render
   useEffect(() => {
     dispatch({ type: 'GET_PROJECT_DETAILS', payload: match.params.id });
   }, []);
 
-  const [note, setNote] = useState(projectDetails.notes || '');
+  const [note, setNote] = useState(projectDetails.notes);
 
   const clickBack = () => {
-    history.goBack();
+    // history.goBack();
+    history.push('/projects');
   };
 
   const handleNote = (event) => {
@@ -52,8 +54,8 @@ const ProjectDetails = (props) => {
 
   return (
     <>
-      {!projectDetails.title && <CircularProgress />}
-      {projectDetails.title && (
+      {!projectDetails.id && <CircularProgress />}
+      {projectDetails.id == match.params.id && (
         <Grid container spacing={3}>
           <Grid item sm={2}>
             <Button
@@ -118,7 +120,7 @@ const ProjectDetails = (props) => {
                   id="outlined-multiline-static"
                   multiline
                   rows={8}
-                  defaultValue={note}
+                  defaultValue={projectDetails.notes}
                   variant="outlined"
                   onChange={handleNote}
                 />

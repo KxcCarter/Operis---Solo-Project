@@ -21,8 +21,6 @@ const ProjectList = (props) => {
     dispatch({ type: 'GET_PROJECTS' });
   }, []);
 
-  const goToProject = () => {};
-
   const projects = props.store.projects.map((item, index) => {
     return (
       <Grid item md={4}>
@@ -34,7 +32,6 @@ const ProjectList = (props) => {
           isStaffed={item.is_staffed}
           id={item.id}
           key={item.id}
-          onClick={goToProject}
         />
       </Grid>
     );
