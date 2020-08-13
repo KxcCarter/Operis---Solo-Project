@@ -29,6 +29,7 @@ function TaskItem(props) {
   const handleChange = (event) => {
     setTaskData(event.target.value);
   };
+
   const handleSave = () => {
     console.log(props);
     dispatch({

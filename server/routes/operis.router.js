@@ -28,17 +28,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // GET a single project
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
-  const query = `SELECT "projects".*, array_agg(DISTINCT "roles".role_name) AS roles, 
-              array_agg(DISTINCT "talent".name) AS talent, array_agg(DISTINCT "tasks".id) AS taskID, 
-              array_agg(DISTINCT "tasks".description) AS tasks from "projects"
-              LEFT JOIN "tasks" ON "tasks".project_id = "projects".id
-              LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
-              LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
-              LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
-              WHERE "projects".id = $1
-              GROUP BY "projects".id;`;
 
-  const queryTEST = `SELECT "projects".*, array_agg(DISTINCT "roles".role_name) AS roles, 
+  const query = `SELECT "projects".*, array_agg(DISTINCT "roles".role_name) AS roles, 
                   array_agg(DISTINCT "talent".name) AS talent from "projects"
                   LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
                   LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
@@ -47,7 +38,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
                   GROUP BY "projects".id;`;
 
   pool
-    .query(queryTEST, [projectID])
+    .query(query, [projectID])
     .then((dbRes) => {
       res.send(dbRes.rows);
     })
@@ -119,9 +110,7 @@ router.post('/newTask', (req, res) => {
 // PUT update note
 router.put('/updateNote/:id', (req, res) => {
   const note = req.body.note;
-  console.log('req.body.note:', req.body.note);
   const id = req.params.id;
-  console.log('params: ', req.params.id);
   // const user = req.user.id;
 
   const query = `UPDATE "projects"
@@ -145,10 +134,9 @@ router.put('/updateNote/:id', (req, res) => {
 router.put('/updateTask/:id', (req, res) => {
   const note = req.body.task;
   const id = req.params.id;
-
   const query = `UPDATE "tasks"
                   SET description = $1
-                  WHERE "tasks".project_id = $2`;
+                  WHERE "tasks".id = $2`;
   pool
     .query(query, [note, id])
     .then((dbRes) => {
