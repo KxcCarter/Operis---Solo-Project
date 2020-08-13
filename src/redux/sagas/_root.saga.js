@@ -6,7 +6,9 @@ import cardSaga from './getProjectCard.saga';
 import projectDetails from './projectDetails.saga';
 import newProject from './newProject.saga';
 import updateNote from './updateNote.saga';
+import updateTask from './updateTask.saga';
 import newTask from './newTask.saga';
+import cardTasksSaga from './getTasks.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -25,5 +27,7 @@ export default function* rootSaga() {
     newProject(),
     newTask(),
     updateNote(),
+    updateTask(),
+    cardTasksSaga(),
   ]);
 }

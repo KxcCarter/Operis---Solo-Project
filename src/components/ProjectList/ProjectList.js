@@ -31,7 +31,7 @@ const ProjectList = (props) => {
           isCompleted={item.is_completed}
           isStaffed={item.is_staffed}
           id={item.id}
-          key={item.id}
+          key={index}
         />
       </Grid>
     );

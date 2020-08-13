@@ -38,14 +38,38 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
               WHERE "projects".id = $1
               GROUP BY "projects".id;`;
 
+  const queryTEST = `SELECT "projects".*, array_agg(DISTINCT "roles".role_name) AS roles, 
+                  array_agg(DISTINCT "talent".name) AS talent from "projects"
+                  LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
+                  LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
+                  LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
+                  WHERE "projects".id = $1
+                  GROUP BY "projects".id;`;
+
   pool
-    .query(query, [projectID])
+    .query(queryTEST, [projectID])
     .then((dbRes) => {
-      // console.log(dbRes.rows);
       res.send(dbRes.rows);
     })
     .catch((err) => {
       console.log('ERROR in GET: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// GET tasks belonging to a project
+router.get('/tasks/:id', rejectUnauthenticated, (req, res) => {
+  const projectID = req.params.id;
+  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1;`;
+
+  pool
+    .query(query, [projectID])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('Error GETTING project tasks: ', err);
       res.sendStatus(500);
     });
 });
@@ -93,7 +117,7 @@ router.post('/newTask', (req, res) => {
 
 // PUT
 // PUT update note
-router.put('/update/:id', (req, res) => {
+router.put('/updateNote/:id', (req, res) => {
   const note = req.body.note;
   console.log('req.body.note:', req.body.note);
   const id = req.params.id;
@@ -111,7 +135,28 @@ router.put('/update/:id', (req, res) => {
       res.sendStatus(201);
     })
     .catch((err) => {
-      console.log('ERROR with PUT: ', err);
+      console.log('ERROR with PUT for note: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// PUT update task
+router.put('/updateTask/:id', (req, res) => {
+  const note = req.body.task;
+  const id = req.params.id;
+
+  const query = `UPDATE "tasks"
+                  SET description = $1
+                  WHERE "tasks".project_id = $2`;
+  pool
+    .query(query, [note, id])
+    .then((dbRes) => {
+      console.log('Update task dbRes: ', dbRes);
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('ERROR with PUT for task: ', err);
       res.sendStatus(500);
     });
 });

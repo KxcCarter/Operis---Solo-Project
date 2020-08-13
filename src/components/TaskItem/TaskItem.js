@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // --- Material-UI
@@ -12,10 +12,11 @@ import { Typography, Button, Box, Grid, Paper } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
-export default function TaskItem(props) {
+function TaskItem(props) {
   const [taskState, setTaskState] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [taskData, setTaskData] = useState(props.taskContent);
+  const dispatch = useDispatch();
 
   const handleOptions = (event) => {
     setTaskState(event.target.value);
@@ -25,12 +26,16 @@ export default function TaskItem(props) {
     setEditMode(!editMode);
   };
 
-  // useEffect(() => {
-
-  // }, []);
-
   const handleChange = (event) => {
     setTaskData(event.target.value);
+  };
+  const handleSave = () => {
+    console.log(props);
+    dispatch({
+      type: 'UPDATE_TASK',
+      payload: { task: taskData, id: props.id },
+    });
+    toggleEditMode();
   };
 
   return (
@@ -70,7 +75,11 @@ export default function TaskItem(props) {
           </Paper>
         </Grid>
         <Grid item md={1}>
-          <Button size="small" variant="text" onClick={toggleEditMode}>
+          <Button
+            size="small"
+            variant="text"
+            onClick={!editMode ? toggleEditMode : handleSave}
+          >
             {!editMode ? <EditIcon /> : <SaveAltIcon />}
           </Button>
         </Grid>
@@ -78,3 +87,5 @@ export default function TaskItem(props) {
     </Box>
   );
 }
+
+export default connect(mapStoreToProps)(TaskItem);

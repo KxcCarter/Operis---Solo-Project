@@ -34,6 +34,8 @@ const ProjectDetails = (props) => {
     dispatch({ type: 'GET_PROJECT_DETAILS', payload: match.params.id });
   }, []);
 
+  // ***
+  // TODO: Componentize note section
   const [note, setNote] = useState(projectDetails.notes);
 
   const clickBack = () => {
@@ -92,8 +94,10 @@ const ProjectDetails = (props) => {
             </ul>
           </Grid>
           <br></br>
+
+          {/* Task Box */}
           <Grid item sm={9}>
-            <TaskBox taskData={projectDetails.tasks} />
+            <TaskBox taskData={projectDetails.tasks} pID={projectDetails.id} />
           </Grid>
 
           {/* Notes Widget Container */}

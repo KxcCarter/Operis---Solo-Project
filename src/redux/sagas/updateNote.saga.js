@@ -5,7 +5,10 @@ function* sendUpdateNote(action) {
   try {
     console.log(action.payload);
     // Calls to the appropriate server route sending id and ntoe data.
-    yield axios.put(`api/operis/update/${action.payload.id}`, action.payload);
+    yield axios.put(
+      `api/operis/updateNote/${action.payload.id}`,
+      action.payload
+    );
     // Calls to server to get new data for all projects.
     // const response = yield axios.get('/api/operis');
     // yield put({

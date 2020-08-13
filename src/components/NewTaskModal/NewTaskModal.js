@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import mapStoreToProps from '../../redux/mapStoreToProps';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Box,
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Modal,
-  TextField,
-  Fab,
-} from '@material-ui/core';
+import { Typography, Button, Modal, TextField, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 function getModalStyle() {
@@ -34,12 +27,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewTaskModal() {
+function NewTaskModal(props) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
+  const dispatch = useDispatch();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [task, setTask] = useState('');
+
+  const {
+    store: { projectDetails },
+  } = props;
 
   const handleOpen = () => {
     setOpen(true);
@@ -54,7 +51,10 @@ export default function NewTaskModal() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(task);
+    dispatch({
+      type: 'CREATE_NEW_TASK',
+      payload: { task: task, id: projectDetails.id },
+    });
     handleClose();
   };
 
@@ -100,3 +100,5 @@ export default function NewTaskModal() {
     </>
   );
 }
+
+export default connect(mapStoreToProps)(NewTaskModal);

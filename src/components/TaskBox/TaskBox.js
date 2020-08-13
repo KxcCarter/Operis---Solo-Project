@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import NewTaskModal from '../NewTaskModal/NewTaskModal';
+import TaskItem from '../TaskItem/TaskItem';
 
 // --- Material-UI
 import {
@@ -11,58 +12,62 @@ import {
   Typography,
   ButtonGroup,
   Button,
-  Fab,
+  CircularProgress,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import TaskItem from '../TaskItem/TaskItem';
 
 function TaskBox(props) {
   const [state, setState] = useState('Functional Component');
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: 'GET_PROJECT_TASKS', payload: props.pID });
+  }, []);
 
-  console.table(props.taskData);
+  const {
+    store: { projectTasks },
+  } = props;
 
-  const taskList = props.taskData.map((item, index) => {
-    return <TaskItem key={index} taskContent={item} />;
+  // console.table(projectDetails.tasks);
+  // console.log(props.pID);
+
+  const taskList = projectTasks.map((item, index) => {
+    return <TaskItem key={index} id={item.id} taskContent={item.description} />;
   });
 
-  const handleAddTask = () => {
-    //  {
-    //     task: '',
-    //     id: '',
-    // }
-    console.log('We bout to add a new one!');
-  };
-
   return (
-    <Box m={2}>
-      <Paper>
-        {/* Taskbar Control Row */}
-        <Grid item sm={12}>
-          <Box align="center" m={2} pt={1}>
-            <Box p={1} display="inline">
-              <Typography variant="h5" display="inline">
-                Tasks
-              </Typography>
+    <>
+      {!projectTasks[0] && <CircularProgress />}
+      {projectTasks && (
+        <Box m={2}>
+          <Paper>
+            {/* Taskbar Control Row */}
+            <Grid item sm={12}>
+              <Box align="center" m={2} pt={1}>
+                <Box p={1} display="inline">
+                  <Typography variant="h5" display="inline">
+                    Tasks
+                  </Typography>
+                </Box>
+                <Box p={1} display="inline">
+                  <NewTaskModal />
+                </Box>
+                <Box p={1} display="inline">
+                  <ButtonGroup size="small" variant="contained" color="primary">
+                    <Button>Completed</Button>
+                    <Button>Incomplete</Button>
+                    <Button>Newest</Button>
+                    <Button>Oldest</Button>
+                  </ButtonGroup>
+                </Box>
+              </Box>
+            </Grid>
+            <Box p={1}>
+              {/* Task Items */}
+              {taskList}
             </Box>
-            <Box p={1} display="inline">
-              <NewTaskModal />
-            </Box>
-            <Box p={1} display="inline">
-              <ButtonGroup size="small" variant="contained" color="primary">
-                <Button>Completed</Button>
-                <Button>Incomplete</Button>
-                <Button>Newest</Button>
-                <Button>Oldest</Button>
-              </ButtonGroup>
-            </Box>
-          </Box>
-        </Grid>
-        <Box p={1}>
-          {/* Task Items */}
-          {taskList}
+          </Paper>
         </Box>
-      </Paper>
-    </Box>
+      )}
+    </>
   );
 }
 
