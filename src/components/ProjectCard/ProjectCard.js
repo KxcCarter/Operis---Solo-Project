@@ -1,12 +1,25 @@
-import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import React from 'react';
+// from 'Cooler Card' - trying to get the cool mouseover action
+import cx from 'clsx';
+import { useSoftRiseShadowStyles } from '@mui-treasury/styles/shadow/softRise';
+
+//
+import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useHistory } from 'react-router-dom';
 
 // --- Material-UI
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Box, Grid, Paper, Typography, Button } from '@material-ui/core';
+import {
+  Box,
+  Grid,
+  Paper,
+  Typography,
+  Button,
+  CircularProgress,
+} from '@material-ui/core';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -33,51 +46,65 @@ const useStyles = makeStyles(() => ({
 const ProjectCard = (props) => {
   const cardStyles = useStyles();
   const history = useHistory();
+  // This causes the little lift on hover, but it disables the card elevation look.
+  const shadowStyles = useSoftRiseShadowStyles();
+  //
 
   const handleClick = () => {
     history.push(`/projectDetails/${props.id}`);
   };
 
+  const statusYes = '#00a819';
+  const statusNo = '#b60c0c';
+
   return (
-    <div className="clickableContainer">
-      <Paper elevation={3}>
-        <Box className={cardStyles.card}>
+    <>
+      {!props.id && <CircularProgress />}
+      {props.id && (
+        <Paper
+          variant="outlined"
+          elevation={3}
+          className={cx(cardStyles.card, shadowStyles.root)}
+        >
           <Typography variant="h5">{props.title}</Typography>
           <Grid container>
             <Grid item sm={6} className={cardStyles.cells}>
-              <img src={props.image} alt="THIS IS ALT TEXT! WOW!"></img>
+              <img src={props.image} alt={props.title}></img>
             </Grid>
             <Grid item sm={6} className={cardStyles.cells}>
               <Typography variant="body1">{props.description}</Typography>
             </Grid>
           </Grid>
 
-          {/* <Typography variant="h4">{props.title}</Typography>
-            <Typography variant="body1">{props.description}</Typography>
-            <Box className={cardStyles.image}>
-              <img src={props.image} alt="THIS IS ALT TEXT! WOW!"></img>
-            </Box> */}
-
-          <Grid container spacing={3} justify="space-between">
+          <Grid container spacing={3}>
             <Grid item sm={8}>
-              <Box ml={1}>
+              <Box>
                 <Typography variant="subtitle1">
-                  {toString(props.isCompleted)}
+                  <FiberManualRecordIcon
+                    fontSize="small"
+                    htmlColor={props.isCompleted ? statusYes : statusNo}
+                  />
+                  Completion Status
                 </Typography>
+
                 <Typography variant="subtitle1">
-                  {toString(props.isStaffed)}
+                  <FiberManualRecordIcon
+                    fontSize="small"
+                    htmlColor={props.isStaffed ? statusYes : statusNo}
+                  />
+                  Staffing Status
                 </Typography>
               </Box>
             </Grid>
             <Grid item sm={3}>
-              <Button size="small" variant="contained" onClick={handleClick}>
-                Open Project
+              <Button variant="text" onClick={handleClick}>
+                <OpenInNewIcon fontSize="large" />
               </Button>
             </Grid>
           </Grid>
-        </Box>
-      </Paper>
-    </div>
+        </Paper>
+      )}
+    </>
   );
 };
 export default connect(mapStoreToProps)(ProjectCard);

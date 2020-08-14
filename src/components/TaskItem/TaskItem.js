@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // --- Material-UI
@@ -12,13 +12,11 @@ import { Typography, Button, Box, Grid, Paper } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
-export default function TaskItem() {
-  const loremIpsum =
-    'Pellentesque eget velit ornare massa semper tempor. Donec hendrerit mi sit amet lacinia ultricies. Aliquam augue diam, rhoncus ut pulvinar eget, commodo ac ex.';
-
+function TaskItem(props) {
   const [taskState, setTaskState] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [taskData, setTaskData] = useState(loremIpsum);
+  const [taskData, setTaskData] = useState(props.taskContent);
+  const dispatch = useDispatch();
 
   const handleOptions = (event) => {
     setTaskState(event.target.value);
@@ -28,28 +26,39 @@ export default function TaskItem() {
     setEditMode(!editMode);
   };
 
-  const handleTaskData = (event) => {
+  const handleChange = (event) => {
     setTaskData(event.target.value);
+  };
+
+  const handleSave = () => {
+    console.log(props);
+    dispatch({
+      type: 'UPDATE_TASK',
+      payload: { task: taskData, id: props.id },
+    });
+    toggleEditMode();
   };
 
   return (
     <Box mt={2}>
-      <Grid container spacing={1} justify="space-around">
-        <Grid item md={1}>
+      <Grid container>
+        <Grid item sm={2}>
           <Select
             native
             value={taskState}
             variant="standard"
             onChange={handleOptions}
           >
-            <option aria-label="None" value="" />
+            <option aria-label="None" value="" disabled>
+              options
+            </option>
             <option value="complete">Complete</option>
             <option value="incomplete">Incomplete</option>
             <option value="remove">Delete</option>
           </Select>
         </Grid>
 
-        <Grid item md={10}>
+        <Grid item sm={9}>
           <Paper elevation={2}>
             {!editMode ? (
               <Box m={1}>
@@ -62,14 +71,18 @@ export default function TaskItem() {
                 fullWidth
                 multiline
                 rows={4}
-                value={taskData}
-                onChange={handleTaskData}
+                defaultValue={taskData}
+                onChange={handleChange}
               />
             )}
           </Paper>
         </Grid>
-        <Grid item md={1}>
-          <Button size="small" variant="text" onClick={toggleEditMode}>
+        <Grid item sm={1}>
+          <Button
+            size="small"
+            variant="text"
+            onClick={!editMode ? toggleEditMode : handleSave}
+          >
             {!editMode ? <EditIcon /> : <SaveAltIcon />}
           </Button>
         </Grid>
@@ -77,3 +90,5 @@ export default function TaskItem() {
     </Box>
   );
 }
+
+export default connect(mapStoreToProps)(TaskItem);

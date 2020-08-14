@@ -9,7 +9,7 @@ import ProjectCard from '../ProjectCard/ProjectCard';
 import PostCardDemo from '../ProjectCard/CoolerCard';
 // --- Material-UI
 
-import { Box, Grid, Paper } from '@material-ui/core';
+import { Box, Grid, CircularProgress } from '@material-ui/core';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -21,8 +21,6 @@ const ProjectList = (props) => {
     dispatch({ type: 'GET_PROJECTS' });
   }, []);
 
-  const goToProject = () => {};
-
   const projects = props.store.projects.map((item, index) => {
     return (
       <Grid item md={4}>
@@ -33,8 +31,7 @@ const ProjectList = (props) => {
           isCompleted={item.is_completed}
           isStaffed={item.is_staffed}
           id={item.id}
-          key={item.id}
-          onClick={goToProject}
+          key={index}
         />
       </Grid>
     );
@@ -42,18 +39,22 @@ const ProjectList = (props) => {
 
   return (
     <Box>
-      <Grid container spacing={3}>
-        {projects}
-        <Grid item md={4}>
-          <PostCardDemo />
+      {!props.store.projects[0] ? (
+        <CircularProgress />
+      ) : (
+        <Grid container spacing={3}>
+          {projects}
+          <Grid item md={4}>
+            <PostCardDemo />
+          </Grid>
+          <Grid item md={4}>
+            <PostCardDemo />
+          </Grid>
+          <Grid item md={4}>
+            <PostCardDemo />
+          </Grid>
         </Grid>
-        <Grid item md={4}>
-          <PostCardDemo />
-        </Grid>
-        <Grid item md={4}>
-          <PostCardDemo />
-        </Grid>
-      </Grid>
+      )}
     </Box>
   );
 };

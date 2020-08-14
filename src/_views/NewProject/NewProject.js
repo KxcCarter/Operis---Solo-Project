@@ -13,12 +13,7 @@ import {
   Button,
 } from '@material-ui/core';
 
-import AddIcon from '@material-ui/icons/Add';
-import TaskItem from '../TaskItem/TaskItem';
-import TaskBox from '../TaskBox/TaskBox';
-
-const loremIpsum =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vehicula ac ipsum eu lobortis. Pellentesque semper dolor justo, in accumsan felis pharetra sit amet. Nunc commodo sagittis odio, in venenatis lacus iaculis eu. In condimentum sed ex nec faucibus. Pellentesque eget velit ornare massa semper tempor. Donec hendrerit mi sit amet lacinia ultricies. Aliquam augue diam, rhoncus ut pulvinar eget, commodo ac ex.';
+import TaskBox from '../../components/TaskBox/TaskBox';
 
 const tempIMG =
   'https://i.pinimg.com/564x/f0/5e/86/f05e865445d3a728165dd97234b76ab9.jpg';
@@ -103,7 +98,7 @@ const NewProject = (props) => {
       </Grid>
       <br></br>
 
-      <TaskBox taskData={props.store} />
+      {/* <TaskBox taskData={props.store} /> */}
 
       {/* Notes Widget Container */}
       <Grid item xs={12} sm={3}>

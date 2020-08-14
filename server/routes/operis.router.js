@@ -17,7 +17,44 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   pool
     .query(query, [user])
     .then((dbRes) => {
-      console.log(dbRes.rows);
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('ERROR in GET all projects: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// GET all roles
+router.get('/roles', rejectUnauthenticated, (req, res) => {
+  const query = `SELECT * FROM "roles";`;
+  pool
+    .query(query)
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('Error GETTING Roles: ', err);
+      res.sendStatus(500);
+    });
+});
+
+// GET a single project
+router.get('/project/:id', rejectUnauthenticated, (req, res) => {
+  const projectID = req.params.id;
+
+  const query = `SELECT "projects".*, array_agg(DISTINCT "roles".role_name) AS roles, 
+                  array_agg(DISTINCT "talent".name) AS talent from "projects"
+                  LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
+                  LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
+                  LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
+                  WHERE "projects".id = $1
+                  GROUP BY "projects".id;`;
+
+  pool
+    .query(query, [projectID])
+    .then((dbRes) => {
       res.send(dbRes.rows);
     })
     .catch((err) => {
@@ -26,25 +63,57 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-// GET a single project
-router.get('/:id', rejectUnauthenticated, (req, res) => {
+//
+// GET tasks belonging to a project
+router.get('/tasks/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
-  const query = `SELECT "projects".title, "projects".description, "projects".image, "projects".is_completed, "projects".is_staffed, array_agg("roles".role_name) AS roles, array_agg("talent".name) AS talent, array_agg("tasks".description) AS tasks from "projects"
-                LEFT JOIN "tasks" ON "tasks".project_id = "projects".id
-                LEFT JOIN "project_roles" ON "project_roles".project_id = "projects".id
-                LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
-                LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
-                WHERE "projects".id = $1
-                GROUP BY "projects".id;`;
+  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1;`;
 
   pool
     .query(query, [projectID])
     .then((dbRes) => {
-      console.log(dbRes.rows);
       res.send(dbRes.rows);
     })
     .catch((err) => {
-      console.log('ERROR in GET: ', err);
+      console.log('Error GETTING project tasks: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// GET crew + roles belonging to a project
+router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
+  const projectID = req.params.id;
+  const query = `SELECT "project_roles".project_id, "talent".name, 
+              "roles".role_name FROM "project_roles"
+              LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
+              LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
+              WHERE "project_roles".project_id = $1;`;
+
+  pool
+    .query(query, [projectID])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('Error GETTING project Crew and Roles: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// GET all talent belonging to a user
+router.get('/talentPool/:id', rejectUnauthenticated, (req, res) => {
+  const user = req.user.id;
+  const query = `SELECT * FROM "talent" WHERE "talent".belongs_to_user = $1;`;
+
+  pool
+    .query(query, [user])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('Error GETTING User Talent Pool: ', err);
       res.sendStatus(500);
     });
 });
@@ -67,6 +136,88 @@ router.post('/', (req, res) => {
     })
     .catch((err) => {
       console.log('ERROR creating project: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// POST new task
+router.post('/newTask', (req, res) => {
+  const task = req.body.task;
+  const id = req.body.id;
+
+  const query = `INSERT INTO tasks (project_id, description)
+                VALUES ($2, $1);`;
+  pool
+    .query(query, [task, id])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error POSTing new note: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// POST new role to project
+router.post('/addProjectRole/:id', (req, res) => {
+  const projectID = req.params.id;
+  const roleID = req.body.roleID;
+  console.log(req.body);
+  const query = `INSERT INTO project_roles (project_id, role_id)
+  VALUES ($1, $2);`;
+
+  pool
+    .query(query, [projectID, roleID])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('ERROR POSTing new Role to project: ', err);
+      res.sendStatus(500);
+    });
+});
+
+// PUT
+// PUT update note
+router.put('/updateNote/:id', (req, res) => {
+  const note = req.body.note;
+  const id = req.params.id;
+  // const user = req.user.id;
+
+  const query = `UPDATE "projects"
+                  SET notes = $1
+                  WHERE "projects".id = $2`;
+
+  pool
+    .query(query, [note, id])
+    .then((dbRes) => {
+      console.log('Update note dbRes: ', dbRes);
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('ERROR with PUT for note: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// PUT update task
+router.put('/updateTask/:id', (req, res) => {
+  const note = req.body.task;
+  const id = req.params.id;
+  const query = `UPDATE "tasks"
+                  SET description = $1
+                  WHERE "tasks".id = $2`;
+  pool
+    .query(query, [note, id])
+    .then((dbRes) => {
+      console.log('Update task dbRes: ', dbRes);
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('ERROR with PUT for task: ', err);
       res.sendStatus(500);
     });
 });
