@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 // --- Components
 
 // --- Material-UI
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
   Grid,
@@ -23,68 +22,94 @@ const CrewList = (props) => {
   useEffect(() => {
     dispatch({ type: 'GET_CREW_LIST', payload: props.pID });
     dispatch({ type: 'GET_ROLES' });
+    dispatch({ type: 'GET_USER_TALENT', payload: props.user.id });
   }, []);
 
   const [roleID, setRoleID] = useState('');
+  const [talentID, setTalentID] = useState('');
 
   const { store } = props;
 
   const handleChangeSelect = (event) => {
-    setRoleID(event.target.value);
-    console.log('role id: ', event.target.value);
     dispatch({
       type: 'ADD_PROJECT_ROLE',
       payload: { id: props.pID, roleID: parseInt(event.target.value) },
     });
   };
 
+  const handleTalentAssign = (event) => {
+    console.log('You just assigned a person to a crew role! Wow!');
+  };
+
   return (
     <Box>
-      {!store.projectCrewList[0] ? (
-        <CircularProgress />
-      ) : (
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Typography variant="h6">Project Crew</Typography>
-            <div>
-              <List dense>
-                <ListItem>
-                  <Select
-                    native
-                    value={roleID}
-                    onChange={handleChangeSelect}
-                    inputProps={{
-                      name: 'role',
-                      id: 'filled-role-native-simple',
-                    }}
-                  >
-                    <option aria-label="None" value="" />
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Typography variant="h6">Project Crew</Typography>
+          <div>
+            <List dense>
+              <ListItem>
+                <Select
+                  native
+                  value={roleID}
+                  onChange={handleChangeSelect}
+                  inputProps={{
+                    name: 'role',
+                    id: 'filled-role-native-simple',
+                  }}
+                >
+                  <option aria-label="None" value="" disabled>
+                    Add a Crew Role
+                  </option>
 
-                    {store.roles.map((item, index) => {
-                      return (
-                        <option key={index} value={item.id}>
-                          {item.role_name}
-                        </option>
-                      );
-                    })}
-                  </Select>
-                </ListItem>
-                {store.projectCrewList[0] &&
-                  store.projectCrewList.map((item, index) => {
+                  {store.roles.map((item, index) => {
                     return (
-                      <ListItem key={index}>
-                        <ListItemText
-                          primary={item.role_name}
-                          secondary={item.name || 'Unassigned'}
-                        />
-                      </ListItem>
+                      <option key={index} value={item.id}>
+                        {item.role_name}
+                      </option>
                     );
                   })}
-              </List>
-            </div>
-          </Grid>
+                </Select>
+              </ListItem>
+              {store.projectCrewList[0] &&
+                store.projectCrewList.map((item, index) => {
+                  return (
+                    <ListItem key={index}>
+                      <ListItemText
+                        primary={item.role_name}
+                        secondary={
+                          item.name || (
+                            <Select
+                              native
+                              value={talentID}
+                              onChange={handleTalentAssign}
+                              inputProps={{
+                                name: 'role',
+                                id: 'filled-role-native-simple',
+                              }}
+                            >
+                              <option aria-label="None" value="" disabled>
+                                Assign To Role
+                              </option>
+
+                              {store.userTalentPool.map((item, index) => {
+                                return (
+                                  <option key={index} value={item.id}>
+                                    {item.name}
+                                  </option>
+                                );
+                              })}
+                            </Select>
+                          )
+                        }
+                      />
+                    </ListItem>
+                  );
+                })}
+            </List>
+          </div>
         </Grid>
-      )}
+      </Grid>
     </Box>
   );
 };
