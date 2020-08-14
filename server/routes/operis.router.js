@@ -20,13 +20,28 @@ router.get('/', rejectUnauthenticated, (req, res) => {
       res.send(dbRes.rows);
     })
     .catch((err) => {
-      console.log('ERROR in GET: ', err);
+      console.log('ERROR in GET all projects: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// GET all roles
+router.get('/roles', rejectUnauthenticated, (req, res) => {
+  const query = `SELECT * FROM "roles";`;
+  pool
+    .query(query)
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('Error GETTING Roles: ', err);
       res.sendStatus(500);
     });
 });
 
 // GET a single project
-router.get('/:id', rejectUnauthenticated, (req, res) => {
+router.get('/project/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
 
   const query = `SELECT "projects".*, array_agg(DISTINCT "roles".role_name) AS roles, 
@@ -90,7 +105,7 @@ router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
 // GET all talent belonging to a user
 router.get('/talentPool/:id', rejectUnauthenticated, (req, res) => {
   const user = req.user.id;
-  const query = `SELECT "talent".* FROM "talent" WHERE "talent".belongs_to_user = $1;`;
+  const query = `SELECT * FROM "talent" WHERE "talent".belongs_to_user = $1;`;
 
   pool
     .query(query, [user])

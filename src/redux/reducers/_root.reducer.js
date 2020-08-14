@@ -6,6 +6,7 @@ import projectDetails from './projectDetails.reducer';
 import projectTasks from './tasks.reducer';
 import crewProjectList from './crewProjectList.reducer';
 import userTalentPool from './userTalentPool.reducer';
+import roles from './roles.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   projectTasks,
   crewProjectList,
   userTalentPool,
+  roles,
 });
 
 export default rootReducer;
