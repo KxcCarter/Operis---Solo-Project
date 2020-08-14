@@ -9,6 +9,7 @@ import updateNote from './updateNote.saga';
 import updateTask from './updateTask.saga';
 import newTask from './newTask.saga';
 import cardTasksSaga from './getTasks.saga';
+import crewList from './crewList.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -29,5 +30,6 @@ export default function* rootSaga() {
     updateNote(),
     updateTask(),
     cardTasksSaga(),
+    crewList(),
   ]);
 }

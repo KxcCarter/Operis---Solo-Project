@@ -65,6 +65,7 @@ router.get('/tasks/:id', rejectUnauthenticated, (req, res) => {
     });
 });
 
+//
 // GET crew + roles belonging to a project
 router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
@@ -81,6 +82,23 @@ router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
     })
     .catch((err) => {
       console.log('Error GETTING project Crew and Roles: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// GET all talent belonging to a user
+router.get('/talentPool/:id', rejectUnauthenticated, (req, res) => {
+  const user = req.user.id;
+  const query = `SELECT "talent".* FROM "talent" WHERE "talent".belongs_to_user = $1;`;
+
+  pool
+    .query(query, [user])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('Error GETTING User Talent Pool: ', err);
       res.sendStatus(500);
     });
 });
