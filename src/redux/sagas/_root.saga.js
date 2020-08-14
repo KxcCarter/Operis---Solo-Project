@@ -10,6 +10,7 @@ import updateTask from './updateTask.saga';
 import newTask from './newTask.saga';
 import cardTasksSaga from './getTasks.saga';
 import crewList from './crewList.saga';
+import userTalentPool from './userTalentPool.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -31,5 +32,6 @@ export default function* rootSaga() {
     updateTask(),
     cardTasksSaga(),
     crewList(),
+    userTalentPool(),
   ]);
 }
