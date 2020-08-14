@@ -65,6 +65,26 @@ router.get('/tasks/:id', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// GET crew + roles belonging to a project
+router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
+  const projectID = req.params.id;
+  const query = `SELECT "talent".name, "projects".title, "roles".role_name FROM "talent"
+              LEFT JOIN "project_roles" ON "project_roles".talent_id = "talent".id
+              LEFT JOIN "projects" ON "projects".id = "project_roles".project_id
+              LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
+              WHERE "projects".id = $1`;
+
+  pool
+    .query(query, [projectID])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('Error GETTING project Crew and Roles: ', err);
+      res.sendStatus(500);
+    });
+});
+
 /**
  * POST route template
  */
