@@ -5,16 +5,17 @@ import { useDispatch } from 'react-redux';
 
 // --- Components
 
-import ProjectCard from '../ProjectCard/ProjectCard';
-import PostCardDemo from '../ProjectCard/CoolerCard';
 // --- Material-UI
-
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
   Grid,
   CircularProgress,
   Typography,
   Select,
+  List,
+  ListItem,
+  ListItemText,
 } from '@material-ui/core';
 
 const CrewList = (props) => {
@@ -42,39 +43,46 @@ const CrewList = (props) => {
       {!store.projectCrewList[0] ? (
         <CircularProgress />
       ) : (
-        <Grid container spacing={3}>
-          <Typography variant="h5">Crew List</Typography>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Typography variant="h6">Project Crew</Typography>
+            <div>
+              <List dense>
+                <ListItem>
+                  <Select
+                    native
+                    value={roleID}
+                    onChange={handleChangeSelect}
+                    inputProps={{
+                      name: 'role',
+                      id: 'filled-role-native-simple',
+                    }}
+                  >
+                    <option aria-label="None" value="" />
 
-          <ul>
-            {store.projectCrewList.map((item, index) => {
-              return (
-                <li key={index}>
-                  {item.role_name}: {item.name || 'Unassigned'}
-                </li>
-              );
-            })}
-            <li>
-              <Select
-                native
-                value={roleID}
-                onChange={handleChangeSelect}
-                inputProps={{
-                  name: 'role',
-                  id: 'filled-role-native-simple',
-                }}
-              >
-                <option aria-label="None" value="" />
-
-                {store.roles.map((item, index) => {
-                  return (
-                    <option key={index} value={item.id}>
-                      {item.role_name}
-                    </option>
-                  );
-                })}
-              </Select>
-            </li>
-          </ul>
+                    {store.roles.map((item, index) => {
+                      return (
+                        <option key={index} value={item.id}>
+                          {item.role_name}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                </ListItem>
+                {store.projectCrewList[0] &&
+                  store.projectCrewList.map((item, index) => {
+                    return (
+                      <ListItem key={index}>
+                        <ListItemText
+                          primary={item.role_name}
+                          secondary={item.name || 'Unassigned'}
+                        />
+                      </ListItem>
+                    );
+                  })}
+              </List>
+            </div>
+          </Grid>
         </Grid>
       )}
     </Box>
