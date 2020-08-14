@@ -41,22 +41,24 @@ function TaskItem(props) {
 
   return (
     <Box mt={2}>
-      <Grid container spacing={1} justify="space-around">
-        <Grid item md={1}>
+      <Grid container>
+        <Grid item sm={2}>
           <Select
             native
             value={taskState}
             variant="standard"
             onChange={handleOptions}
           >
-            <option aria-label="None" value="" />
+            <option aria-label="None" value="" disabled>
+              options
+            </option>
             <option value="complete">Complete</option>
             <option value="incomplete">Incomplete</option>
             <option value="remove">Delete</option>
           </Select>
         </Grid>
 
-        <Grid item md={10}>
+        <Grid item sm={9}>
           <Paper elevation={2}>
             {!editMode ? (
               <Box m={1}>
@@ -75,7 +77,7 @@ function TaskItem(props) {
             )}
           </Paper>
         </Grid>
-        <Grid item md={1}>
+        <Grid item sm={1}>
           <Button
             size="small"
             variant="text"

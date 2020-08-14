@@ -45,7 +45,7 @@ const CrewList = (props) => {
     <Box>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h6">Project Crew</Typography>
+          <Typography variant="h5">Project Crew</Typography>
           <div>
             <List dense>
               <ListItem>

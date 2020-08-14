@@ -67,7 +67,7 @@ const ProjectDetails = (props) => {
             ></Button>
           </Grid>
           <Grid item md={9}>
-            <Typography variant="h4" align="center">
+            <Typography variant="h3" align="center">
               {projectDetails.title}
             </Typography>
           </Grid>
