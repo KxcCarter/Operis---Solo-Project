@@ -87,14 +87,6 @@ const ProjectDetails = (props) => {
 
           {/* Roles and Talent */}
           <Grid item xs={6} sm={3}>
-            {/* <Typography variant="h5">Crew List</Typography>
-
-            <ul>
-              {projectDetails.talent.map((item, index) => {
-                return <li key={index}>{item}</li>;
-              })}
-            </ul> */}
-
             <CrewList pID={projectDetails.id} />
           </Grid>
           <br></br>

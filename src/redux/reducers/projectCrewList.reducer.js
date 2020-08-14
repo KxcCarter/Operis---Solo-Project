@@ -1,4 +1,4 @@
-const crewProjectList = (state = [], action) => {
+const projectCrewList = (state = [], action) => {
   switch (action.type) {
     case 'SET_PROJECT_CREW_LIST':
       return action.payload;
@@ -7,4 +7,4 @@ const crewProjectList = (state = [], action) => {
   }
 };
 
-export default crewProjectList;
+export default projectCrewList;

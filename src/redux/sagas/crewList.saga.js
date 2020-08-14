@@ -5,7 +5,7 @@ function* getCrewList(action) {
   try {
     console.log(action.payload);
     const response = yield axios.get(
-      `api/operis/crewProject/${action.payload.id}`
+      `api/operis/crewProject/${action.payload}`
     );
     yield put({ type: 'SET_PROJECT_CREW_LIST', payload: response.data });
   } catch (err) {

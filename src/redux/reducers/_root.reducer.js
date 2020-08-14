@@ -4,7 +4,7 @@ import user from './user.reducer';
 import projects from './projects.reducer';
 import projectDetails from './projectDetails.reducer';
 import projectTasks from './tasks.reducer';
-import crewProjectList from './crewProjectList.reducer';
+import projectCrewList from './projectCrewList.reducer';
 import userTalentPool from './userTalentPool.reducer';
 import roles from './roles.reducer';
 
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   projects,
   projectDetails,
   projectTasks,
-  crewProjectList,
+  projectCrewList,
   userTalentPool,
   roles,
 });

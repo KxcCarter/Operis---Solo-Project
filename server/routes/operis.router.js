@@ -84,11 +84,11 @@ router.get('/tasks/:id', rejectUnauthenticated, (req, res) => {
 // GET crew + roles belonging to a project
 router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
-  const query = `SELECT "talent".name, "projects".title, "roles".role_name FROM "talent"
-              LEFT JOIN "project_roles" ON "project_roles".talent_id = "talent".id
-              LEFT JOIN "projects" ON "projects".id = "project_roles".project_id
+  const query = `SELECT "project_roles".project_id, "talent".name, 
+              "roles".role_name FROM "project_roles"
+              LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
               LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
-              WHERE "projects".id = $1`;
+              WHERE "project_roles".project_id = $1;`;
 
   pool
     .query(query, [projectID])
@@ -155,6 +155,26 @@ router.post('/newTask', (req, res) => {
     })
     .catch((err) => {
       console.log('Error POSTing new note: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// POST new role to project
+router.post('/addProjectRole/:id', (req, res) => {
+  const projectID = req.params.id;
+  const roleID = req.body.roleID;
+  console.log(req.body);
+  const query = `INSERT INTO project_roles (project_id, role_id)
+  VALUES ($1, $2);`;
+
+  pool
+    .query(query, [projectID, roleID])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('ERROR POSTing new Role to project: ', err);
       res.sendStatus(500);
     });
 });
