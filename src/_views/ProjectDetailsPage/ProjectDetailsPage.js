@@ -15,7 +15,7 @@ import {
   Button,
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
+import CrewList from '../../components/CrewList/CrewList';
 import TaskBox from '../../components/TaskBox/TaskBox';
 
 // this could also be written with destructuring parameters as:
@@ -84,14 +84,18 @@ const ProjectDetails = (props) => {
               {projectDetails.description}
             </Typography>
           </Grid>
+
+          {/* Roles and Talent */}
           <Grid item xs={6} sm={3}>
-            <Typography variant="h5">Crew List</Typography>
+            {/* <Typography variant="h5">Crew List</Typography>
 
             <ul>
               {projectDetails.talent.map((item, index) => {
                 return <li key={index}>{item}</li>;
               })}
-            </ul>
+            </ul> */}
+
+            <CrewList pID={projectDetails.id} />
           </Grid>
           <br></br>
 

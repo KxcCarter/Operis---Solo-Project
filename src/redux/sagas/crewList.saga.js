@@ -3,12 +3,13 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* getCrewList(action) {
   try {
+    console.log(action.payload);
     const response = yield axios.get(
-      `api/operis/projectCrew/${action.payload.id}`
+      `api/operis/crewProject/${action.payload.id}`
     );
     yield put({ type: 'SET_PROJECT_CREW_LIST', payload: response.data });
   } catch (err) {
-    console.log('PUT error in updateTask saga: ', err);
+    console.log('GET error in crewList saga: ', err);
   }
 }
 
