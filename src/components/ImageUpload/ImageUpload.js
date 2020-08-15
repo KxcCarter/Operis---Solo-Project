@@ -5,7 +5,7 @@ import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
 
 function ImageUpload(props) {
   const uploadOptions = {
-    server: 'https://arcane-dusk-92336.herokuapp.com/',
+    server: 'https://arcane-dusk-92336.herokuapp.com',
     // signingUrlQueryParams: {uploadType: 'avatar'},
   };
 
