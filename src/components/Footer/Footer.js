@@ -9,8 +9,8 @@ import ImageUpload from '../ImageUpload/ImageUpload';
 
 const Footer = () => (
   <footer>
-    &copy; Prime Digital Academy
     <ImageUpload />
+    &copy; Prime Digital Academy
   </footer>
 );
 
