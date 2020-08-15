@@ -1,9 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
 
+//
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography, Button, Modal } from '@material-ui/core';
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 200,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function ImageUpload(props) {
+  const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const uploadOptions = {
     server: 'https://arcane-dusk-92336.herokuapp.com',
     // signingUrlQueryParams: {uploadType: 'avatar'},
@@ -16,13 +53,38 @@ function ImageUpload(props) {
 
   const s3Url = 'https://operisstorage.s3.amazonaws.com';
 
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <Typography variant="h6" id="simple-modal-title" gutterBottom>
+        Upload an image
+      </Typography>
+      <DropzoneS3Uploader
+        onFinish={handleFinishedUpload}
+        s3Url={s3Url}
+        maxSize={1024 * 1024 * 5}
+        upload={uploadOptions}
+      />
+    </div>
+  );
+
   return (
-    <DropzoneS3Uploader
-      onFinish={handleFinishedUpload}
-      s3Url={s3Url}
-      maxSize={1024 * 1024 * 5}
-      upload={uploadOptions}
-    />
+    <>
+      <Button
+        size="small"
+        variant="contained"
+        onClick={open ? handleClose : handleOpen}
+      >
+        Upload Image
+      </Button>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+      >
+        {body}
+      </Modal>
+    </>
   );
 }
 
