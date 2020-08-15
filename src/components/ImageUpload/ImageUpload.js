@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
 
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ImageUpload(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -42,13 +43,15 @@ function ImageUpload(props) {
   };
 
   const uploadOptions = {
-    server: 'https://arcane-dusk-92336.herokuapp.com',
+    // server: 'https://arcane-dusk-92336.herokuapp.com',
+    server: 'http://localhost:5000',
     // signingUrlQueryParams: {uploadType: 'avatar'},
   };
 
   const handleFinishedUpload = (info) => {
     console.log('File uploaded with filename', info.filename);
     console.log('Access it on s3 at', info.fileUrl);
+    dispatch({ type: 'POST_IMG_URL', payload: { image: info.fileUrl } });
   };
 
   const s3Url = 'https://operisstorage.s3.amazonaws.com';

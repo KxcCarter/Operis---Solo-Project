@@ -179,6 +179,26 @@ router.post('/addProjectRole/:id', (req, res) => {
     });
 });
 
+//
+//
+// THIS IS JUST A TEST TEMPLATE. IT NEEDS TO RECIEVE A PROJECT ID
+router.put('/uploadImage', (req, res) => {
+  const pID = 15;
+  const image = req.body.image;
+  console.log(req.body);
+  const query = `UPDATE "projects" SET image = $2 WHERE "projects".id = $1;`;
+
+  pool
+    .query(query, [pID, image])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error PUTTING image url: ', err);
+      res.sendStatus(500);
+    });
+});
+
 // PUT
 // PUT update note
 router.put('/updateNote/:id', (req, res) => {
