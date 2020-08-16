@@ -122,6 +122,8 @@ const ProjectDetails = (props) => {
               <TextField
                 variant="outlined"
                 fullWidth
+                multiline
+                rows={10}
                 defaultValue={projectDetails.description}
                 onChange={handleChange('description')}
               ></TextField>

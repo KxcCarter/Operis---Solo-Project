@@ -81,13 +81,15 @@ const ProjectCard = (props) => {
               <img src={props.image} alt={props.title}></img>
             </Grid>
             <Grid item sm={6} className={cardStyles.cells}>
-              <Typography variant="body1">{props.description}</Typography>
+              <Typography align="left" variant="body1">
+                {props.description.substring(0, 120)} ...
+              </Typography>
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
             <Grid item sm={8}>
-              <Box>
+              <Box align="left">
                 <Typography variant="subtitle1">
                   <FiberManualRecordIcon
                     fontSize="small"

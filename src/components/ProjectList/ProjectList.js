@@ -30,7 +30,7 @@ const ProjectList = (props) => {
 
   const projects = props.store.projects.map((item, index) => {
     return (
-      <Grid item md={4}>
+      <Grid key={index} item md={4}>
         <ProjectCard
           title={item.title}
           description={item.description}
@@ -38,7 +38,6 @@ const ProjectList = (props) => {
           isCompleted={item.is_completed}
           isStaffed={item.is_staffed}
           id={item.id}
-          key={index}
         />
       </Grid>
     );
@@ -71,7 +70,7 @@ const ProjectList = (props) => {
               </Button>
             </ButtonGroup>
           </Box>
-          <Box>
+          <Box align="center">
             <Grid container spacing={3}>
               {projects}
               <Grid item md={4}>
