@@ -17,8 +17,8 @@ import {
 const CrewListItem = (props) => {
   const dispatch = useDispatch();
 
-  const [roleID, setRoleID] = useState('');
   const [talentID, setTalentID] = useState('');
+  const [talentName, setTalentName] = useState(props.crewList.name);
   const [checked, setChecked] = useState(false);
 
   const { store } = props;
@@ -47,7 +47,7 @@ const CrewListItem = (props) => {
       <ListItemText
         primary={props.crewList.role_name}
         secondary={
-          props.crewList.name || (
+          talentName || (
             <Select
               native
               value={talentID}

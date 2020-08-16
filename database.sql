@@ -64,7 +64,17 @@ VALUES
     ('Tina Belcher'),
     ('Horacio Farnando'),
     ('Sally McPerson'),
-    ('Andrea Johnson');
+    ('Andrea Johnson'),
+    ('Ethan Dickinson'),
+    ('Edward Dresden'),
+    ('Eliza Dolabella'),
+    ('John Browning'),
+    ('Lilliana Medina'),
+    ('Gareth Wise'),
+    ('Teegan Levine'),
+    ('Dan Smart'),
+    ('Sarah Shepherd'),
+    ('Jordan Browning');
 
 INSERT INTO roles
     (role_name)

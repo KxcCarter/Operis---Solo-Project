@@ -38,6 +38,7 @@ const ProjectDetails = (props) => {
   // ***
   // TODO: Componentize note section
   const [note, setNote] = useState(projectDetails.notes);
+  const [editMode, setEditMode] = useState(false);
 
   const clickBack = () => {
     // history.goBack();
@@ -48,11 +49,19 @@ const ProjectDetails = (props) => {
     setNote(event.target.value);
   };
 
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
   const saveNote = () => {
     dispatch({
       type: 'UPDATE_NOTE',
       payload: { note: note, id: projectDetails.id },
     });
+  };
+
+  const handleChange = (fieldKey) => (event) => {
+    console.log('changing ', fieldKey);
   };
 
   return (
@@ -67,10 +76,24 @@ const ProjectDetails = (props) => {
               onClick={clickBack}
             ></Button>
           </Grid>
-          <Grid item md={9}>
-            <Typography variant="h3" align="center">
-              {projectDetails.title}
-            </Typography>
+          <Grid item md={8}>
+            {!editMode ? (
+              <Typography variant="h3" align="center">
+                {projectDetails.title}
+              </Typography>
+            ) : (
+              <TextField
+                variant="outlined"
+                fullWidth
+                defaultValue={projectDetails.title}
+                onChange={handleChange('title')}
+              ></TextField>
+            )}
+          </Grid>
+          <Grid item sm={1}>
+            <Button variant="text" size="small" onClick={toggleEditMode}>
+              {editMode ? 'save' : 'edit'}
+            </Button>
           </Grid>
           <Grid item xs={6} sm={4}>
             <Paper elevation={5}>
@@ -80,14 +103,29 @@ const ProjectDetails = (props) => {
                 ) : (
                   <ImageUpload />
                 )}
+                {editMode && (
+                  <>
+                    <Typography variant="subtitle1">Add a new image</Typography>
+                    <ImageUpload />
+                  </>
+                )}
               </Box>
             </Paper>
           </Grid>
 
           <Grid item xs={6} sm={5}>
-            <Typography variant="body1">
-              {projectDetails.description}
-            </Typography>
+            {!editMode ? (
+              <Typography variant="body1">
+                {projectDetails.description}
+              </Typography>
+            ) : (
+              <TextField
+                variant="outlined"
+                fullWidth
+                defaultValue={projectDetails.description}
+                onChange={handleChange('description')}
+              ></TextField>
+            )}
           </Grid>
 
           {/* Roles and Talent */}
