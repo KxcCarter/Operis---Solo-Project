@@ -4,6 +4,7 @@ const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 const router = express.Router();
+const moment = require('moment');
 
 /**
  * GET route template
@@ -65,9 +66,10 @@ router.get('/project/:id', rejectUnauthenticated, (req, res) => {
 
 //
 // GET tasks belonging to a project
-router.get('/tasks/:id', rejectUnauthenticated, (req, res) => {
+router.get('/tasks/:id/:orderBy', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
-  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1;`;
+  const orderBy = req.params.orderBy;
+  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy} ASC;`;
 
   pool
     .query(query, [projectID])
@@ -121,15 +123,19 @@ router.get('/talentPool/:id', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
+
+//
+// Create New Project
 router.post('/', (req, res) => {
   const user = req.user.id;
   const title = req.body.title;
   const description = req.body.description;
   const image = req.body.image;
-  const query = `INSERT INTO projects (user_id, title, description, image) VALUES ($1, $2, $3, $4);`;
+  let timeCreated = moment().format('YYYY-MM-DD h:mm:ss');
+  const query = `INSERT INTO projects (user_id, title, description, image, time_created) VALUES ($1, $2, $3, $4, $5);`;
 
   pool
-    .query(query, [user, title, description, image])
+    .query(query, [user, title, description, image, timeCreated])
     .then((dbRes) => {
       console.log(dbRes);
       res.sendStatus(201);
@@ -145,11 +151,11 @@ router.post('/', (req, res) => {
 router.post('/newTask', (req, res) => {
   const task = req.body.task;
   const id = req.body.id;
-
-  const query = `INSERT INTO tasks (project_id, description)
-                VALUES ($2, $1);`;
+  let timeCreated = moment().format('YYYY-MM-DD h:mm:ss');
+  const query = `INSERT INTO tasks (project_id, description, time_created)
+                VALUES ($1, $2, $3);`;
   pool
-    .query(query, [task, id])
+    .query(query, [id, task, timeCreated])
     .then((dbRes) => {
       res.sendStatus(201);
     })
