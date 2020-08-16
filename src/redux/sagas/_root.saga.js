@@ -14,6 +14,7 @@ import userTalentPool from './userTalentPool.saga';
 import rolesSaga from './roles.saga';
 import addRoleToProject from './addRoleToProject.saga';
 import imageInfoSaga from './imageInfoSaga.saga';
+import addTalentToRole from './addTalentToRole.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -39,5 +40,6 @@ export default function* rootSaga() {
     rolesSaga(),
     addRoleToProject(),
     imageInfoSaga(),
+    addTalentToRole(),
   ]);
 }

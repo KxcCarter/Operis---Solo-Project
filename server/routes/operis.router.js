@@ -87,7 +87,7 @@ router.get('/tasks', rejectUnauthenticated, (req, res) => {
 // GET crew + roles belonging to a project
 router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
   const projectID = req.params.id;
-  const query = `SELECT "project_roles".project_id, "talent".name, 
+  const query = `SELECT "project_roles".project_id, "project_roles".id, "talent".name, 
               "roles".role_name FROM "project_roles"
               LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
               LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
@@ -246,6 +246,24 @@ router.put('/updateTask/:id', (req, res) => {
     .catch((err) => {
       console.log('ERROR with PUT for task: ', err);
       res.sendStatus(500);
+    });
+});
+
+//
+// PUT talent on a role
+router.put('/setTalentRole/:id', (req, res) => {
+  const talentID = req.body.talentID;
+  const id = req.params.id;
+  console.log(req.body.talentID, req.params.id);
+  const query = `UPDATE project_roles SET talent_id = $1 WHERE id = $2;`;
+
+  pool
+    .query(query, [talentID, id])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error PUTTING talent on project role: ', err);
     });
 });
 

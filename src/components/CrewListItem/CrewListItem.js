@@ -6,7 +6,13 @@ import { useDispatch } from 'react-redux';
 // --- Components
 
 // --- Material-UI
-import { Select, ListItem, ListItemText, Checkbox } from '@material-ui/core';
+import {
+  Select,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Checkbox,
+} from '@material-ui/core';
 
 const CrewListItem = (props) => {
   const dispatch = useDispatch();
@@ -17,24 +23,27 @@ const CrewListItem = (props) => {
 
   const { store } = props;
 
-  const handleChangeSelect = (event) => {
-    dispatch({
-      type: 'ADD_PROJECT_ROLE',
-      payload: { id: props.pID, roleID: parseInt(event.target.value) },
-    });
+  const handleChecked = () => {
+    setChecked(!checked);
+    console.log(props);
   };
 
   const handleTalentAssign = (event) => {
-    console.log('You just assigned a person to a crew role! Wow!');
+    setTalentID(event.target.value);
+    dispatch({
+      type: 'ADD_TALENT_TO_ROLE',
+      payload: {
+        id: props.crewList.id,
+        talentID: parseInt(event.target.value),
+      },
+    });
   };
 
   return (
     <ListItem>
-      <Checkbox
-        size="small"
-        checked={checked}
-        onChange={() => setChecked(!checked)}
-      />
+      <ListItemIcon>
+        <Checkbox size="small" checked={checked} onChange={handleChecked} />
+      </ListItemIcon>
       <ListItemText
         primary={props.crewList.role_name}
         secondary={

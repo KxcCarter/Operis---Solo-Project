@@ -10,13 +10,10 @@ import CrewListItem from '../CrewListItem/CrewListItem';
 import {
   Box,
   Grid,
-  CircularProgress,
   Typography,
   Select,
   List,
   ListItem,
-  ListItemText,
-  Checkbox,
 } from '@material-ui/core';
 
 const CrewList = (props) => {
@@ -28,8 +25,6 @@ const CrewList = (props) => {
   }, []);
 
   const [roleID, setRoleID] = useState('');
-  const [talentID, setTalentID] = useState('');
-  const [checked, setChecked] = useState(false);
 
   const { store } = props;
 
