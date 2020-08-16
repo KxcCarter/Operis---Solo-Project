@@ -17,6 +17,7 @@ import {
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import CrewList from '../../components/CrewList/CrewList';
 import TaskBox from '../../components/TaskBox/TaskBox';
+import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -74,7 +75,11 @@ const ProjectDetails = (props) => {
           <Grid item xs={6} sm={4}>
             <Paper elevation={5}>
               <Box m={0.7} p={0.3}>
-                <img src={projectDetails.image} alt={projectDetails.title} />
+                {projectDetails.image ? (
+                  <img src={projectDetails.image} alt={projectDetails.title} />
+                ) : (
+                  <ImageUpload />
+                )}
               </Box>
             </Paper>
           </Grid>

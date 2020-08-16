@@ -13,16 +13,17 @@ import {
   Button,
 } from '@material-ui/core';
 
-import TaskBox from '../../components/TaskBox/TaskBox';
+// import TaskBox from '../../components/TaskBox/TaskBox';
+import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
-const tempIMG =
-  'https://i.pinimg.com/564x/f0/5e/86/f05e865445d3a728165dd97234b76ab9.jpg';
+// const tempIMG =
+// 'https://i.pinimg.com/564x/f0/5e/86/f05e865445d3a728165dd97234b76ab9.jpg';
 
 const NewProject = (props) => {
   const [projectDetails, setProjectDetails] = useState({
     title: '',
     description: '',
-    image: tempIMG,
+    image: '',
   });
 
   const dispatch = useDispatch();
@@ -32,11 +33,9 @@ const NewProject = (props) => {
       ...projectDetails,
       [fieldKey]: event.target.value,
     });
-    console.log(projectDetails);
   };
 
   const handleSubmit = () => {
-    console.log(projectDetails);
     dispatch({ type: 'CREATE_NEW_PROJECT', payload: projectDetails });
   };
 
@@ -65,10 +64,18 @@ const NewProject = (props) => {
           </Button>
         </Grid>
       )}
-      <Grid item xs={6} sm={4}>
+      {/* <Grid item xs={6} sm={4}>
         <Paper elevation={5}>
           <Box m={0.7} p={0.3}>
             <img src={projectDetails.image} alt={projectDetails.title} />
+          </Box>
+        </Paper>
+      </Grid> */}
+
+      <Grid item xs={6} sm={4}>
+        <Paper elevation={5}>
+          <Box m={0.7} p={0.3}>
+            <ImageUpload />
           </Box>
         </Paper>
       </Grid>
