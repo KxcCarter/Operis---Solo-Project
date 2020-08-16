@@ -66,10 +66,11 @@ router.get('/project/:id', rejectUnauthenticated, (req, res) => {
 
 //
 // GET tasks belonging to a project
-router.get('/tasks/:id/:orderBy', rejectUnauthenticated, (req, res) => {
-  const projectID = req.params.id;
-  const orderBy = req.params.orderBy;
-  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy} ASC;`;
+router.get('/tasks', rejectUnauthenticated, (req, res) => {
+  const projectID = req.query.id;
+  const orderBy = req.query.orderBy;
+  console.log(req.query);
+  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy};`;
 
   pool
     .query(query, [projectID])
