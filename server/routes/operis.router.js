@@ -13,7 +13,7 @@ const moment = require('moment');
 // GET all projects by user
 router.get('/', rejectUnauthenticated, (req, res) => {
   const user = req.user.id;
-  const query = `SELECT * FROM projects WHERE projects.user_id = $1;`;
+  const query = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY id ASC;`;
 
   pool
     .query(query, [user])

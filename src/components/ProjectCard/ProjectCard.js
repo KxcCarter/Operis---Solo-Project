@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // from 'Cooler Card' - trying to get the cool mouseover action
 import cx from 'clsx';
 import { useSoftRiseShadowStyles } from '@mui-treasury/styles/shadow/softRise';
@@ -16,6 +16,7 @@ import {
   Paper,
   Typography,
   Button,
+  Checkbox,
   CircularProgress,
 } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -49,6 +50,7 @@ const ProjectCard = (props) => {
   // This causes the little lift on hover, but it disables the card elevation look.
   const shadowStyles = useSoftRiseShadowStyles();
   //
+  const [checked, setChecked] = useState(false);
 
   const handleClick = () => {
     history.push(`/projectDetails/${props.id}`);
@@ -66,7 +68,14 @@ const ProjectCard = (props) => {
           elevation={3}
           className={cx(cardStyles.card, shadowStyles.root)}
         >
-          <Typography variant="h5">{props.title}</Typography>
+          <Box display="flex" justifyContent="space-between">
+            <Typography variant="h5">{props.title}</Typography>
+            <Checkbox
+              size="small"
+              checked={checked}
+              onChange={() => setChecked(!checked)}
+            />
+          </Box>
           <Grid container>
             <Grid item sm={6} className={cardStyles.cells}>
               <img src={props.image} alt={props.title}></img>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import NewTaskModal from '../NewTaskModal/NewTaskModal';
@@ -23,16 +23,14 @@ function TaskBox(props) {
     store: { projectTasks },
   } = props;
 
+  // TODO: make task list re-render upon state change.
   useEffect(() => {
     dispatch({
       type: 'GET_PROJECT_TASKS',
       payload: { id: props.pID, orderBy: order },
     });
+    console.log('IN USEEFFECT: ', order);
   }, [order]);
-
-  const taskList = projectTasks.map((item, index) => {
-    return <TaskItem key={index} id={item.id} taskContent={item.description} />;
-  });
 
   const changeSortOrder = (orderBy) => (event) => {
     setOrder(orderBy);
@@ -57,6 +55,11 @@ function TaskBox(props) {
                   <NewTaskModal />
                 </Box>
                 <Box p={1} display="inline">
+                  <Typography variant="h6" display="inline">
+                    Sort
+                  </Typography>
+                </Box>
+                <Box p={1} display="inline">
                   <ButtonGroup size="small" variant="contained" color="primary">
                     <Button onClick={changeSortOrder('is_completed ASC')}>
                       Completed
@@ -76,7 +79,16 @@ function TaskBox(props) {
             </Grid>
             <Box p={1}>
               {/* Task Items */}
-              {taskList}
+              {/* {taskList} */}
+              {projectTasks.map((item, index) => {
+                return (
+                  <TaskItem
+                    key={index}
+                    id={item.id}
+                    taskContent={item.description}
+                  />
+                );
+              })}
             </Box>
           </Paper>
         </Box>

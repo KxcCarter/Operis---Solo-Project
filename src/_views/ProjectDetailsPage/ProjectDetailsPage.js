@@ -98,7 +98,7 @@ const ProjectDetails = (props) => {
 
           {/* Task Box */}
           <Grid item sm={9}>
-            <TaskBox taskData={projectDetails.tasks} pID={projectDetails.id} />
+            <TaskBox pID={projectDetails.id} />
           </Grid>
 
           {/* Notes Widget Container */}

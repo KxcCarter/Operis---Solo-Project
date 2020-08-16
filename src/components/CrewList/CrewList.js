@@ -4,6 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
 
 // --- Components
+import CrewListItem from '../CrewListItem/CrewListItem';
 
 // --- Material-UI
 import {
@@ -15,6 +16,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Checkbox,
 } from '@material-ui/core';
 
 const CrewList = (props) => {
@@ -27,6 +29,7 @@ const CrewList = (props) => {
 
   const [roleID, setRoleID] = useState('');
   const [talentID, setTalentID] = useState('');
+  const [checked, setChecked] = useState(false);
 
   const { store } = props;
 
@@ -73,38 +76,7 @@ const CrewList = (props) => {
               </ListItem>
               {store.projectCrewList[0] &&
                 store.projectCrewList.map((item, index) => {
-                  return (
-                    <ListItem key={index}>
-                      <ListItemText
-                        primary={item.role_name}
-                        secondary={
-                          item.name || (
-                            <Select
-                              native
-                              value={talentID}
-                              onChange={handleTalentAssign}
-                              inputProps={{
-                                name: 'role',
-                                id: 'filled-role-native-simple',
-                              }}
-                            >
-                              <option aria-label="None" value="" disabled>
-                                Assign To Role
-                              </option>
-
-                              {store.userTalentPool.map((item, index) => {
-                                return (
-                                  <option key={index} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                );
-                              })}
-                            </Select>
-                          )
-                        }
-                      />
-                    </ListItem>
-                  );
+                  return <CrewListItem key={index} crewList={item} />;
                 })}
             </List>
           </div>
