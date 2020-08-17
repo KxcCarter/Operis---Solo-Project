@@ -87,6 +87,7 @@ function TaskBox(props) {
                     id={item.id}
                     projectID={props.pID}
                     taskContent={item.description}
+                    status={item.is_completed}
                   />
                 );
               })}

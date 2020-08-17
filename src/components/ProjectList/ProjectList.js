@@ -22,7 +22,7 @@ import {
 // and then instead of `props.user.username` you could use `user.username`
 const ProjectList = (props) => {
   const dispatch = useDispatch();
-  const [order, setOrder] = useState('id DESC');
+  const [order, setOrder] = useState('id');
 
   useEffect(() => {
     dispatch({ type: 'GET_PROJECTS' });
@@ -45,7 +45,8 @@ const ProjectList = (props) => {
 
   const changeSortOrder = (orderBy) => (event) => {
     setOrder(orderBy);
-    console.log('CLICK order by: ', order);
+    console.log('CLICK order by: ', orderBy);
+    dispatch({ type: 'GET_PROJECTS_ORDERED', payload: orderBy });
   };
 
   return (
@@ -56,18 +57,12 @@ const ProjectList = (props) => {
         <Box>
           <Box p={3} align="center">
             <ButtonGroup size="small" variant="contained" color="default">
-              <Button onClick={changeSortOrder('is_completed ASC')}>
+              <Button onClick={changeSortOrder('is_completed')}>
                 Completed
               </Button>
-              <Button onClick={changeSortOrder('is_completed DESC')}>
-                Incomplete
-              </Button>
-              <Button onClick={changeSortOrder('time_created ASC')}>
-                Newest
-              </Button>
-              <Button onClick={changeSortOrder('time_created DESC')}>
-                Oldest
-              </Button>
+              <Button onClick={changeSortOrder('title')}>title</Button>
+              <Button onClick={changeSortOrder('time_created')}>Newest</Button>
+              <Button onClick={changeSortOrder('id')}>default</Button>
             </ButtonGroup>
           </Box>
           <Box align="center">

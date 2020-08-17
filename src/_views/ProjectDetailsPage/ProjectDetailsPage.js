@@ -84,6 +84,8 @@ const ProjectDetails = (props) => {
       {!projectDetails.id && <CircularProgress />}
       {projectDetails.id == match.params.id && (
         <Grid container spacing={3}>
+          {/* Project Title and Details */}
+
           <Grid item sm={2}>
             <Button
               variant="contained"
@@ -113,7 +115,14 @@ const ProjectDetails = (props) => {
             >
               {editMode ? 'save' : 'edit'}
             </Button>
+            {editMode && (
+              <Button variant="text" size="small" onClick={toggleEditMode}>
+                cancel
+              </Button>
+            )}
           </Grid>
+
+          {/* Project Image */}
           <Grid item xs={6} sm={4}>
             <Paper elevation={5}>
               <Box m={0.7} p={0.3}>
@@ -126,6 +135,16 @@ const ProjectDetails = (props) => {
                   <>
                     <Typography variant="subtitle1">Add a new image</Typography>
                     <ImageUpload pID={projectDetails.id} />
+                    <Typography variant="subtitle1">
+                      Use image from web
+                    </Typography>
+                    <TextField
+                      size="small"
+                      variant="outlined"
+                      fullWidth
+                      defaultValue={projectDetails.image}
+                      onChange={handleChange('image')}
+                    ></TextField>
                   </>
                 )}
               </Box>

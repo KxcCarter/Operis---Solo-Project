@@ -27,6 +27,25 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 });
 
 //
+// GET all projects by user, ordered
+router.get('/ordered', rejectUnauthenticated, (req, res) => {
+  const user = req.user.id;
+  const orderBy = req.query.orderBy;
+  console.log(orderBy);
+  const query = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY ${orderBy} ASC;`;
+
+  pool
+    .query(query, [user])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((err) => {
+      console.log('ERROR in GET all projects orderd by...: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
 // GET all roles
 router.get('/roles', rejectUnauthenticated, (req, res) => {
   const query = `SELECT * FROM "roles";`;

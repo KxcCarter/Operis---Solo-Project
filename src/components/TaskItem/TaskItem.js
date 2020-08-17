@@ -49,7 +49,7 @@ function TaskItem(props) {
         <Grid item sm={2}>
           <Select
             native
-            value={taskStatus}
+            value={props.status}
             variant="standard"
             onChange={handleOptions}
           >
