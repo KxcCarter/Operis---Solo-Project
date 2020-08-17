@@ -22,6 +22,7 @@ import RegisterPage from '../../_views/RegisterPage/RegisterPage';
 import ProjectDetails from '../../_views/ProjectDetailsPage/ProjectDetailsPage';
 import ProjectList from '../ProjectList/ProjectList';
 import NewProject from '../../_views/NewProject/NewProject';
+import TalentPoolPage from '../../_views/TalentPoolPage/TalentPoolPage';
 
 import './App.css';
 import { Container } from '@material-ui/core';
@@ -70,12 +71,12 @@ class App extends Component {
               authRedirect="/admin"
               component={LandingPage}
             />
+            <ProtectedRoute exact path="/talent" component={TalentPoolPage} />
             <ProtectedRoute
               exact
               path="/projectDetails/:id"
               component={ProjectDetails}
             />
-
             <ProtectedRoute exact path="/projects" component={ProjectList} />
             <ProtectedRoute exact path="/new" component={NewProject} />
 

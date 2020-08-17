@@ -21,7 +21,7 @@ const CrewList = (props) => {
   useEffect(() => {
     dispatch({ type: 'GET_CREW_LIST', payload: props.pID });
     dispatch({ type: 'GET_ROLES' });
-    dispatch({ type: 'GET_USER_TALENT', payload: props.user.id });
+    dispatch({ type: 'GET_USER_TALENT' });
   }, []);
 
   const [roleID, setRoleID] = useState('');

@@ -130,8 +130,28 @@ router.get('/tasks', rejectUnauthenticated, (req, res) => {
   console.log(req.query);
   const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy} ASC;`;
 
+  let queryString;
+  switch (orderBy) {
+    case 'completed':
+      queryString = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY is_completed DESC;`;
+      break;
+    case 'incomplete':
+      queryString = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY is_completed ASC;`;
+      break;
+    case 'newest':
+      queryString = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY time_created DESC;`;
+      break;
+    case 'oldest':
+      queryString = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY time_created ASC;`;
+      break;
+
+    default:
+      queryString = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY id ASC;`;
+      break;
+  }
+
   pool
-    .query(query, [projectID])
+    .query(queryString, [projectID])
     .then((dbRes) => {
       res.send(dbRes.rows);
     })
@@ -164,9 +184,9 @@ router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
 
 //
 // GET all talent belonging to a user
-router.get('/talentPool/:id', rejectUnauthenticated, (req, res) => {
+router.get('/talentPool', rejectUnauthenticated, (req, res) => {
   const user = req.user.id;
-  const query = `SELECT * FROM "talent" WHERE "talent".belongs_to_user = $1;`;
+  const query = `SELECT * FROM "talent" WHERE "talent".belongs_to_user = $1 ORDER BY name ASC;`;
 
   pool
     .query(query, [user])
@@ -240,6 +260,28 @@ router.post('/addProjectRole/:id', (req, res) => {
     })
     .catch((err) => {
       console.log('ERROR POSTing new Role to project: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// POST new Talent
+router.post('/newTalent', (req, res) => {
+  const user = req.user.id;
+  const name = req.body.name;
+  const contact = req.body.contact;
+  const skills = req.body.skills;
+
+  const query = `INSERT INTO talent (name, contact_details, primary_skills, belongs_to_user)
+                VALUES ($1, $2, $3, $4);`;
+
+  pool
+    .query(query, [name, contact, skills, user])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error POSTing new talent: ', err);
       res.sendStatus(500);
     });
 });

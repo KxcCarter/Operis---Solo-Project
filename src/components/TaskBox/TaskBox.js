@@ -61,25 +61,21 @@ function TaskBox(props) {
                 </Box>
                 <Box p={1} display="inline">
                   <ButtonGroup size="small" variant="contained" color="primary">
-                    <Button onClick={changeSortOrder('is_completed')}>
+                    <Button onClick={changeSortOrder('completed')}>
                       Completed
                     </Button>
-                    <Button onClick={changeSortOrder('is_completed')}>
+                    <Button onClick={changeSortOrder('incomplete')}>
                       Incomplete
                     </Button>
-                    <Button onClick={changeSortOrder('time_created')}>
-                      Newest
-                    </Button>
-                    <Button onClick={changeSortOrder('time_created')}>
-                      Oldest
-                    </Button>
+                    <Button onClick={changeSortOrder('newest')}>Newest</Button>
+                    <Button onClick={changeSortOrder('oldest')}>Oldest</Button>
                   </ButtonGroup>
                 </Box>
               </Box>
             </Grid>
             <Box p={1}>
               {/* Task Items */}
-              {/* {taskList} */}
+
               {projectTasks.map((item, index) => {
                 return (
                   <TaskItem

@@ -11,11 +11,12 @@ import { Typography, Button, Box, Grid, Paper } from '@material-ui/core';
 // --- Icons
 import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import UndoIcon from '@material-ui/icons/Undo';
 
 function TaskItem(props) {
   const [taskStatus, setTaskStatus] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [taskData, setTaskData] = useState(props.taskContent);
+  const [taskData, setTaskData] = useState('');
   const dispatch = useDispatch();
 
   const handleOptions = (event) => {
@@ -38,7 +39,11 @@ function TaskItem(props) {
     console.log(props);
     dispatch({
       type: 'UPDATE_TASK',
-      payload: { task: taskData, taskID: props.id, pID: props.projectID },
+      payload: {
+        task: taskData || props.taskContent,
+        taskID: props.id,
+        pID: props.projectID,
+      },
     });
     toggleEditMode();
   };
@@ -75,7 +80,7 @@ function TaskItem(props) {
                 fullWidth
                 multiline
                 rows={4}
-                defaultValue={taskData}
+                defaultValue={props.taskContent}
                 onChange={handleChange}
               />
             )}
@@ -89,6 +94,11 @@ function TaskItem(props) {
           >
             {!editMode ? <EditIcon /> : <SaveAltIcon />}
           </Button>
+          {editMode && (
+            <Button size="small" variant="text" onClick={toggleEditMode}>
+              <UndoIcon />
+            </Button>
+          )}
         </Grid>
       </Grid>
     </Box>

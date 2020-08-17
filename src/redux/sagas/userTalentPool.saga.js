@@ -3,9 +3,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* getUserTalent(action) {
   try {
-    const response = yield axios.get(
-      `/api/operis/talentPool/${action.payload}`
-    );
+    const response = yield axios.get(`/api/operis/talentPool`);
     yield put({
       type: 'SET_USER_TALENT',
       payload: response.data,

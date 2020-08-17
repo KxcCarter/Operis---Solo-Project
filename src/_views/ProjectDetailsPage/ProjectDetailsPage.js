@@ -40,10 +40,9 @@ const ProjectDetails = (props) => {
   const [note, setNote] = useState(projectDetails.notes);
   const [editMode, setEditMode] = useState(false);
   const [details, setDetails] = useState({
-    title: projectDetails.title,
-    description: projectDetails.description,
-    image: projectDetails.image,
-    id: match.params.id,
+    title: '',
+    description: '',
+    image: '',
   });
 
   const clickBack = () => {
@@ -71,11 +70,18 @@ const ProjectDetails = (props) => {
       ...details,
       [fieldKey]: event.target.value,
     });
-    console.log('changing this! ', details);
   };
 
   const saveDetails = () => {
-    dispatch({ type: 'UPDATE_PROJECT_DETAILS', payload: details });
+    dispatch({
+      type: 'UPDATE_PROJECT_DETAILS',
+      payload: {
+        title: details.title || projectDetails.title,
+        description: details.description || projectDetails.description,
+        image: details.image || projectDetails.image,
+        id: match.params.id,
+      },
+    });
     toggleEditMode();
   };
 
