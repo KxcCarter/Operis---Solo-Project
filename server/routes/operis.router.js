@@ -368,6 +368,27 @@ router.put('/setTalentRole/:id', (req, res) => {
 });
 
 //
+// PUT update Talent Details
+router.put('/updateTalentDetails', (req, res) => {
+  const name = req.body.name;
+  const contact = req.body.contact;
+  const skills = req.body.skills;
+  const id = req.body.id;
+
+  const query = `UPDATE talent SET name = $1, contact_details = $2, primary_skills = $3 WHERE id = $4;`;
+
+  pool
+    .query(query, [name, contact, skills, id])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('PUT error with Talent Details Update: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
 // Update Project Details
 router.put('/updateProjectDetails/:id', (req, res) => {
   const id = req.params.id;

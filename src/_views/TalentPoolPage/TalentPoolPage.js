@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { IMaskInput } from 'react-imask';
 // import FancyTable from '../../components/FancyTable/FancyTable';
 
 // --- Components ---
@@ -11,10 +10,8 @@ import TalentPoolPageItem from '../../components/TalentPoolPageItem/TalentPoolPa
 import { makeStyles } from '@material-ui/core/styles';
 
 // --- Icons
-import EditIcon from '@material-ui/icons/Edit';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import AddBox from '@material-ui/icons/AddBox';
-import UndoIcon from '@material-ui/icons/Undo';
+import Clear from '@material-ui/icons/Clear';
 
 import {
   TextField,
@@ -54,8 +51,12 @@ function TalentPoolPage(props) {
     dispatch({ type: 'GET_USER_TALENT' });
   }, []);
 
-  const toggleEditMode = () => {
-    setEditMode(!editMode);
+  const cancelAdd = () => {
+    setTalentDetails({
+      name: '',
+      contact: '',
+      skills: '',
+    });
   };
 
   const handleChange = (fieldKey) => (event) => {
@@ -110,28 +111,7 @@ function TalentPoolPage(props) {
                   onChange={handleChange('skills')}
                 ></TextField>
               </TableCell>
-              <TableCell align="right">
-                <IMaskInput
-                  mask={Number}
-                  radix="."
-                  value="123"
-                  unmask={false} // true|false|'typed'
-                  // access to nested input
-                  // DO NOT USE onChange TO HANDLE CHANGES!
-                  // USE onAccept INSTEAD
-                  onAccept={
-                    // depending on prop above first argument is
-                    // `value` if `unmask=false`,
-                    // `unmaskedValue` if `unmask=true`,
-                    // `typedValue` if `unmask='typed'`
-                    (value, mask) => console.log(value)
-                  }
-                  // ...and more mask props in a guide
-
-                  // input props also available
-                  placeholder="Enter number here"
-                />
-              </TableCell>
+              <TableCell align="right"></TableCell>
               <TableCell />
 
               <TableCell align="right">
@@ -140,8 +120,8 @@ function TalentPoolPage(props) {
                     <Button size="small" onClick={saveNewTalent}>
                       <AddBox />
                     </Button>
-                    <Button size="small">
-                      <UndoIcon />
+                    <Button size="small" onClick={cancelAdd}>
+                      <Clear />
                     </Button>
                   </Box>
                 )}
