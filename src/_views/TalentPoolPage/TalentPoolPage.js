@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { IMaskInput } from 'react-imask';
+// import FancyTable from '../../components/FancyTable/FancyTable';
 
 // --- Components ---
 import TalentPoolPageItem from '../../components/TalentPoolPageItem/TalentPoolPageItem';
@@ -12,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // --- Icons
 import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import AddBox from '@material-ui/icons/AddBox';
 import UndoIcon from '@material-ui/icons/Undo';
 
 import {
@@ -24,6 +26,7 @@ import {
   TableBody,
   Table,
   Button,
+  Box,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -65,66 +68,97 @@ function TalentPoolPage(props) {
 
   const saveNewTalent = () => {
     dispatch({ type: 'CREATE_NEW_TAlENT', payload: talentDetails });
+    setTalentDetails({
+      name: '',
+      contact: '',
+      skills: '',
+    });
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Talent Name</TableCell>
-            <TableCell align="right">Contact Details</TableCell>
-            <TableCell align="right">Primary Skills</TableCell>
-            <TableCell align="right">Assigned to Project?</TableCell>
-            <TableCell align="right">Talent ID</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <TextField onChange={handleChange('name')}></TextField>
-            </TableCell>
-            <TableCell align="right">
-              <TextField onChange={handleChange('contact')}></TextField>
-            </TableCell>
-            <TableCell align="right">
-              <TextField onChange={handleChange('skills')}></TextField>
-            </TableCell>
-            <TableCell align="right">
-              <IMaskInput
-                mask={Number}
-                radix="."
-                value="123"
-                unmask={false} // true|false|'typed'
-                // access to nested input
-                // DO NOT USE onChange TO HANDLE CHANGES!
-                // USE onAccept INSTEAD
-                onAccept={
-                  // depending on prop above first argument is
-                  // `value` if `unmask=false`,
-                  // `unmaskedValue` if `unmask=true`,
-                  // `typedValue` if `unmask='typed'`
-                  (value, mask) => console.log(value)
-                }
-                // ...and more mask props in a guide
+    <>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Talent Name</TableCell>
+              <TableCell align="right">Contact Details</TableCell>
+              <TableCell align="right">Primary Skills</TableCell>
+              <TableCell align="right">Assigned to Project?</TableCell>
+              <TableCell align="right">Talent ID</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* Add New Person to Pool */}
+            <TableRow>
+              <TableCell>
+                <TextField
+                  value={talentDetails.name}
+                  onChange={handleChange('name')}
+                ></TextField>
+              </TableCell>
+              <TableCell align="right">
+                <TextField
+                  value={talentDetails.contact}
+                  onChange={handleChange('contact')}
+                ></TextField>
+              </TableCell>
+              <TableCell align="right">
+                <TextField
+                  value={talentDetails.skills}
+                  onChange={handleChange('skills')}
+                ></TextField>
+              </TableCell>
+              <TableCell align="right">
+                <IMaskInput
+                  mask={Number}
+                  radix="."
+                  value="123"
+                  unmask={false} // true|false|'typed'
+                  // access to nested input
+                  // DO NOT USE onChange TO HANDLE CHANGES!
+                  // USE onAccept INSTEAD
+                  onAccept={
+                    // depending on prop above first argument is
+                    // `value` if `unmask=false`,
+                    // `unmaskedValue` if `unmask=true`,
+                    // `typedValue` if `unmask='typed'`
+                    (value, mask) => console.log(value)
+                  }
+                  // ...and more mask props in a guide
 
-                // input props also available
-                placeholder="Enter number here"
-              />
-            </TableCell>
-            <TableCell />
+                  // input props also available
+                  placeholder="Enter number here"
+                />
+              </TableCell>
+              <TableCell />
 
-            <TableCell align="right">
-              <Button onClick={saveNewTalent}>Add</Button>
-            </TableCell>
-          </TableRow>
-          {userTalentPool.map((item, index) => (
-            <TalentPoolPageItem key={item.id} talentData={item} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+              <TableCell align="right">
+                {talentDetails.name && (
+                  <Box display="flex">
+                    <Button size="small" onClick={saveNewTalent}>
+                      <AddBox />
+                    </Button>
+                    <Button size="small">
+                      <UndoIcon />
+                    </Button>
+                  </Box>
+                )}
+              </TableCell>
+            </TableRow>
+
+            {/* Render the Talent Pool */}
+
+            {userTalentPool.map((item, index) => (
+              <TalentPoolPageItem key={item.id} talentData={item} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* <FancyTable talent={userTalentPool} /> */}
+    </>
   );
 }
 
