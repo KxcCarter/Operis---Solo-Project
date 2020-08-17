@@ -27,14 +27,12 @@ function TaskBox(props) {
   useEffect(() => {
     dispatch({
       type: 'GET_PROJECT_TASKS',
-      payload: { id: props.pID, orderBy: order },
+      payload: { projectID: props.pID, orderBy: order },
     });
-    console.log('IN USEEFFECT: ', order);
   }, [order]);
 
   const changeSortOrder = (orderBy) => (event) => {
     setOrder(orderBy);
-    console.log('CLICK order by: ', order);
   };
 
   return (

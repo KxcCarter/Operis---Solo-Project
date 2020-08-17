@@ -230,7 +230,7 @@ router.post('/', (req, res) => {
 // POST new task
 router.post('/newTask', (req, res) => {
   const task = req.body.task;
-  const id = req.body.id;
+  const id = req.body.projectID;
   let timeCreated = moment().format('YYYY-MM-DD h:mm:ss');
   const query = `INSERT INTO tasks (project_id, description, time_created)
                 VALUES ($1, $2, $3);`;
