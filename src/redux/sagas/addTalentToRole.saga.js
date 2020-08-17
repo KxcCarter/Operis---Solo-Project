@@ -10,7 +10,7 @@ function* setTalentRole(action) {
     );
     yield put({
       type: 'GET_CREW_LIST',
-      payload: action.payload.id,
+      payload: action.payload.pID,
     });
   } catch (error) {
     console.log('Error with adding talent to role:', error);

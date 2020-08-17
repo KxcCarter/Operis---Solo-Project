@@ -169,7 +169,8 @@ router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
               "roles".role_name FROM "project_roles"
               LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
               LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
-              WHERE "project_roles".project_id = $1;`;
+              WHERE "project_roles".project_id = $1
+              ORDER BY "project_roles".id;`;
 
   pool
     .query(query, [projectID])
