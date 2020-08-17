@@ -66,7 +66,7 @@ function TaskItem(props) {
           <Paper elevation={2}>
             {!editMode ? (
               <Box m={1}>
-                <Typography variant="body1">{taskData}</Typography>
+                <Typography variant="body1">{props.taskContent}</Typography>
               </Box>
             ) : (
               <TextField

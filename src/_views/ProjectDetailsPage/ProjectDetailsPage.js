@@ -43,7 +43,7 @@ const ProjectDetails = (props) => {
     title: projectDetails.title,
     description: projectDetails.description,
     image: projectDetails.image,
-    id: projectDetails.id,
+    id: match.params.id,
   });
 
   const clickBack = () => {

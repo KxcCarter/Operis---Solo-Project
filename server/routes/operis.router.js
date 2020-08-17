@@ -32,10 +32,30 @@ router.get('/ordered', rejectUnauthenticated, (req, res) => {
   const user = req.user.id;
   const orderBy = req.query.orderBy;
   console.log(orderBy);
-  const query = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY ${orderBy} ASC;`;
+  // const query = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY ${orderBy} DESC;`;
+
+  let queryString;
+  switch (orderBy) {
+    case 'is_completed':
+      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY is_completed DESC;`;
+      break;
+    case 'title':
+      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY title ASC;`;
+      break;
+    case 'time_created':
+      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY time_created ASC;`;
+      break;
+    case 'id':
+      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY id DESC;`;
+      break;
+
+    default:
+      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY id ASC;`;
+      break;
+  }
 
   pool
-    .query(query, [user])
+    .query(queryString, [user])
     .then((dbRes) => {
       res.send(dbRes.rows);
     })
@@ -85,11 +105,30 @@ router.get('/project/:id', rejectUnauthenticated, (req, res) => {
 
 //
 // GET tasks belonging to a project
+// router.get('/tasks', rejectUnauthenticated, (req, res) => {
+//   const projectID = req.query.projectID;
+//   // const orderBy = req.query.orderBy;
+//   console.log(req.query);
+//   const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY id ASC;`;
+
+//   pool
+//     .query(query, [projectID])
+//     .then((dbRes) => {
+//       res.send(dbRes.rows);
+//     })
+//     .catch((err) => {
+//       console.log('Error GETTING project tasks: ', err);
+//       res.sendStatus(500);
+//     });
+// });
+
+//
+// GET tasks belonging to a project, ordered by status
 router.get('/tasks', rejectUnauthenticated, (req, res) => {
   const projectID = req.query.projectID;
   const orderBy = req.query.orderBy;
   console.log(req.query);
-  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy};`;
+  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy} ASC;`;
 
   pool
     .query(query, [projectID])

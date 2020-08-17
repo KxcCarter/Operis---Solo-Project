@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 
 function TaskBox(props) {
-  const [order, setOrder] = useState('id DESC');
+  const [order, setOrder] = useState('id');
   const dispatch = useDispatch();
 
   const {
@@ -61,16 +61,16 @@ function TaskBox(props) {
                 </Box>
                 <Box p={1} display="inline">
                   <ButtonGroup size="small" variant="contained" color="primary">
-                    <Button onClick={changeSortOrder('is_completed ASC')}>
+                    <Button onClick={changeSortOrder('is_completed')}>
                       Completed
                     </Button>
-                    <Button onClick={changeSortOrder('is_completed DESC')}>
+                    <Button onClick={changeSortOrder('is_completed')}>
                       Incomplete
                     </Button>
-                    <Button onClick={changeSortOrder('time_created ASC')}>
+                    <Button onClick={changeSortOrder('time_created')}>
                       Newest
                     </Button>
-                    <Button onClick={changeSortOrder('time_created DESC')}>
+                    <Button onClick={changeSortOrder('time_created')}>
                       Oldest
                     </Button>
                   </ButtonGroup>
