@@ -4,17 +4,16 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
 
 // --- Components
+import CrewListItem from '../CrewListItem/CrewListItem';
 
 // --- Material-UI
 import {
   Box,
   Grid,
-  CircularProgress,
   Typography,
   Select,
   List,
   ListItem,
-  ListItemText,
 } from '@material-ui/core';
 
 const CrewList = (props) => {
@@ -22,11 +21,10 @@ const CrewList = (props) => {
   useEffect(() => {
     dispatch({ type: 'GET_CREW_LIST', payload: props.pID });
     dispatch({ type: 'GET_ROLES' });
-    dispatch({ type: 'GET_USER_TALENT', payload: props.user.id });
+    dispatch({ type: 'GET_USER_TALENT' });
   }, []);
 
   const [roleID, setRoleID] = useState('');
-  const [talentID, setTalentID] = useState('');
 
   const { store } = props;
 
@@ -73,38 +71,7 @@ const CrewList = (props) => {
               </ListItem>
               {store.projectCrewList[0] &&
                 store.projectCrewList.map((item, index) => {
-                  return (
-                    <ListItem key={index}>
-                      <ListItemText
-                        primary={item.role_name}
-                        secondary={
-                          item.name || (
-                            <Select
-                              native
-                              value={talentID}
-                              onChange={handleTalentAssign}
-                              inputProps={{
-                                name: 'role',
-                                id: 'filled-role-native-simple',
-                              }}
-                            >
-                              <option aria-label="None" value="" disabled>
-                                Assign To Role
-                              </option>
-
-                              {store.userTalentPool.map((item, index) => {
-                                return (
-                                  <option key={index} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                );
-                              })}
-                            </Select>
-                          )
-                        }
-                      />
-                    </ListItem>
-                  );
+                  return <CrewListItem key={index} crewList={item} />;
                 })}
             </List>
           </div>

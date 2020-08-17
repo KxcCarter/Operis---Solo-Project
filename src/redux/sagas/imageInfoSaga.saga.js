@@ -8,7 +8,10 @@ function* postImageUrl(action) {
       withCredentials: true,
     };
 
-    const response = yield axios.put('/api/operis/uploadImage', action.payload);
+    const response = yield axios.put(
+      `/api/operis/uploadImage/${action.payload.id}`,
+      action.payload
+    );
     console.log(response);
   } catch (err) {
     console.log('ERROR Image Url post (PUT) failed: ', err);

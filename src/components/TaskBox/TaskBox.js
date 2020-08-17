@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import NewTaskModal from '../NewTaskModal/NewTaskModal';
@@ -16,22 +16,26 @@ import {
 } from '@material-ui/core';
 
 function TaskBox(props) {
-  const [state, setState] = useState('Functional Component');
+  const [order, setOrder] = useState('id');
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: 'GET_PROJECT_TASKS', payload: props.pID });
-  }, []);
 
   const {
     store: { projectTasks },
   } = props;
 
-  // console.table(projectDetails.tasks);
-  // console.log(props.pID);
+  // TODO: make task list re-render upon state change.
+  useEffect(() => {
+    dispatch({
+      type: 'GET_PROJECT_TASKS',
+      payload: { id: props.pID, orderBy: order },
+    });
+    console.log('IN USEEFFECT: ', order);
+  }, [order]);
 
-  const taskList = projectTasks.map((item, index) => {
-    return <TaskItem key={index} id={item.id} taskContent={item.description} />;
-  });
+  const changeSortOrder = (orderBy) => (event) => {
+    setOrder(orderBy);
+    console.log('CLICK order by: ', order);
+  };
 
   return (
     <>
@@ -51,18 +55,38 @@ function TaskBox(props) {
                   <NewTaskModal />
                 </Box>
                 <Box p={1} display="inline">
+                  <Typography variant="h6" display="inline">
+                    Sort
+                  </Typography>
+                </Box>
+                <Box p={1} display="inline">
                   <ButtonGroup size="small" variant="contained" color="primary">
-                    <Button>Completed</Button>
-                    <Button>Incomplete</Button>
-                    <Button>Newest</Button>
-                    <Button>Oldest</Button>
+                    <Button onClick={changeSortOrder('completed')}>
+                      Completed
+                    </Button>
+                    <Button onClick={changeSortOrder('incomplete')}>
+                      Incomplete
+                    </Button>
+                    <Button onClick={changeSortOrder('newest')}>Newest</Button>
+                    <Button onClick={changeSortOrder('oldest')}>Oldest</Button>
                   </ButtonGroup>
                 </Box>
               </Box>
             </Grid>
             <Box p={1}>
               {/* Task Items */}
-              {taskList}
+
+              {projectTasks.map((item, index) => {
+                return (
+                  <TaskItem
+                    key={index}
+                    id={item.id}
+                    projectID={props.pID}
+                    taskContent={item.description}
+                    status={item.is_completed}
+                  />
+                );
+              })}
             </Box>
           </Paper>
         </Box>

@@ -6,10 +6,10 @@ function* sendUpdateTask(action) {
     console.log(action.payload);
 
     yield axios.put(
-      `api/operis/updateTask/${action.payload.id}`,
+      `api/operis/updateTask/${action.payload.taskID}`,
       action.payload
     );
-    yield put({ type: 'GET_PROJECT_DETAILS', payload: action.payload.id });
+    yield put({ type: 'GET_PROJECT_TASKS', payload: action.payload.taskID });
   } catch (err) {
     console.log('PUT error in updateTask saga: ', err);
   }

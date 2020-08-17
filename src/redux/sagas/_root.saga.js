@@ -14,6 +14,11 @@ import userTalentPool from './userTalentPool.saga';
 import rolesSaga from './roles.saga';
 import addRoleToProject from './addRoleToProject.saga';
 import imageInfoSaga from './imageInfoSaga.saga';
+import addTalentToRole from './addTalentToRole.saga';
+import updateProjectDetails from './updateProjectDetails.saga';
+import updateTaskStatus from './updateTaskStatus.saga';
+import getProjectsOrdered from './getProjectsOrdered.saga';
+import newTalent from './newTalent.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -28,16 +33,21 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     cardSaga(),
+    getProjectsOrdered(),
     projectDetails(),
     newProject(),
     newTask(),
+    newTalent(),
     updateNote(),
     updateTask(),
+    updateTaskStatus(),
+    updateProjectDetails(),
     cardTasksSaga(),
     crewList(),
     userTalentPool(),
     rolesSaga(),
     addRoleToProject(),
     imageInfoSaga(),
+    addTalentToRole(),
   ]);
 }
