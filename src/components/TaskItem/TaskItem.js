@@ -13,13 +13,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
 function TaskItem(props) {
-  const [taskState, setTaskState] = useState('');
+  const [taskStatus, setTaskStatus] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [taskData, setTaskData] = useState(props.taskContent);
   const dispatch = useDispatch();
 
   const handleOptions = (event) => {
-    setTaskState(event.target.value);
+    setTaskStatus(event.target.value);
+    dispatch({
+      type: 'UPDATE_TASK_STATUS',
+      payload: { status: event.target.value, taskID: props.id },
+    });
   };
 
   const toggleEditMode = () => {
@@ -34,7 +38,7 @@ function TaskItem(props) {
     console.log(props);
     dispatch({
       type: 'UPDATE_TASK',
-      payload: { task: taskData, id: props.id },
+      payload: { task: taskData, taskID: props.id, pID: props.projectID },
     });
     toggleEditMode();
   };
@@ -45,15 +49,15 @@ function TaskItem(props) {
         <Grid item sm={2}>
           <Select
             native
-            value={taskState}
+            value={taskStatus}
             variant="standard"
             onChange={handleOptions}
           >
             <option aria-label="None" value="" disabled>
               options
             </option>
-            <option value="complete">Complete</option>
-            <option value="incomplete">Incomplete</option>
+            <option value="true">Complete</option>
+            <option value="false">Incomplete</option>
             <option value="remove">Delete</option>
           </Select>
         </Grid>

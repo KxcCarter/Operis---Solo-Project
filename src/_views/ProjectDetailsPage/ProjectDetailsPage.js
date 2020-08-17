@@ -39,6 +39,12 @@ const ProjectDetails = (props) => {
   // TODO: Componentize note section
   const [note, setNote] = useState(projectDetails.notes);
   const [editMode, setEditMode] = useState(false);
+  const [details, setDetails] = useState({
+    title: projectDetails.title,
+    description: projectDetails.description,
+    image: projectDetails.image,
+    id: projectDetails.id,
+  });
 
   const clickBack = () => {
     // history.goBack();
@@ -61,7 +67,16 @@ const ProjectDetails = (props) => {
   };
 
   const handleChange = (fieldKey) => (event) => {
-    console.log('changing ', fieldKey);
+    setDetails({
+      ...details,
+      [fieldKey]: event.target.value,
+    });
+    console.log('changing this! ', details);
+  };
+
+  const saveDetails = () => {
+    dispatch({ type: 'UPDATE_PROJECT_DETAILS', payload: details });
+    toggleEditMode();
   };
 
   return (
@@ -91,7 +106,11 @@ const ProjectDetails = (props) => {
             )}
           </Grid>
           <Grid item sm={1}>
-            <Button variant="text" size="small" onClick={toggleEditMode}>
+            <Button
+              variant="text"
+              size="small"
+              onClick={!editMode ? toggleEditMode : saveDetails}
+            >
               {editMode ? 'save' : 'edit'}
             </Button>
           </Grid>
@@ -106,7 +125,7 @@ const ProjectDetails = (props) => {
                 {editMode && (
                   <>
                     <Typography variant="subtitle1">Add a new image</Typography>
-                    <ImageUpload />
+                    <ImageUpload pID={projectDetails.id} />
                   </>
                 )}
               </Box>

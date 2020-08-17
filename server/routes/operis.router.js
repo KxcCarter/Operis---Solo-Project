@@ -67,7 +67,7 @@ router.get('/project/:id', rejectUnauthenticated, (req, res) => {
 //
 // GET tasks belonging to a project
 router.get('/tasks', rejectUnauthenticated, (req, res) => {
-  const projectID = req.query.id;
+  const projectID = req.query.projectID;
   const orderBy = req.query.orderBy;
   console.log(req.query);
   const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy};`;
@@ -187,10 +187,10 @@ router.post('/addProjectRole/:id', (req, res) => {
 });
 
 //
-//
-// THIS IS JUST A TEST TEMPLATE. IT NEEDS TO RECIEVE A PROJECT ID
-router.put('/uploadImage', (req, res) => {
-  const pID = 15;
+// PUT
+// Upload Image
+router.put('/uploadImage/:id', (req, res) => {
+  const pID = req.params.id;
   const image = req.body.image;
   console.log(req.body);
   const query = `UPDATE "projects" SET image = $2 WHERE "projects".id = $1;`;
@@ -264,6 +264,46 @@ router.put('/setTalentRole/:id', (req, res) => {
     })
     .catch((err) => {
       console.log('Error PUTTING talent on project role: ', err);
+    });
+});
+
+//
+// Update Project Details
+router.put('/updateProjectDetails/:id', (req, res) => {
+  const id = req.params.id;
+  const title = req.body.title;
+  const description = req.body.description;
+  const image = req.body.image;
+  console.log(req.body);
+  const query = `UPDATE projects SET title = $1, description = $2, image = $3 WHERE id = $4;`;
+
+  pool
+    .query(query, [title, description, image, id])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error updating project details: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// Update Task Status
+router.put('/updateTaskStatus/:id', (req, res) => {
+  const taskID = req.params.id;
+  const status = req.body.status;
+  console.log('UGH just work already: ', req.params.id, req.body.status);
+  const query = `UPDATE tasks SET is_completed = $1 WHERE id = $2;`;
+
+  pool
+    .query(query, [status, taskID])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error updating task status: ', err);
+      res.sendStatus(500);
     });
 });
 

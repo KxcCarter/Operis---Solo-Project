@@ -85,6 +85,7 @@ function TaskBox(props) {
                   <TaskItem
                     key={index}
                     id={item.id}
+                    projectID={props.pID}
                     taskContent={item.description}
                   />
                 );

@@ -4,7 +4,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* getTasks(action) {
   try {
     const response = yield axios.get(`/api/operis/tasks`, {
-      params: { id: action.payload.id, orderBy: action.payload.orderBy },
+      params: { projectID: action.payload.id, orderBy: action.payload.orderBy },
     });
     yield put({
       type: 'SET_PROJECT_TASKS',
