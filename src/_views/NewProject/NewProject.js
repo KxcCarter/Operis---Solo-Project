@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { useDispatch } from 'react-redux';
 
 // --- Material-UI
 import {
@@ -15,6 +15,7 @@ import {
 
 // import TaskBox from '../../components/TaskBox/TaskBox';
 import ImageUpload from '../../components/ImageUpload/ImageUpload';
+import Axios from 'axios';
 
 // const tempIMG =
 // 'https://i.pinimg.com/564x/f0/5e/86/f05e865445d3a728165dd97234b76ab9.jpg';
@@ -25,6 +26,9 @@ const NewProject = (props) => {
     description: '',
     image: '',
   });
+  const [hasID, setHasID] = useState('not yet set.');
+  const [wasCreated, setWasCreated] = useState(false);
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -36,7 +40,25 @@ const NewProject = (props) => {
   };
 
   const handleSubmit = () => {
-    dispatch({ type: 'CREATE_NEW_PROJECT', payload: projectDetails });
+    Axios({
+      method: 'POST',
+      url: '/api/operis',
+      data: projectDetails,
+    })
+      .then((response) => {
+        Axios.get('/api/operis').then((response) => {
+          console.log(response.data);
+          history.push(
+            `/projectDetails/${response.data[response.data.length - 1].id}`
+          );
+        });
+      })
+      .catch((err) => {
+        console.log('POST error, ', err);
+      });
+
+    // dispatch({ type: 'CREATE_NEW_PROJECT', payload: projectDetails });
+    // setWasCreated(true);
   };
 
   return (
@@ -93,7 +115,7 @@ const NewProject = (props) => {
         />
       </Grid>
 
-      <Grid item xs={6} sm={3}>
+      {/* <Grid item xs={6} sm={3}>
         <Typography variant="h5">Crew List</Typography>
         <ul>
           <li>Lots</li>
@@ -102,7 +124,7 @@ const NewProject = (props) => {
           <li>People</li>
           <li>Here</li>
         </ul>
-      </Grid>
+      </Grid> */}
       <br></br>
 
       {/* <TaskBox taskData={props.store} /> */}

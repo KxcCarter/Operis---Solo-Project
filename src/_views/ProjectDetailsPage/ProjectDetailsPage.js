@@ -134,7 +134,7 @@ const ProjectDetails = (props) => {
                 {projectDetails.image ? (
                   <img src={projectDetails.image} alt={projectDetails.title} />
                 ) : (
-                  <ImageUpload />
+                  <ImageUpload pID={projectDetails.id} />
                 )}
                 {editMode && (
                   <>

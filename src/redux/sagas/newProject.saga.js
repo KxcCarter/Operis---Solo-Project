@@ -3,8 +3,6 @@ import axios from 'axios';
 
 function* createNewProject(action) {
   try {
-    // passes the data
-    console.log(action.payload);
     yield axios.post('/api/operis', action.payload);
     const response = yield axios.get('/api/operis');
     yield put({
