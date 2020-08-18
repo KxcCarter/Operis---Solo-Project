@@ -23,7 +23,11 @@ function TaskItem(props) {
     setTaskStatus(event.target.value);
     dispatch({
       type: 'UPDATE_TASK_STATUS',
-      payload: { status: event.target.value, taskID: props.id },
+      payload: {
+        status: event.target.value,
+        taskID: props.id,
+        projectID: props.projectID,
+      },
     });
   };
 
