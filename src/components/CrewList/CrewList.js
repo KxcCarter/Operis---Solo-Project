@@ -25,7 +25,6 @@ const CrewList = (props) => {
   }, []);
 
   const [roleID, setRoleID] = useState('');
-  const [talentID, setTalentID] = useState('');
 
   const { store } = props;
 
@@ -33,19 +32,6 @@ const CrewList = (props) => {
     dispatch({
       type: 'ADD_PROJECT_ROLE',
       payload: { id: props.pID, roleID: parseInt(event.target.value) },
-    });
-  };
-
-  const handleTalentAssign = (crewID) => (event) => {
-    setTalentID(event.target.value);
-    console.log(event.target.value, crewID);
-    dispatch({
-      type: 'ADD_TALENT_TO_ROLE',
-      payload: {
-        id: parseInt(crewID),
-        talentID: parseInt(event.target.value),
-        pID: props.pID,
-      },
     });
   };
 
@@ -86,14 +72,7 @@ const CrewList = (props) => {
 
               {store.projectCrewList[0] &&
                 store.projectCrewList.map((item, index) => {
-                  return (
-                    <CrewListItem
-                      key={index}
-                      crewList={item}
-                      talent={talentID}
-                      addTalent={handleTalentAssign}
-                    />
-                  );
+                  return <CrewListItem key={index} crewList={item} />;
                 })}
             </List>
           </div>

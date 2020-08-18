@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,6 @@ const CrewListItem = (props) => {
   const dispatch = useDispatch();
 
   const [talentID, setTalentID] = useState('');
-  const [talentName, setTalentName] = useState(props.crewList.name);
   const [checked, setChecked] = useState(false);
 
   const { store } = props;
@@ -48,11 +47,10 @@ const CrewListItem = (props) => {
       <ListItemText
         primary={props.crewList.role_name}
         secondary={
-          talentName || (
+          props.crewList.name || (
             <Select
               native
               value={talentID}
-              // onChange={props.addTalent(props.crewList.id)}
               onChange={handleTalentAssign}
               inputProps={{
                 name: 'role',
