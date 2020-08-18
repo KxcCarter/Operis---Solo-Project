@@ -169,7 +169,8 @@ router.get('/crewProject/:id', rejectUnauthenticated, (req, res) => {
               "roles".role_name FROM "project_roles"
               LEFT JOIN "talent" ON "talent".id = "project_roles".talent_id
               LEFT JOIN "roles" ON "roles".id = "project_roles".role_id
-              WHERE "project_roles".project_id = $1;`;
+              WHERE "project_roles".project_id = $1
+              ORDER BY "project_roles".id;`;
 
   pool
     .query(query, [projectID])
@@ -229,7 +230,7 @@ router.post('/', (req, res) => {
 // POST new task
 router.post('/newTask', (req, res) => {
   const task = req.body.task;
-  const id = req.body.id;
+  const id = req.body.projectID;
   let timeCreated = moment().format('YYYY-MM-DD h:mm:ss');
   const query = `INSERT INTO tasks (project_id, description, time_created)
                 VALUES ($1, $2, $3);`;

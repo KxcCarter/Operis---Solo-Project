@@ -9,7 +9,13 @@ function* sendUpdateTask(action) {
       `api/operis/updateTask/${action.payload.taskID}`,
       action.payload
     );
-    yield put({ type: 'GET_PROJECT_TASKS', payload: action.payload.taskID });
+    yield put({
+      type: 'GET_PROJECT_TASKS',
+      payload: {
+        projectID: action.payload.projectID,
+        orderBy: 'id',
+      },
+    });
   } catch (err) {
     console.log('PUT error in updateTask saga: ', err);
   }

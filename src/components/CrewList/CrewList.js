@@ -25,18 +25,28 @@ const CrewList = (props) => {
   }, []);
 
   const [roleID, setRoleID] = useState('');
+  const [talentID, setTalentID] = useState('');
 
   const { store } = props;
 
-  const handleChangeSelect = (event) => {
+  const handleAddCrewRole = (event) => {
     dispatch({
       type: 'ADD_PROJECT_ROLE',
       payload: { id: props.pID, roleID: parseInt(event.target.value) },
     });
   };
 
-  const handleTalentAssign = (event) => {
-    console.log('You just assigned a person to a crew role! Wow!');
+  const handleTalentAssign = (crewID) => (event) => {
+    setTalentID(event.target.value);
+    console.log(event.target.value, crewID);
+    dispatch({
+      type: 'ADD_TALENT_TO_ROLE',
+      payload: {
+        id: parseInt(crewID),
+        talentID: parseInt(event.target.value),
+        pID: props.pID,
+      },
+    });
   };
 
   return (
@@ -46,11 +56,13 @@ const CrewList = (props) => {
           <Typography variant="h5">Project Crew</Typography>
           <div>
             <List dense>
+              {/* Dropdown List */}
+
               <ListItem>
                 <Select
                   native
                   value={roleID}
-                  onChange={handleChangeSelect}
+                  onChange={handleAddCrewRole}
                   inputProps={{
                     name: 'role',
                     id: 'filled-role-native-simple',
@@ -69,9 +81,19 @@ const CrewList = (props) => {
                   })}
                 </Select>
               </ListItem>
+
+              {/* Rendered Crew List */}
+
               {store.projectCrewList[0] &&
                 store.projectCrewList.map((item, index) => {
-                  return <CrewListItem key={index} crewList={item} />;
+                  return (
+                    <CrewListItem
+                      key={index}
+                      crewList={item}
+                      talent={talentID}
+                      addTalent={handleTalentAssign}
+                    />
+                  );
                 })}
             </List>
           </div>

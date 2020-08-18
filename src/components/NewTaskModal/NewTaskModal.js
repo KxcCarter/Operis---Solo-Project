@@ -53,7 +53,7 @@ function NewTaskModal(props) {
     event.preventDefault();
     dispatch({
       type: 'CREATE_NEW_TASK',
-      payload: { task: task, id: projectDetails.id },
+      payload: { task: task, projectID: projectDetails.id },
     });
     handleClose();
   };

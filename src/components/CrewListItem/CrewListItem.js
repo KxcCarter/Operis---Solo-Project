@@ -35,6 +35,7 @@ const CrewListItem = (props) => {
       payload: {
         id: props.crewList.id,
         talentID: parseInt(event.target.value),
+        pID: props.crewList.project_id,
       },
     });
   };
@@ -51,6 +52,7 @@ const CrewListItem = (props) => {
             <Select
               native
               value={talentID}
+              // onChange={props.addTalent(props.crewList.id)}
               onChange={handleTalentAssign}
               inputProps={{
                 name: 'role',

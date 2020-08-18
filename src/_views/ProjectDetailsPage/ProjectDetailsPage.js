@@ -14,14 +14,13 @@ import {
   CircularProgress,
   Button,
 } from '@material-ui/core';
+
+// --- MUI Icons ---
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import CrewList from '../../components/CrewList/CrewList';
 import TaskBox from '../../components/TaskBox/TaskBox';
 import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
-// this could also be written with destructuring parameters as:
-// const UserPage = ({ user }) => (
-// and then instead of `props.user.username` you could use `user.username`
 const ProjectDetails = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -35,15 +34,15 @@ const ProjectDetails = (props) => {
     dispatch({ type: 'GET_PROJECT_DETAILS', payload: match.params.id });
   }, []);
 
-  // ***
-  // TODO: Componentize note section
-  const [note, setNote] = useState(projectDetails.notes);
   const [editMode, setEditMode] = useState(false);
   const [details, setDetails] = useState({
     title: '',
     description: '',
     image: '',
   });
+  // ***
+  // TODO: Componentize note section
+  const [note, setNote] = useState(projectDetails.notes);
 
   const clickBack = () => {
     // history.goBack();
