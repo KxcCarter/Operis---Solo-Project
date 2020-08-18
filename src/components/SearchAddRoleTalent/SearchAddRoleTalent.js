@@ -19,11 +19,11 @@ export default function SearchAddRoleTalent(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
-  const anchorRef = React.useRef(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (event) => {
+  const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
+
     setList(
       props.talentPool.filter((el) => el.name.includes(event.target.value))
     );
@@ -32,36 +32,43 @@ export default function SearchAddRoleTalent(props) {
 
   const clickAway = () => {
     setSearchQuery('');
-    // setList([]);
+
+    setTimeout(() => {
+      setOpen(false);
+    }, 100);
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root} component="span">
       <Paper className={classes.paper}>
-        <TextField
-          id="outlined-basic"
-          size="small"
-          value={searchQuery}
-          label="Search for talent"
-          variant="outlined"
-          autoComplete="off"
-          onBlur={clickAway}
-          onChange={handleSearch}
-        />
+        <Box pt={0.5}>
+          <TextField
+            id="outlined-basic"
+            size="small"
+            value={searchQuery}
+            label="Search for talent"
+            variant="outlined"
+            autoComplete="off"
+            onBlur={clickAway}
+            onChange={handleSearchChange}
+          />
+        </Box>
 
-        <MenuList>
-          {list.slice(0, 5).map((item, index) => {
-            return (
-              <MenuItem
-                key={item.id}
-                onClick={props.handleTalentAssign(item.id)}
-              >
-                {item.name}
-              </MenuItem>
-            );
-          })}
-        </MenuList>
+        <Box display={open ? 'block' : 'none'}>
+          <MenuList>
+            {list.slice(0, 5).map((item, index) => {
+              return (
+                <MenuItem
+                  key={item.id}
+                  onClick={props.handleTalentAssign(item.id)}
+                >
+                  {item.name}
+                </MenuItem>
+              );
+            })}
+          </MenuList>
+        </Box>
       </Paper>
-    </div>
+    </Box>
   );
 }
