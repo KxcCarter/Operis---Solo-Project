@@ -12,7 +12,7 @@ function* postImageUrl(action) {
       `/api/operis/uploadImage/${action.payload.id}`,
       action.payload
     );
-    console.log(response);
+    yield put({ type: 'GET_PROJECT_DETAILS', payload: action.payload.id });
   } catch (err) {
     console.log('ERROR Image Url post (PUT) failed: ', err);
   }
