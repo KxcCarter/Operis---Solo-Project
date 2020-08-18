@@ -46,7 +46,7 @@ function TaskItem(props) {
       payload: {
         task: taskData || props.taskContent,
         taskID: props.id,
-        pID: props.projectID,
+        projectID: props.projectID,
       },
     });
     toggleEditMode();
