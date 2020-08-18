@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
@@ -14,13 +14,11 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import UndoIcon from '@material-ui/icons/Undo';
 
 function TaskItem(props) {
-  const [taskStatus, setTaskStatus] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [taskData, setTaskData] = useState('');
   const dispatch = useDispatch();
 
   const handleOptions = (event) => {
-    setTaskStatus(event.target.value);
     dispatch({
       type: 'UPDATE_TASK_STATUS',
       payload: {
