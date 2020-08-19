@@ -73,7 +73,7 @@ const ProjectList = (props) => {
               </Button>
               <Button onClick={changeSortOrder('title')}>title</Button>
               <Button onClick={changeSortOrder('time_created')}>Newest</Button>
-              <Button onClick={changeSortOrder('id')}>default</Button>
+              <Button onClick={changeSortOrder('oldest')}>Oldest</Button>
             </ButtonGroup>
           </Box>
           <Box align="center">

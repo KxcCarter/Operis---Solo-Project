@@ -20,6 +20,7 @@ import {
 
 // --- MUI Icons ---
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DeleteProjectButton from '../../components/DeleteProjectButton/DeleteProjectButton';
 
 const ProjectDetails = (props) => {
   const dispatch = useDispatch();
@@ -112,18 +113,25 @@ const ProjectDetails = (props) => {
               ></TextField>
             )}
           </Grid>
-          <Grid item xs={1}>
-            <Button
-              variant="text"
-              size="small"
-              onClick={!editMode ? toggleEditMode : saveDetails}
-            >
-              {editMode ? 'save' : 'edit'}
-            </Button>
-            {editMode && (
-              <Button variant="text" size="small" onClick={toggleEditMode}>
-                cancel
+          <Grid item xs={2} container>
+            <Grid item xs={6}>
+              <Button
+                variant="text"
+                size="small"
+                onClick={!editMode ? toggleEditMode : saveDetails}
+              >
+                {editMode ? 'save' : 'edit'}
               </Button>
+              {editMode && (
+                <Button variant="text" size="small" onClick={toggleEditMode}>
+                  cancel
+                </Button>
+              )}
+            </Grid>
+            {editMode && (
+              <Grid item xs={6}>
+                <DeleteProjectButton projectID={projectDetails.id} />
+              </Grid>
             )}
           </Grid>
 

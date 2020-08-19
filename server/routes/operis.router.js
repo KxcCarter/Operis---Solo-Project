@@ -43,10 +43,10 @@ router.get('/ordered', rejectUnauthenticated, (req, res) => {
       queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY title ASC;`;
       break;
     case 'time_created':
-      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY time_created ASC;`;
+      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY time_created DESC;`;
       break;
-    case 'id':
-      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY id DESC;`;
+    case 'oldest':
+      queryString = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY time_created ASC;`;
       break;
 
     default:
@@ -102,25 +102,6 @@ router.get('/project/:id', rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
-
-//
-// GET tasks belonging to a project
-// router.get('/tasks', rejectUnauthenticated, (req, res) => {
-//   const projectID = req.query.projectID;
-//   // const orderBy = req.query.orderBy;
-//   console.log(req.query);
-//   const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY id ASC;`;
-
-//   pool
-//     .query(query, [projectID])
-//     .then((dbRes) => {
-//       res.send(dbRes.rows);
-//     })
-//     .catch((err) => {
-//       console.log('Error GETTING project tasks: ', err);
-//       res.sendStatus(500);
-//     });
-// });
 
 //
 // GET tasks belonging to a project, ordered by status
@@ -211,7 +192,7 @@ router.post('/', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const image = req.body.image;
-  let timeCreated = moment().format('YYYY-MM-DD h:mm:ss');
+  let timeCreated = moment().format('YYYY-MM-DD HH:mm:ss');
   const query = `INSERT INTO projects (user_id, title, description, image, time_created) VALUES ($1, $2, $3, $4, $5);`;
 
   pool
@@ -231,7 +212,7 @@ router.post('/', (req, res) => {
 router.post('/newTask', (req, res) => {
   const task = req.body.task;
   const id = req.body.projectID;
-  let timeCreated = moment().format('YYYY-MM-DD h:mm:ss');
+  let timeCreated = moment().format('YYYY-MM-DD HH:mm:ss');
   const query = `INSERT INTO tasks (project_id, description, time_created)
                 VALUES ($1, $2, $3);`;
   pool
@@ -425,6 +406,25 @@ router.put('/updateTaskStatus/:id', (req, res) => {
     })
     .catch((err) => {
       console.log('Error updating task status: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+//
+// DELETE project
+router.delete('/deleteProject/:id', (req, res) => {
+  const projectID = req.params.id;
+
+  const query = `DELETE FROM "projects" WHERE "projects".id = $1;`;
+
+  pool
+    .query(query, [projectID])
+    .then((dbRes) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log('Error DELETING project: ', err);
       res.sendStatus(500);
     });
 });
