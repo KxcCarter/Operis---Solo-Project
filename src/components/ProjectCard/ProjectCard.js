@@ -24,7 +24,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles(() => ({
   card: {
-    width: 300,
+    width: '95%',
     padding: 5,
     margin: 5,
   },

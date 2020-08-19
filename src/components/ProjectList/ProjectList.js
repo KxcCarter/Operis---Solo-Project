@@ -26,8 +26,23 @@ const ProjectList = (props) => {
 
   const projects = props.store.projects.map((item, index) => {
     return (
-      <Grid key={index} item md={4}>
+      <Grid key={index} item xs={12} sm={6} md={4}>
         <ProjectCard
+          title={item.title}
+          description={item.description}
+          image={item.image}
+          isCompleted={item.is_completed}
+          isStaffed={item.is_staffed}
+          id={item.id}
+        />
+      </Grid>
+    );
+  });
+
+  const projectsDouble = props.store.projects.map((item, index) => {
+    return (
+      <Grid key={index} item xs={12} sm={6} md={4}>
+        <PostCardDemo
           title={item.title}
           description={item.description}
           image={item.image}
@@ -64,15 +79,7 @@ const ProjectList = (props) => {
           <Box align="center">
             <Grid container spacing={3}>
               {projects}
-              <Grid item md={4}>
-                <PostCardDemo />
-              </Grid>
-              <Grid item md={4}>
-                <PostCardDemo />
-              </Grid>
-              <Grid item md={4}>
-                <PostCardDemo />
-              </Grid>
+              {projectsDouble}
             </Grid>
           </Box>
         </Box>

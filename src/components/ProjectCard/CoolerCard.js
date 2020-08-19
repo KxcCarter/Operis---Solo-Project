@@ -13,11 +13,12 @@ import { useSoftRiseShadowStyles } from '@mui-treasury/styles/shadow/softRise';
 import { useSlopeCardMediaStyles } from '@mui-treasury/styles/cardMedia/slope';
 import { useN01TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n01';
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
-import { CardHeader } from '@material-ui/core';
+import { CardHeader, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 304,
+    maxWidth: '85%',
+
     margin: 'auto',
   },
   content: {
@@ -34,36 +35,28 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const PostCardDemo = React.memo(function PostCard() {
+export const PostCardDemo = React.memo(function PostCard(props) {
   const cardStyles = useStyles();
   const mediaStyles = useSlopeCardMediaStyles();
   const shadowStyles = useSoftRiseShadowStyles();
   const textCardContentStyles = useN01TextInfoContentStyles();
   return (
     <Card className={cx(cardStyles.root, shadowStyles.root)}>
-      <CardMedia
-        classes={mediaStyles}
-        image={
-          'https://i.pinimg.com/564x/f0/5e/86/f05e865445d3a728165dd97234b76ab9.jpg'
-        }
-      >
-        <CardHeader title="Wow what a movie" />
+      <CardMedia classes={mediaStyles} image={props.image}>
+        {/* <CardHeader title={<Box pt={3}></Box>} /> */}
+        <Box p={12}></Box>
       </CardMedia>
-      <Avatar
+      {/* <Avatar
         variant="square"
         className={cardStyles.avatar}
-        src={
-          'https://i.pinimg.com/564x/f0/5e/86/f05e865445d3a728165dd97234b76ab9.jpg'
-        }
-      />
+        src={props.image}
+      /> */}
 
       <CardContent className={cardStyles.content}>
         <TextInfoContent
           classes={textCardContentStyles}
-          heading={'First Snow Storm'}
-          body={
-            'Snow storm coming in Sommaroy island, Arctic Norway. This is something that you definitely wanna see in your life.'
-          }
+          heading={props.title}
+          body={props.description.substring(0, 90)}
         />
       </CardContent>
       <Box px={2} pb={2} mt={-1}>

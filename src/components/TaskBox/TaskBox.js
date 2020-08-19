@@ -42,7 +42,7 @@ function TaskBox(props) {
         <Box m={2}>
           <Paper>
             {/* Taskbar Control Row */}
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <Box align="center" m={2} pt={1}>
                 <Box p={1} display="inline">
                   <Typography variant="h5" display="inline">
@@ -57,18 +57,28 @@ function TaskBox(props) {
                     Sort
                   </Typography>
                 </Box>
-                <Box p={1} display="inline">
-                  <ButtonGroup size="small" variant="contained" color="primary">
-                    <Button onClick={changeSortOrder('completed')}>
-                      Completed
-                    </Button>
-                    <Button onClick={changeSortOrder('incomplete')}>
-                      Incomplete
-                    </Button>
-                    <Button onClick={changeSortOrder('newest')}>Newest</Button>
-                    <Button onClick={changeSortOrder('oldest')}>Oldest</Button>
-                  </ButtonGroup>
-                </Box>
+                <Grid item xs={9}>
+                  <Box p={1} display="inline">
+                    <ButtonGroup
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                    >
+                      <Button onClick={changeSortOrder('completed')}>
+                        Completed
+                      </Button>
+                      <Button onClick={changeSortOrder('incomplete')}>
+                        Incomplete
+                      </Button>
+                      <Button onClick={changeSortOrder('newest')}>
+                        Newest
+                      </Button>
+                      <Button onClick={changeSortOrder('oldest')}>
+                        Oldest
+                      </Button>
+                    </ButtonGroup>
+                  </Box>
+                </Grid>
               </Box>
             </Grid>
             <Box p={1}>

@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import ImageUpload from '../../components/ImageUpload/ImageUpload';
+import CrewList from '../../components/CrewList/CrewList';
+import TaskBox from '../../components/TaskBox/TaskBox';
 
 // --- Material-UI
 import {
@@ -17,9 +20,6 @@ import {
 
 // --- MUI Icons ---
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import CrewList from '../../components/CrewList/CrewList';
-import TaskBox from '../../components/TaskBox/TaskBox';
-import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
 const ProjectDetails = (props) => {
   const dispatch = useDispatch();
@@ -88,17 +88,17 @@ const ProjectDetails = (props) => {
     <>
       {!projectDetails.id && <CircularProgress />}
       {projectDetails.id == match.params.id && (
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           {/* Project Title and Details */}
 
-          <Grid item sm={2}>
+          <Grid item xs={1} sm={2}>
             <Button
               variant="contained"
               startIcon={<ArrowBackIcon />}
               onClick={clickBack}
             ></Button>
           </Grid>
-          <Grid item md={8}>
+          <Grid item xs={12} md={8}>
             {!editMode ? (
               <Typography variant="h3" align="center">
                 {projectDetails.title}
@@ -112,7 +112,7 @@ const ProjectDetails = (props) => {
               ></TextField>
             )}
           </Grid>
-          <Grid item sm={1}>
+          <Grid item xs={1}>
             <Button
               variant="text"
               size="small"
@@ -128,7 +128,7 @@ const ProjectDetails = (props) => {
           </Grid>
 
           {/* Project Image */}
-          <Grid item xs={6} sm={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <Paper elevation={5}>
               <Box m={0.7} p={0.3}>
                 {projectDetails.image ? (
@@ -156,7 +156,7 @@ const ProjectDetails = (props) => {
             </Paper>
           </Grid>
 
-          <Grid item xs={6} sm={5}>
+          <Grid item xs={12} sm={6} md={5}>
             {!editMode ? (
               <Typography variant="body1">
                 {projectDetails.description}
@@ -174,13 +174,13 @@ const ProjectDetails = (props) => {
           </Grid>
 
           {/* Roles and Talent */}
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <CrewList pID={projectDetails.id} />
           </Grid>
           <br></br>
 
           {/* Task Box */}
-          <Grid item sm={9}>
+          <Grid item xs={12} sm={9}>
             <TaskBox pID={projectDetails.id} />
           </Grid>
 
@@ -207,6 +207,7 @@ const ProjectDetails = (props) => {
                 <TextField
                   id="outlined-multiline-static"
                   multiline
+                  fullWidth
                   rows={8}
                   defaultValue={projectDetails.notes}
                   variant="outlined"

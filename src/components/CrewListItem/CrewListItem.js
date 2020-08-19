@@ -11,7 +11,12 @@ import {
   ListItemText,
   ListItemIcon,
   Checkbox,
+  Button,
+  ListItemSecondaryAction,
 } from '@material-ui/core';
+
+import Clear from '@material-ui/icons/Clear';
+
 import SearchAddRoleTalent from '../SearchAddRoleTalent/SearchAddRoleTalent';
 
 const CrewListItem = (props) => {
@@ -53,6 +58,9 @@ const CrewListItem = (props) => {
           )
         }
       />
+      <ListItemSecondaryAction>
+        <Clear size="small" />
+      </ListItemSecondaryAction>
     </ListItem>
   );
 };
