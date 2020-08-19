@@ -31,6 +31,8 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import InfoIcon from '@material-ui/icons/Info';
 import WorkIcon from '@material-ui/icons/Work';
 import HomeIcon from '@material-ui/icons/Home';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import { Box, Typography } from '@material-ui/core';
 
 const StyledMenu = withStyles({
   paper: {
@@ -87,8 +89,14 @@ const Nav = (props) => {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">OPERIS</h2>
+        <h1 className="nav-title">OPERIS</h1>
       </Link>
+      <div className="nav-center">
+        <Typography variant="h6">
+          Hey {props.store.user.username} <InsertEmoticonIcon />
+        </Typography>
+      </div>
+
       <div className="nav-right">
         <Button
           size="large"

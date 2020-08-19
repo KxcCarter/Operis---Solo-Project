@@ -37,32 +37,33 @@ function TaskBox(props) {
 
   return (
     <>
-      {!projectTasks[0] && <CircularProgress />}
       {projectTasks && (
         <Box m={2}>
-          <Paper>
-            {/* Taskbar Control Row */}
-            <Grid item xs={12}>
-              <Box align="center" m={2} pt={1}>
-                <Box p={1} display="inline">
-                  <Typography variant="h5" display="inline">
-                    Tasks
-                  </Typography>
-                </Box>
-                <Box p={1} display="inline">
-                  <NewTaskModal />
-                </Box>
-                <Box p={1} display="inline">
-                  <Typography variant="h6" display="inline">
-                    Sort
-                  </Typography>
-                </Box>
-                <Grid item xs={9}>
-                  <Box p={1} display="inline">
+          <Grid container>
+            <Paper>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                {/* Taskbar Control Row */}
+                <Box m={2} pt={1} display="inline">
+                  <Grid item xs={12}>
+                    <Box p={1} display="inline">
+                      <Typography variant="h5" display="inline">
+                        Tasks
+                      </Typography>
+                    </Box>
+                    <Box p={1} display="inline">
+                      <NewTaskModal />
+                    </Box>
+
                     <ButtonGroup
                       size="small"
                       variant="contained"
                       color="primary"
+                      display="inline"
                     >
                       <Button onClick={changeSortOrder('completed')}>
                         Completed
@@ -77,26 +78,26 @@ function TaskBox(props) {
                         Oldest
                       </Button>
                     </ButtonGroup>
-                  </Box>
-                </Grid>
-              </Box>
-            </Grid>
-            <Box p={1}>
-              {/* Task Items */}
+                  </Grid>
+                </Box>
+              </Grid>
+              <Box p={1}>
+                {/* Task Items */}
 
-              {projectTasks.map((item, index) => {
-                return (
-                  <TaskItem
-                    key={index}
-                    id={item.id}
-                    projectID={props.pID}
-                    taskContent={item.description}
-                    status={item.is_completed}
-                  />
-                );
-              })}
-            </Box>
-          </Paper>
+                {projectTasks.map((item, index) => {
+                  return (
+                    <TaskItem
+                      key={index}
+                      id={item.id}
+                      projectID={props.pID}
+                      taskContent={item.description}
+                      status={item.is_completed}
+                    />
+                  );
+                })}
+              </Box>
+            </Paper>
+          </Grid>
         </Box>
       )}
     </>

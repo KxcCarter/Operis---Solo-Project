@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-import ImageUpload from '../ImageUpload/ImageUpload';
+// import ImageUpload from '../ImageUpload/ImageUpload';
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -9,7 +9,7 @@ import ImageUpload from '../ImageUpload/ImageUpload';
 
 const Footer = () => (
   <footer>
-    <ImageUpload />
+    {/* <ImageUpload /> */}
     &copy; Prime Digital Academy
   </footer>
 );

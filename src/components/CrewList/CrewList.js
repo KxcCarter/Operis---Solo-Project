@@ -14,6 +14,7 @@ import {
   Select,
   List,
   ListItem,
+  Button,
 } from '@material-ui/core';
 
 const CrewList = (props) => {
@@ -66,6 +67,7 @@ const CrewList = (props) => {
                     );
                   })}
                 </Select>
+                <Button size="small">edit</Button>
               </ListItem>
 
               {/* Rendered Crew List */}

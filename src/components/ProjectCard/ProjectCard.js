@@ -109,7 +109,7 @@ const ProjectCard = (props) => {
             </Grid>
             <Grid item sm={3}>
               <Button variant="text" onClick={handleClick}>
-                <OpenInNewIcon fontSize="large" />
+                <OpenInNewIcon />
               </Button>
             </Grid>
           </Grid>

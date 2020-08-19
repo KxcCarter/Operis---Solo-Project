@@ -10,6 +10,8 @@
   margin: 0 0 30px;
   background-color: #00acb0;
   overflow: hidden;
+  display: flex;
+  justify-content: space-around;
 }
 
 .nav-link {
@@ -25,4 +27,9 @@
 
 .nav-right {
   float: right;
+}
+
+.nav-center {
+  display: inline-block;
+  color: #f2f2f2;
 }
