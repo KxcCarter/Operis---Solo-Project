@@ -67,7 +67,6 @@ const CrewList = (props) => {
                     );
                   })}
                 </Select>
-                <Button size="small">edit</Button>
               </ListItem>
 
               {/* Rendered Crew List */}

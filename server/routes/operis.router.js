@@ -447,4 +447,24 @@ router.delete('/deleteTask/:id', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+//
+//
+// DELETE project crew role
+router.delete('/deleteProjectCrewRole/:id', (req, res) => {
+  const crewListRoleID = req.params.id;
+
+  const query = `DELETE FROM "project_roles" WHERE id = $1;`;
+
+  pool
+    .query(query, [crewListRoleID])
+    .then((dbRes) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log('Error DELETING task: ', err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

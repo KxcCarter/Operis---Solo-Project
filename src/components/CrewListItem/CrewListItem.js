@@ -12,23 +12,27 @@ import {
   ListItemIcon,
   Checkbox,
   Button,
+  IconButton,
   ListItemSecondaryAction,
 } from '@material-ui/core';
 
-import Clear from '@material-ui/icons/Clear';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import SearchAddRoleTalent from '../SearchAddRoleTalent/SearchAddRoleTalent';
 
 const CrewListItem = (props) => {
   const dispatch = useDispatch();
 
-  const [checked, setChecked] = useState(false);
-
   const { store } = props;
 
-  const handleChecked = () => {
-    setChecked(!checked);
-    console.log(props);
+  const handleClickDelete = () => {
+    dispatch({
+      type: 'DELETE_CREW_ROLE',
+      payload: {
+        projectID: props.crewList.project_id,
+        crewRoleID: props.crewList.id,
+      },
+    });
   };
 
   const handleTalentAssign = (talent) => (event) => {
@@ -44,9 +48,6 @@ const CrewListItem = (props) => {
 
   return (
     <ListItem>
-      <ListItemIcon>
-        <Checkbox size="small" checked={checked} onChange={handleChecked} />
-      </ListItemIcon>
       <ListItemText
         primary={props.crewList.role_name}
         secondary={
@@ -59,7 +60,13 @@ const CrewListItem = (props) => {
         }
       />
       <ListItemSecondaryAction>
-        <Clear size="small" />
+        <IconButton
+          edge="end"
+          aria-label="delete role"
+          onClick={handleClickDelete}
+        >
+          <DeleteIcon size="small" />
+        </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
   );
