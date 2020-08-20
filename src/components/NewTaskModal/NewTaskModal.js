@@ -88,7 +88,7 @@ function NewTaskModal(props) {
           onChange={handleInputChange}
         />
       </Box>
-      <Box p={3} m={4} display="inline">
+      <Box p={3} display="inline">
         <Button
           variant="outlined"
           size="small"

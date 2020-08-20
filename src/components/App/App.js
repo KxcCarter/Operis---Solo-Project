@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {
   HashRouter as Router,
   Route,
   Redirect,
   Switch,
 } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 //
 import {
@@ -60,79 +60,70 @@ const darkTheme = createMuiTheme({
   },
 });
 
-class App extends Component {
-  componentDidMount() {
-    this.props.dispatch({ type: 'FETCH_USER' });
-  }
+const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: 'FETCH_USER' });
+  }, []);
 
-  render() {
-    return (
-      <ThemeProvider theme={darkTheme}>
-        <Paper>
-          <Router>
-            <Container maxWidth="lg">
-              <Nav />
-              <Switch>
-                {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-                <Redirect exact from="/" to="/home" />
-                {/* Visiting localhost:3000/about will show the about page.
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <Paper>
+        <Router>
+          <Container maxWidth="lg">
+            <Nav />
+            <Switch>
+              {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
+              <Redirect exact from="/" to="/home" />
+              {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
-                <Route exact path="/about" component={AboutPage} />
-                {/* For protected routes, the view could show one of several things on the same route.
+              <Route exact path="/about" component={AboutPage} />
+              {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-                <ProtectedRoute exact path="/admin" component={UserPage} />
-                {/* This works the same as the other protected route, except that if the user is logged in,
+              <ProtectedRoute exact path="/admin" component={UserPage} />
+              {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
-                <ProtectedRoute exact path="/info" component={InfoPage} />
-                {/* This works the same as the other protected route, except that if the user is logged in,
+              <ProtectedRoute exact path="/info" component={InfoPage} />
+              {/* This works the same as the other protected route, except that if the user is logged in,
             they will be redirected to the authRedirect path provided. */}
-                <ProtectedRoute
-                  exact
-                  path="/login"
-                  authRedirect="/admin"
-                  component={LoginPage}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/registration"
-                  authRedirect="/admin"
-                  component={RegisterPage}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/home"
-                  authRedirect="/admin"
-                  component={LandingPage}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/talent"
-                  component={TalentPoolPage}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/projectDetails/:id"
-                  component={ProjectDetails}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/projects"
-                  component={ProjectList}
-                />
-                <ProtectedRoute exact path="/new" component={NewProject} />
+              <ProtectedRoute
+                exact
+                path="/login"
+                authRedirect="/admin"
+                component={LoginPage}
+              />
+              <ProtectedRoute
+                exact
+                path="/registration"
+                authRedirect="/admin"
+                component={RegisterPage}
+              />
+              <ProtectedRoute
+                exact
+                path="/home"
+                authRedirect="/admin"
+                component={LandingPage}
+              />
+              <ProtectedRoute exact path="/talent" component={TalentPoolPage} />
+              <ProtectedRoute
+                exact
+                path="/projectDetails/:id"
+                component={ProjectDetails}
+              />
+              <ProtectedRoute exact path="/projects" component={ProjectList} />
+              <ProtectedRoute exact path="/new" component={NewProject} />
 
-                {/* If none of the other routes matched, we will show a 404. */}
-                <Route render={() => <h1>404</h1>} />
-              </Switch>
-              <Footer />
-            </Container>
-          </Router>
-        </Paper>
-      </ThemeProvider>
-    );
-  }
-}
+              {/* If none of the other routes matched, we will show a 404. */}
+              <Route render={() => <h1>404</h1>} />
+            </Switch>
+            <Footer />
+          </Container>
+        </Router>
+      </Paper>
+    </ThemeProvider>
+  );
+};
 
 export default connect()(App);
