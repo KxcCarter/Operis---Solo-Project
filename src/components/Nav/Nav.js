@@ -5,7 +5,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -47,7 +47,7 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.info.light,
       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
         color: theme.palette.common.white,
       },
@@ -57,6 +57,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 const Nav = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const theme = useTheme();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -88,13 +89,13 @@ const Nav = (props) => {
           </Typography>
         </div>
 
-        <div className="nav-right">
+        <div>
           <Button
+            color="primary"
             size="large"
             aria-controls="customized-menu"
             aria-haspopup="true"
             variant="contained"
-            color="primary"
             onClick={handleClick}
           >
             <MenuIcon fontSize="large" />

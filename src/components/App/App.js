@@ -8,12 +8,20 @@ import {
 import { connect } from 'react-redux';
 
 //
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {
+  ThemeProvider,
+  createMuiTheme,
+  useTheme,
+} from '@material-ui/core/styles';
 
 // ---
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+
+//
+import './App.css';
+import { Container, Paper } from '@material-ui/core';
 
 // --- Pages
 import AboutPage from '../../_views/AboutPage/AboutPage';
@@ -27,12 +35,28 @@ import ProjectList from '../ProjectList/ProjectList';
 import NewProject from '../../_views/NewProject/NewProject';
 import TalentPoolPage from '../../_views/TalentPoolPage/TalentPoolPage';
 
-import './App.css';
-import { Container, Paper } from '@material-ui/core';
+// --- MUI Colors ---
+import { green, orange, red } from '@material-ui/core/colors';
 
 const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
+    primary: { main: '#64b5f6' },
+    secondary: { main: '#f6a5c0', light: '#aa647b' },
+    error: { main: '#f44336', dark: '#d32f2f' },
+    success: {
+      light: green['200'],
+      main: green['300'],
+      contrastText: '#000000',
+    },
+    warning: {
+      light: red['100'],
+      main: orange['200'],
+      contrastText: '#000000',
+    },
+  },
+  status: {
+    danger: '#e53e3e',
   },
 });
 

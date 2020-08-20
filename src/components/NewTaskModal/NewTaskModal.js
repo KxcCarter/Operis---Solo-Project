@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Button, Modal, TextField, Fab } from '@material-ui/core';
+import {
+  Typography,
+  Button,
+  Modal,
+  TextField,
+  Fab,
+  Box,
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 function getModalStyle() {
@@ -24,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    textAlign: 'center',
+  },
+  root: {
+    backgroundColor: theme.palette.success.main,
   },
 }));
 
@@ -60,23 +71,38 @@ function NewTaskModal(props) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <Typography variant="h6" id="simple-modal-title">
-        New Task
-      </Typography>
-      <form onSubmit={handleSubmit}>
+      <Box p={3} display="inline">
+        <Typography
+          variant="h5"
+          id="simple-modal-title"
+          align="center"
+          color="primary"
+        >
+          New Task
+        </Typography>
+
         <TextField
           fullWidth
           multiline
           variant="outlined"
           onChange={handleInputChange}
         />
-        <Button variant="outlined" size="small" type="submit">
+      </Box>
+      <Box p={3} m={4} display="inline">
+        <Button
+          variant="outlined"
+          size="small"
+          className={classes.root}
+          onClick={handleSubmit}
+        >
           create
         </Button>
-        <Button variant="outlined" size="small" type="cancel">
+      </Box>
+      <Box p={3} display="inline">
+        <Button variant="outlined" size="small" onClick={handleClose}>
           cancel
         </Button>
-      </form>
+      </Box>
     </div>
   );
 
@@ -84,7 +110,7 @@ function NewTaskModal(props) {
     <>
       <Fab
         size="small"
-        color="secondary"
+        className={classes.root}
         onClick={open ? handleClose : handleOpen}
       >
         <AddIcon />

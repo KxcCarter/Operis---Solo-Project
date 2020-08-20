@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     textAlign: 'center',
   },
+  danger: {
+    color: theme.palette.error.dark,
+  },
 }));
 
 function DeleteProjectButton(props) {
@@ -56,36 +59,34 @@ function DeleteProjectButton(props) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <Typography variant="h3" color="secondary">
+      <Typography variant="h3" className={classes.danger}>
         WARNING!
       </Typography>
       <Box p={3}>
         <Typography variant="h6" id="simple-modal-title">
-          Are you sure you want to delete this project?
+          Are you sure you want to delete
         </Typography>
-        <Typography variant="subtitle1" color="textSecondary">
+        <Typography variant="h6" id="simple-modal-title" color="primary">
+          {props.projectTitle}?
+        </Typography>
+
+        <Typography variant="subtitle2" color="textSecondary">
           This action cannot be undone.
         </Typography>
       </Box>
 
       <Box p={3} display="inline">
         <Button
+          className={classes.danger}
           variant="outlined"
           size="small"
-          type="submit"
-          color="secondary"
           onClick={handleConfirm}
         >
           Yes, I'm sure.
         </Button>
       </Box>
       <Box p={3} display="inline">
-        <Button
-          variant="outlined"
-          size="small"
-          type="cancel"
-          onClick={handleClose}
-        >
+        <Button variant="outlined" size="small" onClick={handleClose}>
           cancel
         </Button>
       </Box>
@@ -95,8 +96,9 @@ function DeleteProjectButton(props) {
   return (
     <>
       <Button
+        className={classes.danger}
+        variant="outlined"
         size="small"
-        color="secondary"
         onClick={open ? handleClose : handleOpen}
       >
         Delete Project

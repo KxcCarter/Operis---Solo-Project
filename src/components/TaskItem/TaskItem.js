@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 // --- Material-UI
 
@@ -13,10 +14,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import UndoIcon from '@material-ui/icons/Undo';
 
+const useStyles = makeStyles((theme) => ({
+  danger: {
+    color: theme.palette.error.dark,
+  },
+  complete: {
+    backgroundColor: theme.palette.success.light,
+    color: theme.palette.success.contrastText,
+    opacity: '55%',
+  },
+  incomplete: {
+    backgroundColor: theme.palette.warning.main,
+    color: theme.palette.warning.contrastText,
+    opacity: '55%',
+  },
+}));
+
 function TaskItem(props) {
   const [editMode, setEditMode] = useState(false);
   const [taskData, setTaskData] = useState('');
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const handleOptions = (event) => {
     if (event.target.value === 'remove') {
@@ -78,7 +96,10 @@ function TaskItem(props) {
         </Grid>
 
         <Grid item sm={9}>
-          <Paper elevation={2}>
+          <Paper
+            elevation={2}
+            className={props.status ? classes.complete : classes.incomplete}
+          >
             {!editMode ? (
               <Box m={1}>
                 <Typography variant="body1">{props.taskContent}</Typography>

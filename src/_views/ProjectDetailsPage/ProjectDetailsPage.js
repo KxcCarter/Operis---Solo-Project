@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from '@material-ui/core/styles';
 import ImageUpload from '../../components/ImageUpload/ImageUpload';
 import CrewList from '../../components/CrewList/CrewList';
 import TaskBox from '../../components/TaskBox/TaskBox';
@@ -25,6 +26,7 @@ import DeleteProjectButton from '../../components/DeleteProjectButton/DeleteProj
 const ProjectDetails = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const theme = useTheme();
   const { match } = props;
   const {
     store: { projectDetails },
@@ -52,18 +54,26 @@ const ProjectDetails = (props) => {
 
   const handleNote = (event) => {
     setNote(event.target.value);
+
+    setTimeout(() => {
+      dispatch({
+        type: 'UPDATE_NOTE',
+        payload: { note: note, id: projectDetails.id },
+      });
+    }, 600);
   };
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
 
-  const saveNote = () => {
-    dispatch({
-      type: 'UPDATE_NOTE',
-      payload: { note: note, id: projectDetails.id },
-    });
-  };
+  // Don't need this anymore since it automatically saves now
+  // const saveNote = () => {
+  //   dispatch({
+  //     type: 'UPDATE_NOTE',
+  //     payload: { note: note, id: projectDetails.id },
+  //   });
+  // };
 
   const handleChange = (fieldKey) => (event) => {
     setDetails({
@@ -130,7 +140,10 @@ const ProjectDetails = (props) => {
             </Grid>
             {editMode && (
               <Grid item xs={6}>
-                <DeleteProjectButton projectID={projectDetails.id} />
+                <DeleteProjectButton
+                  projectID={projectDetails.id}
+                  projectTitle={projectDetails.title}
+                />
               </Grid>
             )}
           </Grid>
@@ -200,10 +213,12 @@ const ProjectDetails = (props) => {
               <Box m={0.5} p={0.5} pb={1.5}>
                 <Box m={1}>
                   <Grid container>
-                    <Grid item xs={6}>
-                      <Typography variant="h6">Notes</Typography>
+                    <Grid item xs={12}>
+                      <Typography variant="h6" align="center">
+                        Notes
+                      </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                       <Button
                         variant="contained"
                         size="small"
@@ -211,7 +226,7 @@ const ProjectDetails = (props) => {
                       >
                         save
                       </Button>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Box>
                 <TextField

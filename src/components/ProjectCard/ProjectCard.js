@@ -87,7 +87,7 @@ const ProjectCard = (props) => {
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justify="space-between">
             <Grid item sm={8}>
               <Box align="left">
                 <Typography variant="subtitle1">

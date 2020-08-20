@@ -3,6 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import NewTaskModal from '../NewTaskModal/NewTaskModal';
 import TaskItem from '../TaskItem/TaskItem';
+import { makeStyles } from '@material-ui/core/styles';
 
 // --- Material-UI
 import {
@@ -12,12 +13,18 @@ import {
   Typography,
   ButtonGroup,
   Button,
-  CircularProgress,
 } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.success.light,
+  },
+}));
 
 function TaskBox(props) {
   const [order, setOrder] = useState('id');
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const {
     store: { projectTasks },
