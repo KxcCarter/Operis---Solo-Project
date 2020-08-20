@@ -2,10 +2,10 @@
   background-image: url('https://images.unsplash.com/photo-1520720812953-4544b935ead8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80');
   background-size: cover;
   position: relative;
-  height: 500px;
+  height: 300px;
 }
 
-.text {
+.imageText {
   background-color: white;
   color: black;
   font-size: 10vw;

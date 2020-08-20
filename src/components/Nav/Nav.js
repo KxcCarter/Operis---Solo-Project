@@ -78,96 +78,102 @@ const Nav = (props) => {
   }
 
   return (
-    <Paper>
-      <div className="nav">
-        <Link to="/home">
-          <h1 className="nav-title">OPERIS</h1>
-        </Link>
-        <div className="nav-center">
-          <Typography variant="h6">
-            Hey {props.store.user.username} <InsertEmoticonIcon />
-          </Typography>
-        </div>
+    // <Paper>
+    <div className="nav">
+      <div className="imageContainer">
+        <div className="imageText">OPERIS</div>
 
-        <div>
-          <Button
-            color="primary"
-            size="large"
-            aria-controls="customized-menu"
-            aria-haspopup="true"
-            variant="contained"
-            onClick={handleClick}
-          >
-            <MenuIcon fontSize="large" />
-          </Button>
-          <StyledMenu
-            id="customized-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <StyledMenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <HomeIcon fontSize="small" />
-              </ListItemIcon>
-              <Link className="nav-link" to={loginLinkData.path}>
-                {loginLinkData.text}
-              </Link>
-            </StyledMenuItem>
+        <div className="nav-bottom">
+          <Link to="/home">
+            <h1 className="nav-title">OPERIS</h1>
+          </Link>
+          <div className="nav-center">
+            <Typography variant="h6">
+              Hey {props.store.user.username} <InsertEmoticonIcon />
+            </Typography>
+          </div>
 
-            {/* Show the link to the info page and the logout button if the user is logged in */}
-            {props.store.user.id && (
-              <>
-                <StyledMenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <WorkIcon fontSize="small" />
-                  </ListItemIcon>
-                  <Link className="nav-link" to="/projects">
-                    Projects
-                  </Link>
-                </StyledMenuItem>
+          <div className="nav-link">
+            <Button
+              color="primary"
+              size="large"
+              aria-controls="customized-menu"
+              aria-haspopup="true"
+              variant="contained"
+              onClick={handleClick}
+            >
+              <MenuIcon fontSize="large" />
+            </Button>
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <StyledMenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <HomeIcon fontSize="small" />
+                </ListItemIcon>
+                <Link className="nav-link" to={loginLinkData.path}>
+                  {loginLinkData.text}
+                </Link>
+              </StyledMenuItem>
 
-                <StyledMenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <AddBoxIcon fontSize="small" />
-                  </ListItemIcon>
-                  <Link className="nav-link" to="/new">
-                    New Project
-                  </Link>
-                </StyledMenuItem>
+              {/* Show the link to the info page and the logout button if the user is logged in */}
+              {props.store.user.id && (
+                <>
+                  <StyledMenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <WorkIcon fontSize="small" />
+                    </ListItemIcon>
+                    <Link className="nav-link" to="/projects">
+                      Projects
+                    </Link>
+                  </StyledMenuItem>
 
-                <StyledMenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <PeopleIcon fontSize="small" />
-                  </ListItemIcon>
-                  <Link className="nav-link" to="/talent">
-                    Talent Pool
-                  </Link>
-                </StyledMenuItem>
+                  <StyledMenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <AddBoxIcon fontSize="small" />
+                    </ListItemIcon>
+                    <Link className="nav-link" to="/new">
+                      New Project
+                    </Link>
+                  </StyledMenuItem>
 
-                <StyledMenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <ExitToAppIcon fontSize="small" />
-                  </ListItemIcon>
-                  <LogOutButton className="nav-link" />
-                </StyledMenuItem>
-              </>
-            )}
-            {/* Always show this link since the about page is not protected */}
+                  <StyledMenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <PeopleIcon fontSize="small" />
+                    </ListItemIcon>
+                    <Link className="nav-link" to="/talent">
+                      Talent Pool
+                    </Link>
+                  </StyledMenuItem>
 
-            <StyledMenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <InfoIcon fontSize="small" />
-              </ListItemIcon>
-              <Link className="nav-link" to="/info">
-                Info Page
-              </Link>
-            </StyledMenuItem>
-          </StyledMenu>
+                  <StyledMenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                      <ExitToAppIcon fontSize="small" />
+                    </ListItemIcon>
+                    <LogOutButton className="nav-link" />
+                  </StyledMenuItem>
+                </>
+              )}
+              {/* Always show this link since the about page is not protected */}
+
+              <StyledMenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <InfoIcon fontSize="small" />
+                </ListItemIcon>
+                <Link className="nav-link" to="/info">
+                  Info Page
+                </Link>
+              </StyledMenuItem>
+            </StyledMenu>
+          </div>
         </div>
       </div>
-    </Paper>
+    </div>
+    // </Paper>
   );
 };
 
