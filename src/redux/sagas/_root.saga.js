@@ -21,6 +21,7 @@ import getProjectsOrdered from './getProjectsOrdered.saga';
 import newTalent from './newTalent.saga';
 import updateTalentDetails from './updateTalentDetails.saga';
 import deleteProjectSaga from './deleteProject.saga';
+import deleteTaskSaga from './deleteTask.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -53,5 +54,6 @@ export default function* rootSaga() {
     imageInfoSaga(),
     addTalentToRole(),
     deleteProjectSaga(),
+    deleteTaskSaga(),
   ]);
 }

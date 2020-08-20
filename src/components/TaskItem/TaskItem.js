@@ -19,6 +19,14 @@ function TaskItem(props) {
   const dispatch = useDispatch();
 
   const handleOptions = (event) => {
+    if (event.target.value === 'remove') {
+      dispatch({
+        type: 'DELETE_TASK',
+        payload: { taskID: props.id, projectID: props.projectID },
+      });
+      return;
+    }
+
     dispatch({
       type: 'UPDATE_TASK_STATUS',
       payload: {

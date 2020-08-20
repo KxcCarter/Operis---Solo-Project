@@ -429,4 +429,22 @@ router.delete('/deleteProject/:id', (req, res) => {
     });
 });
 
+//
+//
+// DELETE a task
+router.delete('/deleteTask/:id', (req, res) => {
+  const taskID = req.params.id;
+
+  const query = `DELETE FROM "tasks" WHERE "tasks".id = $1;`;
+
+  pool
+    .query(query, [taskID])
+    .then((dbRes) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log('Error DELETING task: ', err);
+      res.sendStatus(500);
+    });
+});
 module.exports = router;
