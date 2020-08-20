@@ -3,7 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Button, Modal } from '@material-ui/core';
+import { Typography, Button, Modal, Box } from '@material-ui/core';
 
 function getModalStyle() {
   const top = 50;
@@ -19,11 +19,12 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 350,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    textAlign: 'center',
   },
 }));
 
@@ -46,7 +47,6 @@ function DeleteProjectButton(props) {
   };
 
   const handleConfirm = (event) => {
-    event.preventDefault();
     dispatch({
       type: 'DELETE_PROJECT',
       payload: props.projectID,
@@ -59,20 +59,36 @@ function DeleteProjectButton(props) {
       <Typography variant="h3" color="secondary">
         WARNING!
       </Typography>
-      <Typography variant="h6" id="simple-modal-title">
-        Are you sure you want to delete this project?
-      </Typography>
-      <Typography variant="subtitle1" color="textSecondary">
-        This action cannot be undone.
-      </Typography>
-      <form onSubmit={handleConfirm}>
-        <Button variant="outlined" size="small" type="submit" color="secondary">
+      <Box p={3}>
+        <Typography variant="h6" id="simple-modal-title">
+          Are you sure you want to delete this project?
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          This action cannot be undone.
+        </Typography>
+      </Box>
+
+      <Box p={3} display="inline">
+        <Button
+          variant="outlined"
+          size="small"
+          type="submit"
+          color="secondary"
+          onClick={handleConfirm}
+        >
           Yes, I'm sure.
         </Button>
-        <Button variant="outlined" size="small" type="cancel">
+      </Box>
+      <Box p={3} display="inline">
+        <Button
+          variant="outlined"
+          size="small"
+          type="cancel"
+          onClick={handleClose}
+        >
           cancel
         </Button>
-      </form>
+      </Box>
     </div>
   );
 

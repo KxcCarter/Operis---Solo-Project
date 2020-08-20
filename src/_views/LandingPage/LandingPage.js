@@ -25,8 +25,8 @@ class LandingPage extends Component {
         <div className="grid">
           <div className="grid-col grid-col_8">
             <Typography variant="h6">
-              Operis is a project managment application geared toward
-              filmmakers.
+              Operis - <em>from the Latin "work"</em> - is a project managment
+              application geared toward filmmakers.
             </Typography>
             <br></br>
             <Typography variant="body1">
@@ -45,7 +45,7 @@ class LandingPage extends Component {
             <br></br>
             <Typography variant="body1">
               Projects can also have tasks associated with them, which the user
-              can edit, mark as complete, or delete (NOT BUILT YET).
+              can edit, mark as complete, or delete.
             </Typography>
           </div>
           <div className="grid-col grid-col_4">

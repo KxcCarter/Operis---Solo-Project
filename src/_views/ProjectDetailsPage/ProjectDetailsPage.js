@@ -181,9 +181,11 @@ const ProjectDetails = (props) => {
             )}
           </Grid>
 
-          {/* Roles and Talent */}
+          {/* Crew Roles and Talent */}
           <Grid item xs={12} sm={6} md={3}>
-            <CrewList pID={projectDetails.id} />
+            <Paper>
+              <CrewList pID={projectDetails.id} />
+            </Paper>
           </Grid>
           <br></br>
 

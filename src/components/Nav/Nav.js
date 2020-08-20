@@ -14,16 +14,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 // --- MUI icons ---
 
-// import {
-//   HomeIcon,
-//   MenuIcon,
-//   PeopleIcon,
-//   ExitToAppIcon,
-//   AddBoxIcon,
-//   InfoIcon,
-//   WorkIcon,
-// } from '@material-ui/icons';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -32,7 +22,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import WorkIcon from '@material-ui/icons/Work';
 import HomeIcon from '@material-ui/icons/Home';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-import { Box, Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 
 const StyledMenu = withStyles({
   paper: {
@@ -87,94 +77,96 @@ const Nav = (props) => {
   }
 
   return (
-    <div className="nav">
-      <Link to="/home">
-        <h1 className="nav-title">OPERIS</h1>
-      </Link>
-      <div className="nav-center">
-        <Typography variant="h6">
-          Hey {props.store.user.username} <InsertEmoticonIcon />
-        </Typography>
+    <Paper>
+      <div className="nav">
+        <Link to="/home">
+          <h1 className="nav-title">OPERIS</h1>
+        </Link>
+        <div className="nav-center">
+          <Typography variant="h6">
+            Hey {props.store.user.username} <InsertEmoticonIcon />
+          </Typography>
+        </div>
+
+        <div className="nav-right">
+          <Button
+            size="large"
+            aria-controls="customized-menu"
+            aria-haspopup="true"
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+          >
+            <MenuIcon fontSize="large" />
+          </Button>
+          <StyledMenu
+            id="customized-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <StyledMenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <HomeIcon fontSize="small" />
+              </ListItemIcon>
+              <Link className="nav-link" to={loginLinkData.path}>
+                {loginLinkData.text}
+              </Link>
+            </StyledMenuItem>
+
+            {/* Show the link to the info page and the logout button if the user is logged in */}
+            {props.store.user.id && (
+              <>
+                <StyledMenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <WorkIcon fontSize="small" />
+                  </ListItemIcon>
+                  <Link className="nav-link" to="/projects">
+                    Projects
+                  </Link>
+                </StyledMenuItem>
+
+                <StyledMenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <AddBoxIcon fontSize="small" />
+                  </ListItemIcon>
+                  <Link className="nav-link" to="/new">
+                    New Project
+                  </Link>
+                </StyledMenuItem>
+
+                <StyledMenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <PeopleIcon fontSize="small" />
+                  </ListItemIcon>
+                  <Link className="nav-link" to="/talent">
+                    Talent Pool
+                  </Link>
+                </StyledMenuItem>
+
+                <StyledMenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <ExitToAppIcon fontSize="small" />
+                  </ListItemIcon>
+                  <LogOutButton className="nav-link" />
+                </StyledMenuItem>
+              </>
+            )}
+            {/* Always show this link since the about page is not protected */}
+
+            <StyledMenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <InfoIcon fontSize="small" />
+              </ListItemIcon>
+              <Link className="nav-link" to="/info">
+                Info Page
+              </Link>
+            </StyledMenuItem>
+          </StyledMenu>
+        </div>
       </div>
-
-      <div className="nav-right">
-        <Button
-          size="large"
-          aria-controls="customized-menu"
-          aria-haspopup="true"
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-        >
-          <MenuIcon fontSize="large" />
-        </Button>
-        <StyledMenu
-          id="customized-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <StyledMenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <HomeIcon fontSize="small" />
-            </ListItemIcon>
-            <Link className="nav-link" to={loginLinkData.path}>
-              {loginLinkData.text}
-            </Link>
-          </StyledMenuItem>
-
-          {/* Show the link to the info page and the logout button if the user is logged in */}
-          {props.store.user.id && (
-            <>
-              <StyledMenuItem onClick={handleClose}>
-                <ListItemIcon>
-                  <WorkIcon fontSize="small" />
-                </ListItemIcon>
-                <Link className="nav-link" to="/projects">
-                  Projects
-                </Link>
-              </StyledMenuItem>
-
-              <StyledMenuItem onClick={handleClose}>
-                <ListItemIcon>
-                  <AddBoxIcon fontSize="small" />
-                </ListItemIcon>
-                <Link className="nav-link" to="/new">
-                  New Project
-                </Link>
-              </StyledMenuItem>
-
-              <StyledMenuItem onClick={handleClose}>
-                <ListItemIcon>
-                  <PeopleIcon fontSize="small" />
-                </ListItemIcon>
-                <Link className="nav-link" to="/talent">
-                  Talent Pool
-                </Link>
-              </StyledMenuItem>
-
-              <StyledMenuItem onClick={handleClose}>
-                <ListItemIcon>
-                  <ExitToAppIcon fontSize="small" />
-                </ListItemIcon>
-                <LogOutButton className="nav-link" />
-              </StyledMenuItem>
-            </>
-          )}
-          {/* Always show this link since the about page is not protected */}
-
-          <StyledMenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <InfoIcon fontSize="small" />
-            </ListItemIcon>
-            <Link className="nav-link" to="/info">
-              Info Page
-            </Link>
-          </StyledMenuItem>
-        </StyledMenu>
-      </div>
-    </div>
+    </Paper>
   );
 };
 
