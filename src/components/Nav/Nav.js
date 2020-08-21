@@ -73,7 +73,7 @@ const Nav = (props) => {
   };
 
   if (props.store.user.id != null) {
-    loginLinkData.path = '/admin';
+    loginLinkData.path = '/projects';
     loginLinkData.text = 'Home';
   }
 
@@ -112,14 +112,14 @@ const Nav = (props) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <StyledMenuItem onClick={handleClose}>
+              {/* <StyledMenuItem onClick={handleClose}>
                 <ListItemIcon>
                   <HomeIcon fontSize="small" />
                 </ListItemIcon>
                 <Link className="nav-link" to={loginLinkData.path}>
                   {loginLinkData.text}
                 </Link>
-              </StyledMenuItem>
+              </StyledMenuItem> */}
 
               {/* Show the link to the info page and the logout button if the user is logged in */}
               {props.store.user.id && (

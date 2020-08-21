@@ -45,7 +45,7 @@ function TaskBox(props) {
   return (
     <>
       {projectTasks && (
-        <Box m={2}>
+        <Box m={2} paddingBottom={3}>
           <Grid container>
             <Paper>
               <Grid

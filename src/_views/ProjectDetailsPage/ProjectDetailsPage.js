@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import ImageUpload from '../../components/ImageUpload/ImageUpload';
 import CrewList from '../../components/CrewList/CrewList';
 import TaskBox from '../../components/TaskBox/TaskBox';
@@ -23,10 +23,20 @@ import {
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteProjectButton from '../../components/DeleteProjectButton/DeleteProjectButton';
 
+const useStyles = makeStyles((theme) => ({
+  text: {
+    color: theme.palette.primary.contrastText,
+  },
+  upload: {
+    backgroundColor: theme.palette.success.light,
+    color: theme.palette.success.contrastText,
+  },
+}));
+
 const ProjectDetails = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const theme = useTheme();
+  const classes = useStyles();
   const { match } = props;
   const {
     store: { projectDetails },
@@ -126,6 +136,7 @@ const ProjectDetails = (props) => {
           <Grid item xs={2} container>
             <Grid item xs={6}>
               <Button
+                className={classes.text}
                 variant="text"
                 size="small"
                 onClick={!editMode ? toggleEditMode : saveDetails}
@@ -151,7 +162,7 @@ const ProjectDetails = (props) => {
           {/* Project Image */}
           <Grid item xs={12} sm={6} md={4}>
             <Paper elevation={5}>
-              <Box m={0.7} p={0.3}>
+              <Box m={1} p={1}>
                 {projectDetails.image ? (
                   <img src={projectDetails.image} alt={projectDetails.title} />
                 ) : (
@@ -159,18 +170,25 @@ const ProjectDetails = (props) => {
                 )}
                 {editMode && (
                   <>
-                    <Typography variant="subtitle1">Add a new image</Typography>
-                    <ImageUpload pID={projectDetails.id} />
-                    <Typography variant="subtitle1">
-                      Use image from web
-                    </Typography>
-                    <TextField
-                      size="small"
-                      variant="outlined"
-                      fullWidth
-                      defaultValue={projectDetails.image}
-                      onChange={handleChange('image')}
-                    ></TextField>
+                    <Box p={1}>
+                      <Typography variant="subtitle1" display="inline">
+                        Upload a new image{' '}
+                      </Typography>
+
+                      <ImageUpload pID={projectDetails.id} />
+                    </Box>
+                    <Box p={1}>
+                      <Typography variant="subtitle1">
+                        Or use an image from the web
+                      </Typography>
+                      <TextField
+                        size="small"
+                        variant="outlined"
+                        fullWidth
+                        defaultValue={projectDetails.image}
+                        onChange={handleChange('image')}
+                      ></TextField>
+                    </Box>
                   </>
                 )}
               </Box>
@@ -210,7 +228,7 @@ const ProjectDetails = (props) => {
           {/* Notes Widget Container */}
           <Grid item xs={12} sm={3}>
             <Paper elevation={3}>
-              <Box m={0.5} p={0.5} pb={1.5}>
+              <Box m={2} p={0.5} pb={1.5}>
                 <Box m={1}>
                   <Grid container>
                     <Grid item xs={12}>

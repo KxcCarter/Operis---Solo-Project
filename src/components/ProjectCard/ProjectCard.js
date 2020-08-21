@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
     width: '95%',
     padding: 5,
     margin: 5,
+    backgroundColor: '#8C8C8C',
   },
   cells: {
     padding: 3,
@@ -68,7 +69,7 @@ const ProjectCard = (props) => {
           elevation={3}
           className={cx(cardStyles.card, shadowStyles.root)}
         >
-          <Box display="flex" justifyContent="space-between">
+          <Box p={1} display="flex" justifyContent="space-between">
             <Typography variant="h5">{props.title}</Typography>
             <Checkbox
               size="small"

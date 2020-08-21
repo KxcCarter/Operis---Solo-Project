@@ -37,10 +37,12 @@ const CrewList = (props) => {
   };
 
   return (
-    <Box>
+    <Box p={1}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h5">Project Crew</Typography>
+          <Typography variant="h5" align="center" color="primary">
+            Project Crew
+          </Typography>
           <div>
             <List dense>
               {/* Dropdown List */}

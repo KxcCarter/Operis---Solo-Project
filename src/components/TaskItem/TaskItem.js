@@ -77,7 +77,7 @@ function TaskItem(props) {
   };
 
   return (
-    <Box mt={2}>
+    <Box mt={2} pb={1}>
       <Grid container>
         <Grid item sm={2}>
           <Select

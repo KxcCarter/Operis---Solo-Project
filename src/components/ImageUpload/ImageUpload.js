@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  button: {
+    backgroundColor: theme.palette.success.light,
+    color: theme.palette.success.contrastText,
+  },
 }));
 
 function ImageUpload(props) {
@@ -76,6 +80,7 @@ function ImageUpload(props) {
   return (
     <>
       <Button
+        className={classes.button}
         size="small"
         variant="contained"
         onClick={open ? handleClose : handleOpen}

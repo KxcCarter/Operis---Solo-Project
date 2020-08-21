@@ -38,13 +38,16 @@ const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
 
-    primary: { main: '#64b5f6' },
+    primary: { main: '#64b5f6', contrastText: '#000000' },
     secondary: { main: '#f6a5c0', light: '#aa647b' },
     error: { main: '#f44336', dark: '#d32f2f' },
     success: {
       light: green['200'],
       main: green['300'],
       contrastText: '#000000',
+    },
+    background: {
+      paper: '#8C8C8C',
     },
     warning: {
       light: red['100'],
@@ -68,7 +71,7 @@ const App = () => {
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/projects" />
             {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
             <Route exact path="/about" component={AboutPage} />
@@ -85,7 +88,7 @@ const App = () => {
             <ProtectedRoute
               exact
               path="/login"
-              authRedirect="/admin"
+              authRedirect="/projects"
               component={LoginPage}
             />
             <ProtectedRoute

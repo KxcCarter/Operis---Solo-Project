@@ -2,10 +2,12 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
   background-color: #cfd8dc;
+  background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
 }
 
 img {
   max-width: 100%;
+  border-radius: 3px;
 }
 
 .alert {
