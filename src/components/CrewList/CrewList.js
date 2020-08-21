@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
@@ -14,7 +14,6 @@ import {
   Select,
   List,
   ListItem,
-  Button,
 } from '@material-ui/core';
 
 const CrewList = (props) => {
@@ -23,9 +22,7 @@ const CrewList = (props) => {
     dispatch({ type: 'GET_CREW_LIST', payload: props.pID });
     dispatch({ type: 'GET_ROLES' });
     dispatch({ type: 'GET_USER_TALENT' });
-  }, []);
-
-  const [roleID, setRoleID] = useState('');
+  }, [dispatch, props.pID]);
 
   const { store } = props;
 
@@ -50,7 +47,6 @@ const CrewList = (props) => {
               <ListItem>
                 <Select
                   native
-                  value={roleID}
                   onChange={handleAddCrewRole}
                   inputProps={{
                     name: 'role',

@@ -38,10 +38,6 @@ function DeleteProjectButton(props) {
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
-  const {
-    store: { projectDetails },
-  } = props;
-
   const handleOpen = () => {
     setOpen(true);
   };

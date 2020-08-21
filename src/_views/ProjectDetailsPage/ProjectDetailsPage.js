@@ -45,7 +45,7 @@ const ProjectDetails = (props) => {
   // GET project details on render
   useEffect(() => {
     dispatch({ type: 'GET_PROJECT_DETAILS', payload: match.params.id });
-  }, []);
+  }, [dispatch, match.params.id]);
 
   const [editMode, setEditMode] = useState(false);
   const [details, setDetails] = useState({

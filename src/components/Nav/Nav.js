@@ -5,12 +5,11 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
-import { withStyles, makeStyles, useTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 // --- MUI icons ---
 
@@ -20,9 +19,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import InfoIcon from '@material-ui/icons/Info';
 import WorkIcon from '@material-ui/icons/Work';
-import HomeIcon from '@material-ui/icons/Home';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-import { Paper, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const StyledMenu = withStyles({
   paper: {
@@ -57,7 +55,6 @@ const StyledMenuItem = withStyles((theme) => ({
 
 const Nav = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const theme = useTheme();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

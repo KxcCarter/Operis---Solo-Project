@@ -1,7 +1,8 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  background-color: #cfd8dc;
+  /* background-color: #cfd8dc; */
+  background-color: #8c8c8cb2;
   background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
 }
 
@@ -40,9 +41,9 @@ input {
 .log-in,
 .log-out,
 .register {
-  background-color: #00acb0;
-  border: 1px solid #004c4d;
-  border-width: 1px 1px 3px 1px;
+  background-color: #81c784;
+  border: 1px solid #004d1a;
+  border-width: 1px 1px 2px 1px;
   border-radius: 4px;
   color: #f8f8f8;
   min-height: 50px;
@@ -54,7 +55,8 @@ input {
 .log-in:hover,
 .log-out:hover,
 .register:hover {
-  background-color: #008183;
+  background-color: #76ad79;
+  border-width: 0 0 1px 0;
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */

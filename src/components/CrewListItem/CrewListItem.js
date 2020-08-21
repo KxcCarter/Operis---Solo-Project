@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,15 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   ListItem,
   ListItemText,
-  ListItemIcon,
-  Checkbox,
-  Button,
   IconButton,
   ListItemSecondaryAction,
 } from '@material-ui/core';
 
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import SearchAddRoleTalent from '../SearchAddRoleTalent/SearchAddRoleTalent';
 
 const useStyles = makeStyles((theme) => ({

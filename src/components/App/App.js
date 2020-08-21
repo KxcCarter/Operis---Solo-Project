@@ -32,7 +32,7 @@ import NewProject from '../../_views/NewProject/NewProject';
 import TalentPoolPage from '../../_views/TalentPoolPage/TalentPoolPage';
 
 // --- MUI Colors ---
-import { green, orange, red, blueGrey } from '@material-ui/core/colors';
+import { green, orange, red } from '@material-ui/core/colors';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -62,7 +62,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-  }, []);
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={darkTheme}>

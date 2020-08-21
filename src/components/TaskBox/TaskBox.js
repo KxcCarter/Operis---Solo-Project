@@ -3,7 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import NewTaskModal from '../NewTaskModal/NewTaskModal';
 import TaskItem from '../TaskItem/TaskItem';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 
 // --- Material-UI
 import {
@@ -15,28 +15,27 @@ import {
   Button,
 } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    color: theme.palette.success.light,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     color: theme.palette.success.light,
+//   },
+// }));
 
 function TaskBox(props) {
   const [order, setOrder] = useState('id');
   const dispatch = useDispatch();
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const {
     store: { projectTasks },
   } = props;
 
-  // TODO: make task list re-render upon state change.
   useEffect(() => {
     dispatch({
       type: 'GET_PROJECT_TASKS',
       payload: { projectID: props.pID, orderBy: order },
     });
-  }, [order]);
+  }, [order, dispatch, props.pID]);
 
   const changeSortOrder = (orderBy) => (event) => {
     setOrder(orderBy);

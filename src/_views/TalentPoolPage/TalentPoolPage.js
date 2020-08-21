@@ -41,15 +41,13 @@ function TalentPoolPage(props) {
     skills: '',
   });
 
-  const [editMode, setEditMode] = useState(false);
-
   const {
     store: { userTalentPool },
   } = props;
 
   useEffect(() => {
     dispatch({ type: 'GET_USER_TALENT' });
-  }, []);
+  }, [dispatch]);
 
   const cancelAdd = () => {
     setTalentDetails({
@@ -64,7 +62,6 @@ function TalentPoolPage(props) {
       ...talentDetails,
       [fieldKey]: event.target.value,
     });
-    console.log('handling that change, yo: ', talentDetails);
   };
 
   const saveNewTalent = () => {
