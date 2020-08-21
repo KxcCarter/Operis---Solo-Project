@@ -108,7 +108,6 @@ router.get('/project/:id', rejectUnauthenticated, (req, res) => {
 router.get('/tasks', rejectUnauthenticated, (req, res) => {
   const projectID = req.query.projectID;
   const orderBy = req.query.orderBy;
-  console.log(req.query);
   const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy} ASC;`;
 
   let queryString;
@@ -406,6 +405,24 @@ router.put('/updateTaskStatus/:id', (req, res) => {
     })
     .catch((err) => {
       console.log('Error updating task status: ', err);
+      res.sendStatus(500);
+    });
+});
+
+//
+// Update Project Completion status
+router.put('/completionStatus/:id', (req, res) => {
+  const projectID = req.params.id;
+
+  const query = `UPDATE "projects" SET "projects".is_completed = true WHERE "projects".id = $1;`;
+
+  pool
+    .query(query, [projectID])
+    .then((dbRes) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error updating project completion status: ', err);
       res.sendStatus(500);
     });
 });

@@ -27,6 +27,9 @@ const useStyles = makeStyles(() => ({
     width: '95%',
     padding: 5,
     margin: 5,
+    backgroundColor: '#8C8C8C',
+    boxShadow: '0 5px 20px 0 rgba(0,0,0,0.12)',
+    border: '1px solid #595959',
   },
   cells: {
     padding: 3,
@@ -63,12 +66,8 @@ const ProjectCard = (props) => {
     <>
       {!props.id && <CircularProgress />}
       {props.id && (
-        <Paper
-          variant="outlined"
-          elevation={3}
-          className={cx(cardStyles.card, shadowStyles.root)}
-        >
-          <Box display="flex" justifyContent="space-between">
+        <Paper className={cx(cardStyles.card, shadowStyles.root)}>
+          <Box p={1} display="flex" justifyContent="space-between">
             <Typography variant="h5">{props.title}</Typography>
             <Checkbox
               size="small"
@@ -87,7 +86,7 @@ const ProjectCard = (props) => {
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justify="space-between">
             <Grid item sm={8}>
               <Box align="left">
                 <Typography variant="subtitle1">

@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import { useDispatch } from 'react-redux';
-
-// --- Components
+import { makeStyles } from '@material-ui/core/styles';
 
 // --- Material-UI
 import {
   ListItem,
   ListItemText,
-  ListItemIcon,
-  Checkbox,
-  Button,
   IconButton,
   ListItemSecondaryAction,
 } from '@material-ui/core';
 
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import SearchAddRoleTalent from '../SearchAddRoleTalent/SearchAddRoleTalent';
+
+const useStyles = makeStyles((theme) => ({
+  delete: {
+    color: theme.palette.warning.light,
+  },
+}));
 
 const CrewListItem = (props) => {
   const dispatch = useDispatch();
-
+  const classes = useStyles();
   const { store } = props;
 
   const handleClickDelete = () => {
@@ -65,7 +65,7 @@ const CrewListItem = (props) => {
           aria-label="delete role"
           onClick={handleClickDelete}
         >
-          <DeleteIcon size="small" />
+          <DeleteIcon size="small" className={classes.delete} />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>

@@ -9,6 +9,7 @@ function* getTasks(action) {
         orderBy: action.payload.orderBy,
       },
     });
+
     yield put({
       type: 'SET_PROJECT_TASKS',
       payload: response.data,

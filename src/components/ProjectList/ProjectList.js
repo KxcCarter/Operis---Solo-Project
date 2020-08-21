@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // --- Components
 
 import ProjectCard from '../ProjectCard/ProjectCard';
-import PostCardDemo from '../ProjectCard/CoolerCard';
+// import PostCardDemo from '../ProjectCard/CoolerCard';
 // --- Material-UI
 
 import {
@@ -18,11 +18,10 @@ import {
 
 const ProjectList = (props) => {
   const dispatch = useDispatch();
-  const [order, setOrder] = useState('id');
 
   useEffect(() => {
     dispatch({ type: 'GET_PROJECTS' });
-  }, []);
+  }, [dispatch]);
 
   const projects = props.store.projects.map((item, index) => {
     return (
@@ -39,23 +38,22 @@ const ProjectList = (props) => {
     );
   });
 
-  const projectsDouble = props.store.projects.map((item, index) => {
-    return (
-      <Grid key={index} item xs={12} sm={6} md={4}>
-        <PostCardDemo
-          title={item.title}
-          description={item.description}
-          image={item.image}
-          isCompleted={item.is_completed}
-          isStaffed={item.is_staffed}
-          id={item.id}
-        />
-      </Grid>
-    );
-  });
+  // const projectsDouble = props.store.projects.map((item, index) => {
+  //   return (
+  //     <Grid key={index} item xs={12} sm={6} md={4}>
+  //       <PostCardDemo
+  //         title={item.title}
+  //         description={item.description}
+  //         image={item.image}
+  //         isCompleted={item.is_completed}
+  //         isStaffed={item.is_staffed}
+  //         id={item.id}
+  //       />
+  //     </Grid>
+  //   );
+  // });
 
   const changeSortOrder = (orderBy) => (event) => {
-    setOrder(orderBy);
     console.log('CLICK order by: ', orderBy);
     dispatch({ type: 'GET_PROJECTS_ORDERED', payload: orderBy });
   };
@@ -79,7 +77,7 @@ const ProjectList = (props) => {
           <Box align="center">
             <Grid container spacing={3}>
               {projects}
-              {projectsDouble}
+              {/* {projectsDouble} */}
             </Grid>
           </Box>
         </Box>

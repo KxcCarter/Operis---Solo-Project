@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import ImageUpload from '../../components/ImageUpload/ImageUpload';
 import CrewList from '../../components/CrewList/CrewList';
 import TaskBox from '../../components/TaskBox/TaskBox';
@@ -22,9 +23,20 @@ import {
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteProjectButton from '../../components/DeleteProjectButton/DeleteProjectButton';
 
+const useStyles = makeStyles((theme) => ({
+  text: {
+    color: theme.palette.primary.contrastText,
+  },
+  upload: {
+    backgroundColor: theme.palette.success.light,
+    color: theme.palette.success.contrastText,
+  },
+}));
+
 const ProjectDetails = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const classes = useStyles();
   const { match } = props;
   const {
     store: { projectDetails },
@@ -33,7 +45,7 @@ const ProjectDetails = (props) => {
   // GET project details on render
   useEffect(() => {
     dispatch({ type: 'GET_PROJECT_DETAILS', payload: match.params.id });
-  }, []);
+  }, [dispatch, match.params.id]);
 
   const [editMode, setEditMode] = useState(false);
   const [details, setDetails] = useState({
@@ -52,18 +64,31 @@ const ProjectDetails = (props) => {
 
   const handleNote = (event) => {
     setNote(event.target.value);
+
+    setTimeout(() => {
+      dispatch({
+        type: 'UPDATE_NOTE',
+        payload: { note: note, id: projectDetails.id },
+      });
+      console.log('WOOOOW WE ARE DOING THIS');
+    }, 600);
+  };
+
+  const handleSave = () => {
+    console.log('You should only see this after text input has finished.');
   };
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
 
-  const saveNote = () => {
-    dispatch({
-      type: 'UPDATE_NOTE',
-      payload: { note: note, id: projectDetails.id },
-    });
-  };
+  // Don't need this anymore since it automatically saves now
+  // const saveNote = () => {
+  //   dispatch({
+  //     type: 'UPDATE_NOTE',
+  //     payload: { note: note, id: projectDetails.id },
+  //   });
+  // };
 
   const handleChange = (fieldKey) => (event) => {
     setDetails({
@@ -88,7 +113,7 @@ const ProjectDetails = (props) => {
   return (
     <>
       {!projectDetails.id && <CircularProgress />}
-      {projectDetails.id == match.params.id && (
+      {projectDetails.id === parseInt(match.params.id) && (
         <Grid container spacing={2}>
           {/* Project Title and Details */}
 
@@ -116,6 +141,7 @@ const ProjectDetails = (props) => {
           <Grid item xs={2} container>
             <Grid item xs={6}>
               <Button
+                className={classes.text}
                 variant="text"
                 size="small"
                 onClick={!editMode ? toggleEditMode : saveDetails}
@@ -130,7 +156,10 @@ const ProjectDetails = (props) => {
             </Grid>
             {editMode && (
               <Grid item xs={6}>
-                <DeleteProjectButton projectID={projectDetails.id} />
+                <DeleteProjectButton
+                  projectID={projectDetails.id}
+                  projectTitle={projectDetails.title}
+                />
               </Grid>
             )}
           </Grid>
@@ -138,7 +167,7 @@ const ProjectDetails = (props) => {
           {/* Project Image */}
           <Grid item xs={12} sm={6} md={4}>
             <Paper elevation={5}>
-              <Box m={0.7} p={0.3}>
+              <Box m={1} p={1}>
                 {projectDetails.image ? (
                   <img src={projectDetails.image} alt={projectDetails.title} />
                 ) : (
@@ -146,18 +175,25 @@ const ProjectDetails = (props) => {
                 )}
                 {editMode && (
                   <>
-                    <Typography variant="subtitle1">Add a new image</Typography>
-                    <ImageUpload pID={projectDetails.id} />
-                    <Typography variant="subtitle1">
-                      Use image from web
-                    </Typography>
-                    <TextField
-                      size="small"
-                      variant="outlined"
-                      fullWidth
-                      defaultValue={projectDetails.image}
-                      onChange={handleChange('image')}
-                    ></TextField>
+                    <Box p={1}>
+                      <Typography variant="subtitle1" display="inline">
+                        Upload a new image{' '}
+                      </Typography>
+
+                      <ImageUpload pID={projectDetails.id} />
+                    </Box>
+                    <Box p={1}>
+                      <Typography variant="subtitle1">
+                        Or use an image from the web
+                      </Typography>
+                      <TextField
+                        size="small"
+                        variant="outlined"
+                        fullWidth
+                        defaultValue={projectDetails.image}
+                        onChange={handleChange('image')}
+                      ></TextField>
+                    </Box>
                   </>
                 )}
               </Box>
@@ -181,9 +217,11 @@ const ProjectDetails = (props) => {
             )}
           </Grid>
 
-          {/* Roles and Talent */}
+          {/* Crew Roles and Talent */}
           <Grid item xs={12} sm={6} md={3}>
-            <CrewList pID={projectDetails.id} />
+            <Paper>
+              <CrewList pID={projectDetails.id} />
+            </Paper>
           </Grid>
           <br></br>
 
@@ -195,13 +233,15 @@ const ProjectDetails = (props) => {
           {/* Notes Widget Container */}
           <Grid item xs={12} sm={3}>
             <Paper elevation={3}>
-              <Box m={0.5} p={0.5} pb={1.5}>
+              <Box m={2} p={0.5} pb={1.5}>
                 <Box m={1}>
                   <Grid container>
-                    <Grid item xs={6}>
-                      <Typography variant="h6">Notes</Typography>
+                    <Grid item xs={12}>
+                      <Typography variant="h6" align="center">
+                        Notes
+                      </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                       <Button
                         variant="contained"
                         size="small"
@@ -209,7 +249,7 @@ const ProjectDetails = (props) => {
                       >
                         save
                       </Button>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Box>
                 <TextField
@@ -220,6 +260,7 @@ const ProjectDetails = (props) => {
                   defaultValue={projectDetails.notes}
                   variant="outlined"
                   onChange={handleNote}
+                  onBlur={handleSave}
                 />
               </Box>
             </Paper>

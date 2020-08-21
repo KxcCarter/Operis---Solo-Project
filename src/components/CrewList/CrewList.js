@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import { useDispatch } from 'react-redux';
@@ -14,7 +14,6 @@ import {
   Select,
   List,
   ListItem,
-  Button,
 } from '@material-ui/core';
 
 const CrewList = (props) => {
@@ -23,9 +22,7 @@ const CrewList = (props) => {
     dispatch({ type: 'GET_CREW_LIST', payload: props.pID });
     dispatch({ type: 'GET_ROLES' });
     dispatch({ type: 'GET_USER_TALENT' });
-  }, []);
-
-  const [roleID, setRoleID] = useState('');
+  }, [dispatch, props.pID]);
 
   const { store } = props;
 
@@ -37,10 +34,12 @@ const CrewList = (props) => {
   };
 
   return (
-    <Box>
+    <Box p={1}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h5">Project Crew</Typography>
+          <Typography variant="h5" align="center" color="primary">
+            Project Crew
+          </Typography>
           <div>
             <List dense>
               {/* Dropdown List */}
@@ -48,7 +47,6 @@ const CrewList = (props) => {
               <ListItem>
                 <Select
                   native
-                  value={roleID}
                   onChange={handleAddCrewRole}
                   inputProps={{
                     name: 'role',

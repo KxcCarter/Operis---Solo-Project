@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {
   HashRouter as Router,
   Route,
   Redirect,
   Switch,
 } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+
+//
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // ---
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+
+//
+import './App.css';
+import { Container } from '@material-ui/core';
 
 // --- Pages
 import AboutPage from '../../_views/AboutPage/AboutPage';
@@ -24,22 +31,47 @@ import ProjectList from '../ProjectList/ProjectList';
 import NewProject from '../../_views/NewProject/NewProject';
 import TalentPoolPage from '../../_views/TalentPoolPage/TalentPoolPage';
 
-import './App.css';
-import { Container } from '@material-ui/core';
+// --- MUI Colors ---
+import { green, orange, red } from '@material-ui/core/colors';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.dispatch({ type: 'FETCH_USER' });
-  }
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
 
-  render() {
-    return (
+    primary: { main: '#64b5f6', contrastText: '#000000' },
+    secondary: { main: '#f6a5c0', light: '#aa647b' },
+    error: { main: '#f44336', dark: '#d32f2f' },
+    success: {
+      light: green['200'],
+      main: green['300'],
+      contrastText: '#000000',
+    },
+    background: {
+      paper: '#8C8C8C',
+    },
+    warning: {
+      light: red['100'],
+      main: orange['200'],
+      contrastText: '#000000',
+    },
+  },
+});
+
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_USER' });
+  }, [dispatch]);
+
+  return (
+    <ThemeProvider theme={darkTheme}>
       <Router>
         <Container maxWidth="lg">
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/projects" />
             {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
             <Route exact path="/about" component={AboutPage} />
@@ -56,7 +88,7 @@ class App extends Component {
             <ProtectedRoute
               exact
               path="/login"
-              authRedirect="/admin"
+              authRedirect="/projects"
               component={LoginPage}
             />
             <ProtectedRoute
@@ -86,8 +118,8 @@ class App extends Component {
           <Footer />
         </Container>
       </Router>
-    );
-  }
-}
+    </ThemeProvider>
+  );
+};
 
 export default connect()(App);
