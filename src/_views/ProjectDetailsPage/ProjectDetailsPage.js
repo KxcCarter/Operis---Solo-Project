@@ -70,7 +70,12 @@ const ProjectDetails = (props) => {
         type: 'UPDATE_NOTE',
         payload: { note: note, id: projectDetails.id },
       });
+      console.log('WOOOOW WE ARE DOING THIS');
     }, 600);
+  };
+
+  const handleSave = () => {
+    console.log('You should only see this after text input has finished.');
   };
 
   const toggleEditMode = () => {
@@ -108,7 +113,7 @@ const ProjectDetails = (props) => {
   return (
     <>
       {!projectDetails.id && <CircularProgress />}
-      {projectDetails.id == match.params.id && (
+      {projectDetails.id === parseInt(match.params.id) && (
         <Grid container spacing={2}>
           {/* Project Title and Details */}
 
@@ -255,6 +260,7 @@ const ProjectDetails = (props) => {
                   defaultValue={projectDetails.notes}
                   variant="outlined"
                   onChange={handleNote}
+                  onBlur={handleSave}
                 />
               </Box>
             </Paper>
