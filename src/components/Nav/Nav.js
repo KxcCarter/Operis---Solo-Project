@@ -78,24 +78,25 @@ const Nav = (props) => {
   }
 
   return (
-    // <Paper>
-    <div className="nav">
+    <div>
       <div className="imageContainer">
         <div className="imageText">OPERIS</div>
 
         <div className="nav-bottom">
           <Link to="/home">
-            <h1 className="nav-title">OPERIS</h1>
+            {/* <h1 className="nav-title">OPERIS</h1> */}
+            <Typography variant="h6" className="nav-title">
+              Hey {props.store.user.username} <InsertEmoticonIcon />
+            </Typography>
           </Link>
-          <div className="nav-center">
+          {/* <div className="nav-center">
             <Typography variant="h6">
               Hey {props.store.user.username} <InsertEmoticonIcon />
             </Typography>
-          </div>
+          </div> */}
 
           <div className="nav-link">
             <Button
-              color="primary"
               size="large"
               aria-controls="customized-menu"
               aria-haspopup="true"
@@ -173,7 +174,6 @@ const Nav = (props) => {
         </div>
       </div>
     </div>
-    // </Paper>
   );
 };
 

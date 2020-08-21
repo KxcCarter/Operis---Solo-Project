@@ -7,10 +7,13 @@ import './Footer.css';
 // It doesn't dispatch any redux actions or display any part of redux state
 // or even care what the redux state is, so it doesn't need 'connect()'
 
+const date = new Date();
+const now = date.getFullYear();
+
 const Footer = () => (
   <footer>
     {/* <ImageUpload /> */}
-    &copy; Prime Digital Academy
+    &copy; Kenneth R Carter {now}
   </footer>
 );
 

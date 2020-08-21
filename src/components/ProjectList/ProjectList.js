@@ -79,7 +79,7 @@ const ProjectList = (props) => {
           <Box align="center">
             <Grid container spacing={3}>
               {projects}
-              {projectsDouble}
+              {/* {projectsDouble} */}
             </Grid>
           </Box>
         </Box>
