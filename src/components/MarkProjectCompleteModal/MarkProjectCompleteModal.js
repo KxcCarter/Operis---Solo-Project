@@ -79,17 +79,18 @@ function NewTaskModal(props) {
           {props.projectTitle} is{' '}
           {props.projectStatus ? 'already complete!' : 'incomplete.'}
         </Typography>
+
         <Typography
-          variant="h5"
+          variant="subtitle1"
           id="simple-modal-title"
-          align="center"
+          color="textSecondary"
           gutterBottom
-          color="primary"
         >
           Are you sure you want to mark {props.projectTitle}{' '}
           {props.projectStatus ? 'incomplete' : 'complete'}?
         </Typography>
       </Box>
+
       <Box p={3} display="inline">
         <Button
           variant="outlined"
@@ -97,11 +98,13 @@ function NewTaskModal(props) {
           className={!props.projectStatus ? classes.success : classes.warning}
           onClick={handleSubmit}
         >
-          {props.projectStatus ? (
+          {!props.projectStatus ? (
             <CheckCircleOutlineIcon />
           ) : (
             <RadioButtonUncheckedIcon />
-          )}
+          )}{' '}
+          mark as
+          {props.projectStatus ? ' incomplete' : ' complete'}!
         </Button>
       </Box>
       <Box p={3} display="inline">

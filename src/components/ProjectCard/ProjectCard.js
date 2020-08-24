@@ -97,13 +97,13 @@ const ProjectCard = (props) => {
                   Completion Status
                 </Typography>
 
-                <Typography variant="subtitle1">
+                {/* <Typography variant="subtitle1">
                   <FiberManualRecordIcon
                     fontSize="small"
                     htmlColor={props.isStaffed ? statusYes : statusNo}
                   />
                   Staffing Status
-                </Typography>
+                </Typography> */}
               </Box>
             </Grid>
             <Grid item sm={3}>
