@@ -22,6 +22,7 @@ import {
 // --- MUI Icons ---
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteProjectButton from '../../components/DeleteProjectButton/DeleteProjectButton';
+import MarkProjectCompleteModal from '../../components/MarkProjectCompleteModal/MarkProjectCompleteModal';
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -148,17 +149,26 @@ const ProjectDetails = (props) => {
               >
                 {editMode ? 'save' : 'edit'}
               </Button>
+
               {editMode && (
                 <Button variant="text" size="small" onClick={toggleEditMode}>
                   cancel
                 </Button>
               )}
             </Grid>
-            {editMode && (
+            {editMode ? (
               <Grid item xs={6}>
                 <DeleteProjectButton
                   projectID={projectDetails.id}
                   projectTitle={projectDetails.title}
+                />
+              </Grid>
+            ) : (
+              <Grid item xs={6}>
+                <MarkProjectCompleteModal
+                  projectID={projectDetails.id}
+                  projectTitle={projectDetails.title}
+                  projectStatus={projectDetails.is_completed}
                 />
               </Grid>
             )}
