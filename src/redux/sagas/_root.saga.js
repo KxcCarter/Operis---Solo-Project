@@ -23,6 +23,7 @@ import updateTalentDetails from './updateTalentDetails.saga';
 import deleteProjectSaga from './deleteProject.saga';
 import deleteTaskSaga from './deleteTask.saga';
 import deleteCrewRoleSaga from './deleteProjectCrewRole.saga';
+import updateProjectStatus from './updateProjectStatus.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -46,6 +47,7 @@ export default function* rootSaga() {
     updateTask(),
     updateTaskStatus(),
     updateProjectDetails(),
+    updateProjectStatus(),
     updateTalentDetails(),
     cardTasksSaga(),
     crewList(),

@@ -52,6 +52,7 @@ const darkTheme = createMuiTheme({
     warning: {
       light: red['100'],
       main: orange['200'],
+      dark: orange['400'],
       contrastText: '#000000',
     },
   },

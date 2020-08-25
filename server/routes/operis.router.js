@@ -31,8 +31,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.get('/ordered', rejectUnauthenticated, (req, res) => {
   const user = req.user.id;
   const orderBy = req.query.orderBy;
-  console.log(orderBy);
-  // const query = `SELECT * FROM projects WHERE projects.user_id = $1 ORDER BY ${orderBy} DESC;`;
 
   let queryString;
   switch (orderBy) {
@@ -108,7 +106,6 @@ router.get('/project/:id', rejectUnauthenticated, (req, res) => {
 router.get('/tasks', rejectUnauthenticated, (req, res) => {
   const projectID = req.query.projectID;
   const orderBy = req.query.orderBy;
-  const query = `SELECT * FROM tasks WHERE "tasks".project_id = $1 ORDER BY ${orderBy} ASC;`;
 
   let queryString;
   switch (orderBy) {
@@ -230,7 +227,7 @@ router.post('/newTask', (req, res) => {
 router.post('/addProjectRole/:id', (req, res) => {
   const projectID = req.params.id;
   const roleID = req.body.roleID;
-  console.log(req.body);
+
   const query = `INSERT INTO project_roles (project_id, role_id)
   VALUES ($1, $2);`;
 
@@ -273,7 +270,7 @@ router.post('/newTalent', (req, res) => {
 router.put('/uploadImage/:id', (req, res) => {
   const pID = req.params.id;
   const image = req.body.image;
-  console.log(req.body);
+
   const query = `UPDATE "projects" SET image = $2 WHERE "projects".id = $1;`;
 
   pool
@@ -292,7 +289,6 @@ router.put('/uploadImage/:id', (req, res) => {
 router.put('/updateNote/:id', (req, res) => {
   const note = req.body.note;
   const id = req.params.id;
-  // const user = req.user.id;
 
   const query = `UPDATE "projects"
                   SET notes = $1
@@ -301,7 +297,6 @@ router.put('/updateNote/:id', (req, res) => {
   pool
     .query(query, [note, id])
     .then((dbRes) => {
-      console.log('Update note dbRes: ', dbRes);
       res.sendStatus(201);
     })
     .catch((err) => {
@@ -321,7 +316,6 @@ router.put('/updateTask/:id', (req, res) => {
   pool
     .query(query, [note, id])
     .then((dbRes) => {
-      console.log('Update task dbRes: ', dbRes);
       res.sendStatus(201);
     })
     .catch((err) => {
@@ -335,7 +329,6 @@ router.put('/updateTask/:id', (req, res) => {
 router.put('/setTalentRole/:id', (req, res) => {
   const talentID = req.body.talentID;
   const id = req.params.id;
-  console.log(req.body.talentID, req.params.id);
   const query = `UPDATE project_roles SET talent_id = $1 WHERE id = $2;`;
 
   pool
@@ -376,7 +369,6 @@ router.put('/updateProjectDetails/:id', (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const image = req.body.image;
-  console.log(req.body);
   const query = `UPDATE projects SET title = $1, description = $2, image = $3 WHERE id = $4;`;
 
   pool
@@ -395,7 +387,6 @@ router.put('/updateProjectDetails/:id', (req, res) => {
 router.put('/updateTaskStatus/:id', (req, res) => {
   const taskID = req.params.id;
   const status = req.body.status;
-  console.log('UGH just work already: ', req.params.id, req.body.status);
   const query = `UPDATE tasks SET is_completed = $1 WHERE id = $2;`;
 
   pool
@@ -413,11 +404,12 @@ router.put('/updateTaskStatus/:id', (req, res) => {
 // Update Project Completion status
 router.put('/completionStatus/:id', (req, res) => {
   const projectID = req.params.id;
+  projectStatus = req.body.projectStatus;
 
-  const query = `UPDATE "projects" SET "projects".is_completed = true WHERE "projects".id = $1;`;
+  const query = `UPDATE "projects" SET is_completed = $1 WHERE id = $2;`;
 
   pool
-    .query(query, [projectID])
+    .query(query, [projectStatus, projectID])
     .then((dbRes) => {
       res.sendStatus(201);
     })
