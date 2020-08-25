@@ -47,8 +47,8 @@ function ImageUpload(props) {
   };
 
   const uploadOptions = {
-    // server: 'https://arcane-dusk-92336.herokuapp.com',
-    server: 'http://localhost:5000',
+    server: 'https://arcane-dusk-92336.herokuapp.com',
+    // server: 'http://localhost:5000',
     // signingUrlQueryParams: {uploadType: 'avatar'},
   };
 
