@@ -78,7 +78,7 @@ function NewTaskModal(props) {
           align="center"
           color="primary"
         >
-          New Task
+          New Todo Item
         </Typography>
 
         <TextField

@@ -74,6 +74,7 @@ function ImageUpload(props) {
         maxSize={1024 * 1024 * 5}
         upload={uploadOptions}
       />
+      <Button onClick={handleClose}>close</Button>
     </div>
   );
 

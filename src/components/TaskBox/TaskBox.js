@@ -58,7 +58,7 @@ function TaskBox(props) {
                   <Grid item xs={12}>
                     <Box p={1} display="inline">
                       <Typography variant="h5" display="inline">
-                        Tasks
+                        Todo
                       </Typography>
                     </Box>
                     <Box p={1} display="inline">

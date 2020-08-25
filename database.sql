@@ -106,14 +106,6 @@ CREATE TABLE "talent"
         (1, 'Compose the music');
 
 
-    -- I think I can delete this
-    SELECT "projects".*, array_agg(DISTINCT "tasks".description) AS tasks
-    from "projects"
-        JOIN "tasks" ON "tasks".project_id = "projects".id
-    WHERE "projects".user_id = 3
-    GROUP BY "projects".id;
-
-
     -- For Card
     SELECT "projects".title, "projects".description, "projects".image, "projects".is_completed, "projects".is_staffed, array_agg(DISTINCT "roles".role_name), array_agg(DISTINCT "talent".name) AS talent, array_agg(DISTINCT "tasks".description) AS tasks
     from "projects"
@@ -188,12 +180,6 @@ WHERE "projects".id = 11 AND "projects".user_id = 3;
     VALUES
         (7, 8);
 
-
-
-    SELECT *
-    FROM tasks
-    WHERE "tasks".project_id = 13
-    ORDER BY time_created DESC;
 
     INSERT INTO project_roles
         (project_id, role_id, talent_id)
