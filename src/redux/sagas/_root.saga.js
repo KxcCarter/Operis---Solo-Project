@@ -24,6 +24,7 @@ import deleteProjectSaga from './deleteProject.saga';
 import deleteTaskSaga from './deleteTask.saga';
 import deleteCrewRoleSaga from './deleteProjectCrewRole.saga';
 import updateProjectStatus from './updateProjectStatus.saga';
+import deleteS3ImageSaga from './deleteS3Image.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -59,5 +60,6 @@ export default function* rootSaga() {
     deleteProjectSaga(),
     deleteTaskSaga(),
     deleteCrewRoleSaga(),
+    deleteS3ImageSaga(),
   ]);
 }

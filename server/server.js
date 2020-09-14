@@ -7,6 +7,8 @@ const sessionMiddleware = require('./modules/session-middleware');
 
 const passport = require('./strategies/user.strategy');
 
+const s3Router = require('./routes/s3.router');
+
 // Route includes
 const userRouter = require('./routes/user.router');
 const operisRouter = require('./routes/operis.router');
@@ -34,9 +36,23 @@ app.use(
     bucket: 'operisstorage', // required
     region: 'us-east-2', // optional
     headers: { 'Access-Control-Allow-Origin': '*' }, // optional
-    ACL: 'public-read', // this is the default - set to `public-read` to let anyone view uploads
+    ACL: 'public-read', // private is the default - set to `public-read` to let anyone view uploads
+    uniquePrefix: false, // true is the default
   })
 );
+
+// const deleteAFile = async () => {
+//   const result = await s3
+//     .deleteObject({
+//       Bucket: 'operisstorage',
+//       Key: req.params.key,
+//     })
+//     .promise(() => {
+//       console.log('hey whats up?');
+//     });
+// };
+
+app.use('/deleteS3Image', s3Router);
 
 // Serve static files
 app.use(express.static('build'));

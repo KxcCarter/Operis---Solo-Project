@@ -16,7 +16,8 @@ class LandingPage extends Component {
   onLogin = (event) => {
     this.props.history.push('/login');
   };
-
+  // TODO
+  // use MUI grid
   render() {
     return (
       <div className="container">
