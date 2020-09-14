@@ -40,9 +40,7 @@ function ImageUpload(props) {
   const [open, setOpen] = useState(false);
   const [uploadFinished, setUploadFinished] = useState(false);
   const [filename, setFilename] = useState('');
-
-  // let filename;
-  let fileUrl;
+  const [fileUrl, setFileUrl] = useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -86,8 +84,7 @@ function ImageUpload(props) {
     console.log('File uploaded with filename', info.filename);
     console.log('Access it on s3 at', info.fileUrl);
     setFilename(info.filename);
-    // filename = info.filename;
-    fileUrl = info.fileUrl;
+    setFileUrl(info.fileUrl);
 
     setUploadFinished(true);
     // dispatch({
@@ -108,8 +105,6 @@ function ImageUpload(props) {
         s3Url={s3Url}
         maxSize={1024 * 1024 * 5}
         upload={uploadOptions}
-        filename="operisProject"
-        scrubFilename={(filename) => filename.replace(/[^\w\d_\-.]+/gi, '')}
       />
       {uploadFinished && (
         <Box>

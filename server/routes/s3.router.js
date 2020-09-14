@@ -1,5 +1,4 @@
 const express = require('express');
-// const pool = require('../modules/pool');
 const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
@@ -21,18 +20,6 @@ const deleteObject = async (keyName) => {
 
 router.delete('/:key', rejectUnauthenticated, (req, res) => {
   console.log('in s3 router.');
-  //   s3.deleteObject({
-  //     Bucket: 'operisstorage',
-  //     Key: req.params.key,
-  //   })
-  //     .then((res) => {
-  //       console.log('delete request has been sent to s3');
-  //       res.send(200);
-  //     })
-  //     .catch((err) => {
-  //       console.log('That didnt work. ', err);
-  //       res.sendStatus(500);
-  //     });
   console.log('Here is the key: ', req.params.key);
   deleteObject(req.params.key);
 });
