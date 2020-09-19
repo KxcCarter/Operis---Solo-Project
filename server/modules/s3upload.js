@@ -2,8 +2,8 @@ const fs = require('fs');
 const AWS = require('aws-sdk');
 
 const BUCKET_NAME = 'operisstorage';
-const ID = 'AKIAUR5YYQYJE5EXXXO4';
-const SECRET = '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';
+const ID = process.env.AWS_ACCESS_KEY_ID;
+const SECRET = process.env.AWS_SECRET_ACCESS_KEY;
 
 // The name of the bucket that you have created
 
